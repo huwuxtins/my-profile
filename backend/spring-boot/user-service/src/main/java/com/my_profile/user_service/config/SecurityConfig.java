@@ -26,8 +26,8 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         return http.authorizeExchange(authorize -> {
-                    authorize.pathMatchers("/", "/images/**").permitAll();
-                    authorize.anyExchange().authenticated();
+                    authorize.pathMatchers("/", "/images/**", "/api/v1/user/**").permitAll();
+                    // authorize.anyExchange().authenticated();
                 })
             .oauth2Login(withDefaults())
             .logout(logout ->
