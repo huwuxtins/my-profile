@@ -25,27 +25,32 @@ public class SecurityConfig {
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
-        return http.authorizeExchange(authorize -> {
-                    authorize.pathMatchers("/", "/images/**", "/api/v1/user/**").permitAll();
-                    // authorize.anyExchange().authenticated();
+        return http
+                .csrf(ServerHttpSecurity.CsrfSpec::disable)
+                .authorizeExchange(authorize -> {
+                    authorize.pathMatchers("/", "/images/**", "/api/v1/user/registration").permitAll();
+                    authorize.anyExchange().authenticated();
                 })
-            .oauth2Login(withDefaults())
-            .logout(logout ->
-                logout.logoutSuccessHandler(logoutSuccessHandler())
-            ).build();
+                .oauth2Login(withDefaults())
+                .logout(logout -> logout.logoutSuccessHandler(logoutSuccessHandler())).build();
     }
 
     /**
-     * Configures the logout handling to log users out of Auth0 after successful logout from the application.
-     * @return a {@linkplain ServerLogoutSuccessHandler} that will be called on successful logout.
+     * Configures the logout handling to log users out of Auth0 after successful
+     * logout from the application.
+     *
+     * @return a {@linkplain ServerLogoutSuccessHandler} that will be called on
+     *         successful logout.
      */
     @Bean
     public ServerLogoutSuccessHandler logoutSuccessHandler() {
         // Change this as needed to URI where users should be redirected to after logout
         String returnTo = "http://localhost:8081/";
 
-        // Build the URL to log the user out of Auth0 and redirect them to the home page.
-        // URL will look like https://YOUR-DOMAIN/v2/logout?clientId=YOUR-CLIENT-ID&returnTo=http://localhost:3000
+        // Build the URL to log the user out of Auth0 and redirect them to the home
+        // page.
+        // URL will look like
+        // https://YOUR-DOMAIN/v2/logout?clientId=YOUR-CLIENT-ID&returnTo=http://localhost:3000
         String logoutUrl = UriComponentsBuilder
                 .fromHttpUrl(issuer + "v2/logout?client_id=" + clientId + "&returnTo=" + returnTo)
                 .encode()
