@@ -25,5 +25,6 @@ public class User {
     private String phoneNumber;
     private String avatar;
     private Date bod;
+    private Date registerAt;
     private String major;
 }

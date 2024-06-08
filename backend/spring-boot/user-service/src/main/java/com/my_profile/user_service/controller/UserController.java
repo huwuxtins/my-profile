@@ -10,6 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
@@ -38,13 +45,33 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<Object> registrationUser(@AuthenticationPrincipal OidcUser authentication){
-//        User updatedUser = userService.updateUser(user);
-//
-//        if(updatedUser != null) {
-//            return ResponseMessage.createResponse("Update user successfully!", updatedUser, HttpStatus.OK);
-//        }
-        System.out.print(authentication);
+    public ResponseEntity<Object> registrationUser(@RequestBody Map<String, Object> map) throws ParseException {
+        System.out.print("Map: " + map);
+        String userID = map.get("userID").toString();
+        String email = map.get("email").toString();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+        LocalDateTime date;
+
+        try {
+            date = LocalDateTime.parse(map.get("createdAt").toString(), formatter);
+        } catch (Exception e) {
+            e.printStackTrace();
+            date = LocalDateTime.now();
+        }
+
+        Date registerAt = Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
+        User user = new User
+                .UserBuilder()
+                .userID(userID)
+                .email(email)
+                .registerAt(registerAt)
+                .build();
+
+        User updatedUser = userService.addUser(user);
+
+        if(updatedUser != null) {
+            return ResponseMessage.createResponse("Update user successfully!", updatedUser, HttpStatus.OK);
+        }
         return ResponseMessage.createResponse("Update user failed!", null, HttpStatus.OK);
     }
 

@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User addUser(User user) {
         try{
-            userRepository.insert(user);
+            return userRepository.insert(user);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateUser(User user) {
         try{
-            userRepository.save(user);
+            return userRepository.save(user);
         } catch (Exception e){
             e.printStackTrace();
         }
