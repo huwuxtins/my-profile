@@ -57,7 +57,11 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public Diary deleteDiary(Diary diary) {
+    public Diary deleteDiary(String id) {
+        Diary diary = diaryRepository.findById(id).orElse(null);
+        if(diary == null){
+            return null;
+        }
         try {
             diaryRepository.delete(diary);
             return diary;

@@ -10,5 +10,5 @@ public interface BlogService {
     public List<Blog> getBlogs(int page, int size);
     public Blog addBlog(Blog blog);
     public Blog updateBlog(Blog blog);
-    public Blog deleteBlog(Blog blog);
+    public Blog deleteBlog(String id);
 }

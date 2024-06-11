@@ -8,7 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Document
 @Data
@@ -23,12 +23,12 @@ public class Plan {
     private String userID;
 
     @Field("created_at")
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @Field("start_at")
-    private Date startAt;
+    private LocalDateTime startAt;
 
     @Field("end_at")
-    private Date endAt;
+    private LocalDateTime endAt;
     private String work;
 }

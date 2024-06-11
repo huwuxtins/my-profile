@@ -8,7 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Document
 @Data
@@ -23,7 +23,7 @@ public class Diary {
     private String userID;
 
     @Field("created_at")
-    private Date createdAt;
+    private LocalDateTime createdAt;
     private String image;
     private String video;
     private String content;

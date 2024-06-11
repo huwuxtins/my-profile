@@ -10,5 +10,5 @@ public interface DiaryService {
     public List<Diary> getDiaries(int page, int size);
     public Diary addDiary(Diary Diary);
     public Diary updateDiary(Diary Diary);
-    public Diary deleteDiary(Diary Diary);
+    public Diary deleteDiary(String id);
 }

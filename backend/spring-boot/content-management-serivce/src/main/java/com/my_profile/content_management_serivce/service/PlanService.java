@@ -10,5 +10,5 @@ public interface PlanService {
     public List<Plan> getPlans(int page, int size);
     public Plan addPlan(Plan Plan);
     public Plan updatePlan(Plan Plan);
-    public Plan deletePlan(Plan Plan);
+    public Plan deletePlan(String id);
 }

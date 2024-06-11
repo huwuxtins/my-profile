@@ -57,7 +57,11 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public Plan deletePlan(Plan plan) {
+    public Plan deletePlan(String id) {
+        Plan plan = planRepository.findById(id).orElse(null);
+        if(plan == null){
+            return null;
+        }
         try {
             planRepository.delete(plan);
             return plan;
