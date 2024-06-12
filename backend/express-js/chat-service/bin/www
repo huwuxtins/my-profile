@@ -7,6 +7,12 @@
 var app = require('../app');
 var debug = require('debug')('chat:server');
 var http = require('http');
+const WebSocket = require('ws');
+
+var dotenv = require('dotenv'); // Load dotenv package
+dotenv.config(); // Load .env file
+
+var connectDb = require('../database/mongodb');
 
 /**
  * Get port from environment and store in Express.
@@ -22,10 +28,58 @@ app.set('port', port);
 var server = http.createServer(app);
 
 /**
+ * Create WebSocket server.
+ */
+
+const wss = new WebSocket.Server({ server }); // Correctly pass HTTP server instance
+
+/**
+ * WebSocket connection handling.
+ */
+
+wss.on('connection', (ws) => {
+  console.log('Client connected');
+
+  ws.on('message', (message) => {
+    console.log('Received message:', message.toString());
+
+    const data = JSON.parse(message);
+
+    wss.clients.forEach(function each(client) {
+      if (client.readyState === WebSocket.OPEN && client.user.id == data.to) {
+        console.log(client)
+        client.send(JSON.stringify({ type: 'MESSAGE', content: data.message}));
+      }
+    });
+
+    ws.send(JSON.stringify({ type: 'MESSAGE', content: data.message}))
+  })
+
+  ws.on('join', (user) => {
+    ws.user = user
+  })
+
+  ws.on('error', console.error);
+
+  ws.on('close', () => {
+    console.log('Client disconnected');
+  });
+});
+
+/**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+server.listen(port, async () => {
+  try {
+    console.log(`Server running: http://localhost:${port}`);
+    await connectDb(process.env.MONGO_URI);
+    console.log('Connected to database successfully');
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 server.on('error', onError);
 server.on('listening', onListening);
 
@@ -58,9 +112,7 @@ function onError(error) {
     throw error;
   }
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+  var bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -83,8 +135,19 @@ function onError(error) {
 
 function onListening() {
   var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
+  var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
   debug('Listening on ' + bind);
+}
+
+/**
+ * Helper function to find WebSocket client by username.
+ */
+
+function findClientByUsername(username) {
+  for (const [ws, user] of Object.entries(users)) {
+    if (user === username) {
+      return ws;
+    }
+  }
+  return null;
 }
