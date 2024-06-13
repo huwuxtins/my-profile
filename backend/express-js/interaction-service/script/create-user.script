@@ -1,0 +1,5 @@
+CREATE (user: User {
+    userID: $userID,
+    avatar: $avatar,
+    username: $username
+})

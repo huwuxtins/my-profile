@@ -3,8 +3,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/user');
+var blogRouter = require('./routes/blog');
+var commentRouter = require('./routes/comment')
+
 const { auth } = require('express-openid-connect');
 var dotenv = require('dotenv') /// thêm dot env vào hệ thống
 dotenv.config() /// load file .env
@@ -21,12 +23,12 @@ const config = {
 };
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
-app.use(auth(config));
+// app.use(auth(config));
 
 // req.isAuthenticated is provided from the auth router
-app.get('/', (req, res) => {
-  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-});
+// app.get('/', (req, res) => {
+//   res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+// });
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -34,7 +36,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use((req, res, next) => {
+  req.neo4j = require('./database/neo4js')
+  next()
+})
+
+app.use('/api/v1/user', usersRouter);
+app.use('/api/v1/blog', blogRouter);
+app.use('/api/v1/comment', commentRouter);
 
 module.exports = app;

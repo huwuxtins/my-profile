@@ -1,0 +1,4 @@
+CREATE (blog: Blog{
+    blogID: $blogID,
+    userID: $userID
+})

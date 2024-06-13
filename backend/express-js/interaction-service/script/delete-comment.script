@@ -1,0 +1,2 @@
+DELETE (comment: Comment {commentID: $commentID})
+DETACH DELETE comment

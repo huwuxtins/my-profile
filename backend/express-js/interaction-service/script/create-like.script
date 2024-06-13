@@ -1,0 +1,5 @@
+MATCH (user: User{userID: $userID})
+MATCH (blog: Blog{blogID: $blogID})
+
+MERGE (user)-[like:LIKE]->(blog) ON CREATE SET like.createdAt = datetime()
+RETURN like

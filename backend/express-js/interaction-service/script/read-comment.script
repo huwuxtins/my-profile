@@ -1,0 +1,2 @@
+MATCH (comments: Comment {blogID: $blogID})
+RETURN comments

@@ -1,0 +1,2 @@
+DELETE (blog: Blog {blogID: $blogID})
+DETACH DELETE blog
