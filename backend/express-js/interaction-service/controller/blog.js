@@ -6,7 +6,17 @@ const BlogController = {
 
         await req.neo4j.read(cypher('read-blog'), {blogID})
         .then((value) => {
-            res.status(200).json({message: "Read blog successfully!", data: value.records[0].get('blog').properties})
+            res.status(200).json(
+                {
+                    message: "Read blog successfully!", 
+                    data: {
+                        blogID: value.records[0].get('blog').properties, 
+                        users: value.records.reduce((acc, record) => {
+                            const userProperties = record.get('user')?.properties; // Use optional chaining
+                            return acc.concat(userProperties || []); // Concat with empty array if userProperties is null/undefined
+                        }, []),
+                    }
+                })
         }).catch((err) => {
             res.status(404).json({message: "Read blog failed!", data: err})
         });

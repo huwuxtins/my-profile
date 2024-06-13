@@ -1,0 +1,4 @@
+MATCH (follower: User{ userID: $followerID}), (target: User{ userID: $targetID })
+
+MERGE (follower) - [follow:FOLLOW] -> (target) ON CREATE SET follow.createdAt = datetime()
+RETURN follower, target

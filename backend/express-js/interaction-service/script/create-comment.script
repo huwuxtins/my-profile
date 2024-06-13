@@ -1,12 +1,12 @@
 MATCH (user: User {userID: $userID}), (blog: Blog {blogID: $blogID})
 
 CREATE (comment: Comment {
-  commentID: $commentID,
-  userID: $userID,
-  blogID: $blogID,
-  createdAt: $createdAt,
-  replyCommentID: $replyCommentID,
-  content: $content
+    commentID: $commentID,
+    userID: $userID,
+    blogID: $blogID,
+    createdAt: $createdAt,
+    replyCommentID: $replyCommentID,
+    content: $content
 })
 CREATE (user)-[:COMMENTED_ON] -> (comment) <- [:INCLUDED_IN]-(blog)
 RETURN comment

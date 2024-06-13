@@ -24,8 +24,6 @@ const CommentController = {
             content
         }
 
-        console.log(comment)
-
         await req.neo4j.write(cypher('create-comment'), comment)
         .then(() => {
             res.status(201).json({message: "Add comment successfully!", data: comment})

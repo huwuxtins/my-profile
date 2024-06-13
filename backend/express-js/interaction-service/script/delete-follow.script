@@ -1,0 +1,2 @@
+MATCH (follower: User{ userID: $followerID}) - [follow:FOLLOW] -> (target: User{ userID: $targetID })
+DELETE follow

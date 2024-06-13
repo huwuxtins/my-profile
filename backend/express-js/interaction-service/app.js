@@ -5,7 +5,9 @@ var logger = require('morgan');
 
 var usersRouter = require('./routes/user');
 var blogRouter = require('./routes/blog');
-var commentRouter = require('./routes/comment')
+var commentRouter = require('./routes/comment');
+var likeRouter = require('./routes/like');
+var followRouter = require('./routes/follow')
 
 const { auth } = require('express-openid-connect');
 var dotenv = require('dotenv') /// thêm dot env vào hệ thống
@@ -44,5 +46,7 @@ app.use((req, res, next) => {
 app.use('/api/v1/user', usersRouter);
 app.use('/api/v1/blog', blogRouter);
 app.use('/api/v1/comment', commentRouter);
+app.use('/api/v1/like', likeRouter);
+app.use('/api/v1/follow', followRouter);
 
 module.exports = app;

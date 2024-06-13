@@ -1,0 +1,2 @@
+MATCH (user: User{ userID: $userID }) - [like:LIKE] -> (blog: Blog{ blogID: $blogID })
+DELETE like
