@@ -1,10 +1,8 @@
 import Image from "next/image";
-import Heading from "~/components/heading";
+import Introduce from "~/components/introduce";
 
 export default function Home() {
   return (
-    <main>
-      <Heading/>
-    </main>
+    <Introduce/>
   );
 }
