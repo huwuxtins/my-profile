@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function LinkButton({ name, icon, color, width, height, number, onClick, sizeIcon, hoverColor }) {
-    const className = `flex mr-3 flex-row items-center bg-${color} hover:bg-${hoverColor} rounded-md border-solid border-2 border-white`
+    const className = `flex mr-3 flex-row items-center ${color} ${hoverColor} rounded-md border-solid border-2 border-white`
 
     return (
         <button className={className} style={{ width, height }} onClick={onClick}>

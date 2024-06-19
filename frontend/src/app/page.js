@@ -1,8 +1,15 @@
-import Image from "next/image";
-import Introduce from "~/components/introduce";
+import ProjectPreview from "~/layout/project";
+import Introduce from "~/layout/introduce";
+import Blogs from "~/layout/blog";
+import Contact from "~/layout/contact";
 
 export default function Home() {
   return (
-    <Introduce/>
+    <>
+      <Introduce />
+      <ProjectPreview />
+      <Blogs />
+      <Contact/>
+    </>
   );
 }

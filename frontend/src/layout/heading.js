@@ -11,7 +11,7 @@ import {
   Transition,
 } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import ImageButton from './button/image_button'
+import ImageButton from '../components/button/image_button'
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from "react"
 const navigation = [
@@ -43,7 +43,7 @@ export default function Example() {
     setIcon(icon === faSun ? faMoon : faSun)
   }
   return (
-    <Disclosure as="nav" className="bg-white dark:bg-black">
+    <Disclosure as="nav" className="fixed top-0 left-0 right-0 bg-transparent dark:bg-black opacity-0.5">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 border-b-2">

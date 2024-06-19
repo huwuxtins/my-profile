@@ -1,6 +1,6 @@
-import ImageButton from "./button/image_button"
+import ImageButton from "../components/button/image_button"
 import { faGit, faGithub, faYoutube } from "@fortawesome/free-brands-svg-icons"
-import LinkButton from "./button/link_button"
+import LinkButton from "../components/button/link_button"
 
 const features = [
     { name: 'Fullname', description: 'Nguyen Huu Tin' },
@@ -37,8 +37,8 @@ export default function Introduce() {
                 </div>
                 <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:gap-8">
                     <div className="flex flex-row my-10 grid-cols-2 justify-center">
-                        <LinkButton width={'150px'} height={'50px'} icon={faYoutube} name={'Youtube'} color={'rose-100'} hoverColor={'rose-100'} sizeIcon={'50px'} />
-                        <LinkButton width={'150px'} height={'50px'} icon={faGithub} name={'Github'} color={'black'} hoverColor={'gray-700'} sizeIcon={'50px'} />
+                        <LinkButton width={'150px'} height={'50px'} icon={faYoutube} name={'Youtube'} color={'bg-red-700'} hoverColor={'hover:bg-red-400'} sizeIcon={'50px'} />
+                        <LinkButton width={'150px'} height={'50px'} icon={faGithub} name={'Github'} color={'bg-black'} hoverColor={'hover:bg-gray-400'} sizeIcon={'50px'} />
                     </div>
                     <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">Introduce</h2>
                     <p className="mt-4 text-gray-900 dark:text-white">
