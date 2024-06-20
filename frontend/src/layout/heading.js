@@ -15,8 +15,8 @@ import ImageButton from '../components/button/image_button'
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from "react"
 const navigation = [
-  { name: 'Home', href: '#', current: true },
-  { name: 'Team', href: '#', current: false },
+  { name: 'Home', href: '/', current: true },
+  { name: 'Blog', href: '/blog', current: false },
   { name: 'Projects', href: '#', current: false },
   { name: 'Calendar', href: '#', current: false },
 ]
@@ -43,7 +43,7 @@ export default function Example() {
     setIcon(icon === faSun ? faMoon : faSun)
   }
   return (
-    <Disclosure as="nav" className="fixed top-0 left-0 right-0 bg-transparent dark:bg-black opacity-0.5">
+    <Disclosure as="nav" className="fixed top-0 left-0 right-0 bg-white dark:bg-black opacity-80 z-10">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 border-b-2">

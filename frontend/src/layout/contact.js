@@ -11,7 +11,7 @@ export default function Contact() {
                 <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                     <div>
                         <label htmlFor="first-name" className="block text-sm font-semibold leading-6 text-gray-900 dark:text-white">
-                            First name
+                            Name
                         </label>
                         <div className="mt-2.5">
                             <input
@@ -25,7 +25,7 @@ export default function Contact() {
                     </div>
                     <div>
                         <label htmlFor="last-name" className="block text-sm font-semibold leading-6 text-gray-900 dark:text-white">
-                            Last name
+                            Email
                         </label>
                         <div className="mt-2.5">
                             <input

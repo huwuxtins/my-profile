@@ -1,5 +1,4 @@
-import ImageButton from "../components/button/image_button"
-import { faGit, faGithub, faYoutube } from "@fortawesome/free-brands-svg-icons"
+import { faGithub, faYoutube } from "@fortawesome/free-brands-svg-icons"
 import LinkButton from "../components/button/link_button"
 
 const features = [

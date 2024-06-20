@@ -57,11 +57,11 @@ export default function ProjectPreview() {
     }, []);
 
     return (
-        <div className="bg-gray-100">
+        <div className="bg-gray-100 dark:bg-black">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl py-16 sm:py-24 lg:max-w-none lg:py-32">
                     <div className="flex flex-row justify-between items-center">
-                        <h2 className="text-4xl font-bold text-gray-900">Projects</h2>
+                        <h2 className="text-4xl font-bold text-gray-900 dark:text-white">Projects</h2>
                         <Link href='/#' className="text-blue-800">View all projects</Link>
                     </div>
 
@@ -78,13 +78,13 @@ export default function ProjectPreview() {
                                         className="h-full w-full object-cover object-center"
                                     />
                                 </div>
-                                <h3 className="mt-6 text-sm text-gray-500">
+                                <h3 className="mt-6 text-sm text-gray-500 dark:text-white">
                                     <a href={callout.href}>
                                         <span className="absolute inset-0" />
                                         {callout.name}
                                     </a>
                                 </h3>
-                                <p className="text-base font-semibold text-gray-900">{callout.description}</p>
+                                <p className="text-base font-semibold text-gray-900 dark:text-white">{callout.description}</p>
                             </div>
                         ))}
                     </div>
