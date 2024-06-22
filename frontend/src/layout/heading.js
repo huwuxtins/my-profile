@@ -43,7 +43,7 @@ export default function Example() {
     setIcon(icon === faSun ? faMoon : faSun)
   }
   return (
-    <Disclosure as="nav" className="fixed top-0 left-0 right-0 bg-white dark:bg-black opacity-80 z-10">
+    <Disclosure as="nav" className="fixed top-0 left-0 right-0 bg-white dark:bg-gray-800 opacity-80 z-10">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 border-b-2">
@@ -78,7 +78,7 @@ export default function Example() {
                         key={item.name}
                         href={item.href}
                         className={classNames(
-                          item.current ? 'bg-black dark:bg-white text-white dark:text-black' : 'text-black dark:text-white hover:bg-gray-700 hover:text-white',
+                          item.current ? 'bg-gray-800 dark:bg-white text-white dark:text-black' : 'text-black dark:text-white hover:bg-gray-700 hover:text-white',
                           'rounded-md px-3 py-2 text-sm font-medium',
                         )}
                         aria-current={item.current ? 'page' : undefined}

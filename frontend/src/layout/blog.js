@@ -71,7 +71,7 @@ const posts = [
 
 export default function Blogs() {
     return (
-        <div className="bg-white dark:bg-black py-24 sm:py-32">
+        <div className="bg-white dark:bg-gray-800 py-24 sm:py-32">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="flex flex-col mx-auto lg:mx-0 items-end">
                     <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">My blogs</h2>
