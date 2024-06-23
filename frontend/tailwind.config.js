@@ -6,6 +6,7 @@ export const content = [
   "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
   "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   "./src/layout/**/*.{js,ts,jsx,tsx,mdx}",
+  "./node_modules/flowbite/**/*.js",
 ];
 export const theme = {
   extend: {
@@ -19,4 +20,6 @@ export const theme = {
   },
 };
 export const variants = {};
-export const plugins = [];
+export const plugins = [
+  require('flowbite/plugin')
+];
