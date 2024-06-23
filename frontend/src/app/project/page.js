@@ -2,7 +2,7 @@ import { faShare, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import LinkButton from "~/components/button/link_button";
 import Comment from "~/components/comment";
 
-function BlogPage({ children }) {
+function ProjectPage({ children }) {
     const comments = [
         {
             id: "48193c46-654c-460d-99c1-92a7550c5aa8",
@@ -29,8 +29,32 @@ function BlogPage({ children }) {
     ]
     return (
         <div className="bg-white dark:bg-gray-800 mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+
+            {/*  */}
+            <div className="bg-white dark:bg-gray-800 mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 pb-5 sm:pb-5">
+                <div className="flex flex-row justify-center">
+                    <span
+                        className='font-semibold text-4xl text-gray-800 dark:text-gray-200'
+                    >
+                        Project's name
+                    </span>
+                </div>
+            </div>
+            <div className="bg-white dark:bg-gray-800 mx-auto max-w-7xl px-4 py-5 sm:px-6 sm:py-5">
+                <div className="flex flex-row justify-between">
+                    <span
+                        className='text-base text-gray-400 dark:text-gray-200'
+                    >
+                        Release date: 24/12/2003
+                    </span>
+                    <div className="flex flexr-row justify-between">
+                        <LinkButton width={'150px'} height={'50px'} icon={faThumbsUp} name={'Like'} number={'10'} color={'bg-sky-700'} hoverColor={'hover:bg-sky-400'} sizeIcon={'50px'} />
+                        <LinkButton width={'150px'} height={'50px'} icon={faShare} name={'Share'} color={'bg-orange-700'} hoverColor={'hover:bg-orange-400'} sizeIcon={'50px'} />
+                    </div>
+                </div>
+            </div>
             <div className="bg-white dark:bg-gray-800">
-                <div className="mx-auto grid max-w-2xl grid-cols-1 items-start gap-x-8 gap-y-16 px-4 py-24 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
+                <div className="mx-auto grid max-w-2xl grid-cols-1 items-start gap-x-8 gap-y-16 px-4 py-8 sm:px-6 sm:py-12 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
                     <div>
                         <img
                             src="https://tailwindui.com/img/ecommerce-images/product-feature-03-detail-01.jpg"
@@ -95,26 +119,8 @@ function BlogPage({ children }) {
                 </div>
             </div>
 
-            {/*  */}
-            <div className="bg-white dark:bg-gray-800 mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-                <div className="flex flex-row justify-between">
-                    <div className="flex items-center">
-                        <img src='https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-                            alt="" className="h-10 w-10 flex-shrink-0 rounded-full mr-5" />
-                        <span
-                            className='font-semibold text-2xl text-gray-800 dark:text-gray-200'
-                        >
-                            Author's name
-                        </span>
-                    </div>
-                    <div className="flex flexr-row justify-between">
-                        <LinkButton width={'150px'} height={'50px'} icon={faThumbsUp} name={'Like'} number={'10'} color={'bg-sky-700'} hoverColor={'hover:bg-sky-400'} sizeIcon={'50px'} />
-                        <LinkButton width={'150px'} height={'50px'} icon={faShare} name={'Share'} color={'bg-orange-700'} hoverColor={'hover:bg-orange-400'} sizeIcon={'50px'} />
-                    </div>
-                </div>
-            </div>
-            <div className="bg-white dark:bg-gray-800 mx-auto grid max-w-2xl grid-cols-1 items-start gap-x-8 gap-y-16 px-4 py-24 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
-                <span className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-200 sm:text-6xl">Blog's name</span>
+            <div className="bg-white dark:bg-gray-800 mx-auto grid max-w-2xl grid-cols-1 items-start gap-x-8 gap-y-16 px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
+                <span className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-200 sm:text-6xl">Project's name</span>
                 <div></div>
                 <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:gap-8">
                     <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-200 sm:text-4xl">Title</h2>
@@ -134,7 +140,7 @@ function BlogPage({ children }) {
                     />
                 </div>
             </div>
-            <div className="bg-white dark:bg-gray-800 mx-auto grid grid-cols-1 max-w-2xl px-4 sm:px-6 lg:max-w-7xl">
+            <div className="bg-white dark:bg-gray-800 mx-auto grid grid-cols-1 max-w-2xl px-4 py-4 sm:px-6 sm:py-4 lg:max-w-7xl">
                 <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-200 sm:text-4xl">Title</h2>
                 <p className="mt-4 text-gray-900 dark:text-gray-200 pb-5">
                     The walnut wood card tray is precision milled to perfectly fit a stack of Focus cards. The powder coated
@@ -149,6 +155,22 @@ function BlogPage({ children }) {
                         alt="Walnut card tray with white powder coated steel divider and 3 punchout holes."
                         className="rounded-lg bg-white"
                     />
+                </div>
+            </div>
+            <div className="bg-white dark:bg-gray-800 mx-auto grid grid-cols-1 max-w-2xl px-4 py-4 sm:px-6 sm:py-4 lg:max-w-7xl">
+                <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-200 sm:text-4xl">Demo video</h2>
+                <p className="mt-4 text-gray-900 dark:text-gray-200 pb-5">
+                    The walnut wood card tray is precision milled to perfectly fit a stack of Focus cards. The powder coated
+                    steel divider separates active cards from new ones, or can be used to archive important task lists.
+                    <r />
+                    The walnut wood card tray is precision milled to perfectly fit a stack of Focus cards. The powder coated
+                    steel divider separates active cards from new ones, or can be used to archive important task lists.
+                </p>
+                <div className="flex justify-center">
+                    <video className="h-full w-full rounded-lg" controls autoPlay>
+                        <source src="https://docs.material-tailwind.com/demo.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
             </div>
             <div className="bg-white dark:bg-gray-800 mx-auto max-w-2xl px-4 py-24 sm:px-6 sm:py-12 lg:max-w-7xl text-right border-b-2">
@@ -174,7 +196,7 @@ function BlogPage({ children }) {
                     {comments.map((comment, index) => {
                         return <div key={comment.id} >
                             <Comment comment={comment} />
-                            {comment.replyComment? <Comment comment={comment.replyComment} isReply={true}/>: null}
+                            {comment.replyComment ? <Comment comment={comment.replyComment} isReply={true} /> : null}
                         </div>
                     })}
                 </div>
@@ -183,4 +205,4 @@ function BlogPage({ children }) {
     )
 }
 
-export default BlogPage;
+export default ProjectPage;
