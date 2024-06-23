@@ -3,10 +3,11 @@ import colors from 'tailwindcss/colors';
 
 export const darkMode = 'selector';
 export const content = [
+  "./node_modules/flowbite/**/*.js",
   "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
   "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   "./src/layout/**/*.{js,ts,jsx,tsx,mdx}",
-  "./node_modules/flowbite/**/*.js",
+  "./node_modules/tailwind-datepicker-react/dist/**/*.js",
 ];
 export const theme = {
   extend: {
