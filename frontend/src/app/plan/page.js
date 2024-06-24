@@ -65,6 +65,7 @@ function PlanPage({ children }) {
 
     const openDialog = () => {
         setOpen(!open)
+        console.log(new Date(Date.now()))
     }
 
     const openEvent = () => {
@@ -72,23 +73,64 @@ function PlanPage({ children }) {
     }
 
     const [show, setShow] = useState(false)
-    const [selectedDate, setSelectedDate] = useState(Date.now)
+    const [selectedDate, setSelectedDate] = useState(Date.now())
     const handleChange = (selectedDate) => {
         setSelectedDate(selectedDate)
-        console.log(selectedDate)
     }
     const handleClose = (state) => {
         setShow(state)
     }
     const [showEnd, setShowEnd] = useState(false)
-    const [selectedEndDate, setSelectedEndDate] = useState(Date.now)
+    const [selectedEndDate, setSelectedEndDate] = useState(Date.now())
     const handleChangeEnd = (selectedEndDate) => {
         setSelectedEndDate(selectedEndDate)
-        console.log(selectedEndDate)
     }
     const handleCloseEnd = (state) => {
         setShowEnd(state)
     }
+
+    const [viewMode, setViewMode] = useState('month')
+
+    const [weeks, setWeeks] = useState(generateCalendar(new Date(Date.now()).getMonth(), new Date(Date.now()).getFullYear()))
+
+    function generateCalendar(month, year) {
+
+        const firstDayOfMonth = new Date(year, month, 1);
+        const lastDayOfMonth = new Date(year, month + 1, 0);
+
+        // Calculate the day of the week the month starts on (0 = Sunday, ..., 6 = Saturday)
+        let startDay = firstDayOfMonth.getDay();
+        startDay = startDay === 0 ? 7 : startDay; // Adjust if the first day is Sunday
+
+        let date = 1;
+        let weeks = [];
+
+        for (let i = 0; i < 6; i++) {
+            const week = [];
+            for (let j = 1; j <= 7; j++) {
+                if (i === 0 && j < startDay) {
+                    week.push('');
+                } else if (date > lastDayOfMonth.getDate()) {
+                    week.push('');
+                } else {
+                    week.push(date);
+                    date++;
+                }
+            }
+            weeks.push(week);
+        }
+        return weeks
+    }
+
+    const events = [
+        {
+            id: 'a5875e64-4b24-4e8d-aa9c-d6f928bb6ecd',
+            time: new Date(Date.now()),
+            startDate: new Date(Date.now()),
+            endDate: new Date('2024-06-30'),
+            task: "Task",
+        }
+    ]
 
     return <div>
         {/* Dialog add event */}
@@ -108,19 +150,19 @@ function PlanPage({ children }) {
                                     <DialogTitle as="h3" className="text-base font-semibold leading-6 text-gray-900">
                                         Deactivate account
                                     </DialogTitle>
-                                    <div date-rangepicker class="flex items-center">
-                                        <div class="relative">
-                                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <div date-rangepicker className="flex items-center">
+                                        <div className="relative">
+                                            <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                                <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                                     <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                                 </svg>
                                             </div>
                                             <Datepicker options={options} onChange={handleChange} show={show} setShow={handleClose} />
                                         </div>
-                                        <span class="mx-4 text-gray-500">to</span>
-                                        <div class="relative">
-                                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <span className="mx-4 text-gray-500">to</span>
+                                        <div className="relative">
+                                            <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                                <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                                     <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                                 </svg>
                                             </div>
@@ -351,184 +393,32 @@ function PlanPage({ children }) {
                     </div>
                 </div>
                 <div className="flex bg-gray-200 text-xs leading-6 text-gray-700 dark:text-gray-200 grid grid-cols-7 grid-rows-6 lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px">
-                    <div className="hidden w-full grid" onClick={openEvent}>
-                        <time dateTime="2021-12-27">27</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2 text-gray-500 dark:text-gray-200" onClick={openEvent}>
+
+                    {/* <div className="relative bg-white dark:bg-gray-800 px-3 py-2 text-gray-500 dark:text-gray-200" onClick={openEvent}>
                         <time dateTime="2021-12-28">28</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2 text-gray-500 dark:text-gray-200" onClick={openEvent}>
-                        <time dateTime="2021-12-29">29</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2 text-gray-500 dark:text-gray-200" onClick={openEvent}>
-                        <time dateTime="2021-12-30">30</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2 text-gray-500 dark:text-gray-200" onClick={openEvent}>
-                        <time dateTime="2021-12-31">31</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-01">1</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-01">2</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-03">3</time>
-                        <ol className="mt-2">
-                            <li>
-                                <a href="#" className="group flex">
-                                    <p className="flex-auto truncate font-medium text-gray-900 dark:text-gray-200 group-hover:text-indigo-600">Design review</p>
-                                    <time dateTime="2022-01-03T10:00" className="ml-3 hidden flex-none text-gray-500 dark:text-gray-200 group-hover:text-indigo-600 xl:block">10AM</time>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" className="group flex">
-                                    <p className="flex-auto truncate font-medium text-gray-900 dark:text-gray-200 group-hover:text-indigo-600">Sales meeting</p>
-                                    <time dateTime="2022-01-03T14:00" className="ml-3 hidden flex-none text-gray-500 dark:text-gray-200 group-hover:text-indigo-600 xl:block">2PM</time>
-                                </a>
-                            </li>
-                        </ol>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-04">4</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-05">5</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-06">6</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-07">7</time>
-                        <ol className="mt-2">
-                            <li>
-                                <a href="#" className="group flex">
-                                    <p className="flex-auto truncate font-medium text-gray-900 dark:text-gray-200 group-hover:text-indigo-600">Date night</p>
-                                    <time dateTime="2022-01-08T18:00" className="ml-3 hidden flex-none text-gray-500 dark:text-gray-200 group-hover:text-indigo-600 xl:block">6PM</time>
-                                </a>
-                            </li>
-                        </ol>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-08">8</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-09">9</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-10">10</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-11">11</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-12" className="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-600 font-semibold text-white">12</time>
-                        <ol className="mt-2">
-                            <li>
-                                <a href="#" className="group flex">
-                                    <p className="flex-auto truncate font-medium text-gray-900 dark:text-gray-200 group-hover:text-indigo-600">Sam's birthday party</p>
-                                    <time dateTime="2022-01-25T14:00" className="ml-3 hidden flex-none text-gray-500 dark:text-gray-200 group-hover:text-indigo-600 xl:block">2PM</time>
-                                </a>
-                            </li>
-                        </ol>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-13">13</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-14">14</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-15">15</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-16">16</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-17">17</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-18">18</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-19">19</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-20">20</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-21">21</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-22">22</time>
-                        <ol className="mt-2">
-                            <li>
-                                <a href="#" className="group flex">
-                                    <p className="flex-auto truncate font-medium text-gray-900 dark:text-gray-200 group-hover:text-indigo-600">Maple syrup museum</p>
-                                    <time dateTime="2022-01-22T15:00" className="ml-3 hidden flex-none text-gray-500 dark:text-gray-200 group-hover:text-indigo-600 xl:block">3PM</time>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" className="group flex">
-                                    <p className="flex-auto truncate font-medium text-gray-900 dark:text-gray-200 group-hover:text-indigo-600">Hockey game</p>
-                                    <time dateTime="2022-01-22T19:00" className="ml-3 hidden flex-none text-gray-500 dark:text-gray-200 group-hover:text-indigo-600 xl:block">7PM</time>
-                                </a>
-                            </li>
-                        </ol>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-23">23</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-24">24</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-25">25</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-26">26</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-27">27</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-28">28</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-29">29</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-30">30</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                        <time dateTime="2022-01-31">31</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2 text-gray-500 dark:text-gray-200" onClick={openEvent}>
-                        <time dateTime="2022-02-01">1</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2 text-gray-500 dark:text-gray-200" onClick={openEvent}>
-                        <time dateTime="2022-02-02">2</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2 text-gray-500 dark:text-gray-200" onClick={openEvent}>
-                        <time dateTime="2022-02-03">3</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2 text-gray-500 dark:text-gray-200" onClick={openEvent}>
-                        <time dateTime="2022-02-04">4</time>
-                        <ol className="mt-2">
-                            <li>
-                                <a href="#" className="group flex">
-                                    <p className="flex-auto truncate font-medium text-gray-900 dark:text-gray-200 group-hover:text-indigo-600">Cinema with friends</p>
-                                    <time dateTime="2022-02-04T21:00" className="ml-3 hidden flex-none text-gray-500 dark:text-gray-200 group-hover:text-indigo-600 xl:block">9PM</time>
-                                </a>
-                            </li>
-                        </ol>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2 text-gray-500 dark:text-gray-200" onClick={openEvent}>
-                        <time dateTime="2022-02-05">5</time>
-                    </div>
-                    <div className="relative bg-white dark:bg-gray-800 px-3 py-2 text-gray-500 dark:text-gray-200" onClick={openEvent}>
-                        <time dateTime="2022-02-06">6</time>
-                    </div>
+                    </div> */}
+                    {weeks.map((week, index) => (
+                        week.map((date, index) => {
+                            return <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
+                                <time dateTime="2022-01-03">{date}</time>
+                                <ol className="mt-2">
+                                    <li>
+                                        <a href="#" className="group flex">
+                                            <p className="flex-auto truncate font-medium text-gray-900 dark:text-gray-200 group-hover:text-indigo-600">Design review</p>
+                                            <time dateTime="2022-01-03T10:00" className="ml-3 hidden flex-none text-gray-500 dark:text-gray-200 group-hover:text-indigo-600 xl:block">10AM</time>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" className="group flex">
+                                            <p className="flex-auto truncate font-medium text-gray-900 dark:text-gray-200 group-hover:text-indigo-600">Sales meeting</p>
+                                            <time dateTime="2022-01-03T14:00" className="ml-3 hidden flex-none text-gray-500 dark:text-gray-200 group-hover:text-indigo-600 xl:block">2PM</time>
+                                        </a>
+                                    </li>
+                                </ol>
+                            </div>
+                        })
+                    ))}
+
                 </div>
             </div>
         </div>
