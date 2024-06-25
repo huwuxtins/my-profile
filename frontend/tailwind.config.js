@@ -22,5 +22,6 @@ export const theme = {
 };
 export const variants = {};
 export const plugins = [
-  require('flowbite/plugin')
+  require('@tailwindcss/forms'),
+  require('flowbite/plugin'),
 ];
