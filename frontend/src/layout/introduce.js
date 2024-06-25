@@ -1,5 +1,6 @@
 import { faGithub, faYoutube } from "@fortawesome/free-brands-svg-icons"
 import LinkButton from "../components/button/link_button"
+import { faComment, faUserPlus } from "@fortawesome/free-solid-svg-icons"
 
 const features = [
     { name: 'Fullname', description: 'Nguyen Huu Tin' },
@@ -32,12 +33,14 @@ export default function Introduce() {
                                 <dd className="mt-2 text-sm text-gray-900 dark:text-white">{feature.description}</dd>
                             </div>
                         ))}
+                        <LinkButton width={'150px'} height={'50px'} icon={faYoutube} name={'Youtube'} color={'bg-red-700'} hoverColor={'hover:bg-red-400'} sizeIcon={'50px'} />
+                        <LinkButton width={'150px'} height={'50px'} icon={faGithub} name={'Github'} color={'bg-gray-800'} hoverColor={'hover:bg-gray-400'} sizeIcon={'50px'} />
                     </dl>
                 </div>
                 <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:gap-8">
                     <div className="flex flex-row my-10 grid-cols-2 justify-center">
-                        <LinkButton width={'150px'} height={'50px'} icon={faYoutube} name={'Youtube'} color={'bg-red-700'} hoverColor={'hover:bg-red-400'} sizeIcon={'50px'} />
-                        <LinkButton width={'150px'} height={'50px'} icon={faGithub} name={'Github'} color={'bg-gray-800'} hoverColor={'hover:bg-gray-400'} sizeIcon={'50px'} />
+                        <LinkButton width={'200px'} height={'50px'} icon={faUserPlus} name={'Add friend'} color={'bg-blue-700'} hoverColor={'hover:bg-blue-400'} sizeIcon={'50px'} />
+                        <LinkButton width={'200px'} height={'50px'} icon={faComment} name={'Chat'} color={'bg-gray-800'} hoverColor={'hover:bg-gray-400'} sizeIcon={'50px'} />
                     </div>
                     <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">Introduce</h2>
                     <p className="mt-4 text-gray-900 dark:text-white">

@@ -61,15 +61,14 @@ function PlanPage({ children }) {
     const [selected, setSelected] = useState(people[0])
 
     const [open, setOpen] = useState(false)
-    const [event, setEvent] = useState(false)
+    const [plan, setplan] = useState({ date: new Date(Date.now()), event: [] })
 
-    const openDialog = () => {
+    const openDialog = (plan) => {
+        if (plan != null) {
+            console.log(plan)
+            setplan(plan)
+        }
         setOpen(!open)
-        console.log(new Date(Date.now()))
-    }
-
-    const openEvent = () => {
-        setEvent(!event)
     }
 
     const [show, setShow] = useState(false)
@@ -89,8 +88,6 @@ function PlanPage({ children }) {
         setShowEnd(state)
     }
 
-    const [viewMode, setViewMode] = useState('month')
-
     const [weeks, setWeeks] = useState(generateCalendar(new Date(Date.now()).getMonth(), new Date(Date.now()).getFullYear()))
 
     function generateCalendar(month, year) {
@@ -109,11 +106,21 @@ function PlanPage({ children }) {
             const week = [];
             for (let j = 1; j <= 7; j++) {
                 if (i === 0 && j < startDay) {
-                    week.push('');
+                    week.push({ date: '', event: [] });
                 } else if (date > lastDayOfMonth.getDate()) {
-                    week.push('');
+                    week.push({ date: '', event: [] });
                 } else {
-                    week.push(date);
+                    week.push(
+                        {
+                            date,
+                            event: [{
+                                id: 'a5875e64-4b24-4e8d-aa9c-d6f928bb6ecd',
+                                time: new Date(Date.now()),
+                                startDate: new Date(Date.now()),
+                                endDate: new Date('2024-06-30'),
+                                task: "Task",
+                            }]
+                        });
                     date++;
                 }
             }
@@ -121,16 +128,6 @@ function PlanPage({ children }) {
         }
         return weeks
     }
-
-    const events = [
-        {
-            id: 'a5875e64-4b24-4e8d-aa9c-d6f928bb6ecd',
-            time: new Date(Date.now()),
-            startDate: new Date(Date.now()),
-            endDate: new Date('2024-06-30'),
-            task: "Task",
-        }
-    ]
 
     return <div>
         {/* Dialog add event */}
@@ -148,9 +145,42 @@ function PlanPage({ children }) {
                                 </div>
                                 <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
                                     <DialogTitle as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                                        Deactivate account
+                                        {plan.event.length != 0 ? 'Edit event' : 'Add event'}
                                     </DialogTitle>
-                                    <div date-rangepicker className="flex items-center">
+                                    {plan.event.length != 0 ? plan.event.map((task, index) => {
+                                        return <div key={index} className="mt-5 border-2 p-2">
+                                            <div>
+                                                <label htmlFor="last-name" className="block text-sm font-semibold leading-6 text-gray-900">
+                                                    Event's name
+                                                </label>
+                                                <div className="mt-2.5">
+                                                    <input
+                                                        type="text"
+                                                        name="last-name"
+                                                        id="last-name"
+                                                        autoComplete="family-name"
+                                                        className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                                        value={task.task}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label htmlFor="last-name" className="block text-sm font-semibold leading-6 text-gray-900">
+                                                    Description
+                                                </label>
+                                                <div className="mt-2.5">
+                                                    <textarea
+                                                        name="message"
+                                                        id="message"
+                                                        rows={4}
+                                                        className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                                        defaultValue={''}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }) : null}
+                                    <div date-rangepicker className="flex items-center mt-5">
                                         <div className="relative">
                                             <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                                                 <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -170,10 +200,9 @@ function PlanPage({ children }) {
                                         </div>
                                     </div>
                                     <div className="mt-2">
-
                                         <div>
                                             <label htmlFor="last-name" className="block text-sm font-semibold leading-6 text-gray-900">
-                                                Event'name
+                                                Event's name
                                             </label>
                                             <div className="mt-2.5">
                                                 <input
@@ -194,7 +223,7 @@ function PlanPage({ children }) {
                                                     name="message"
                                                     id="message"
                                                     rows={4}
-                                                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-80"
+                                                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                                     defaultValue={''}
                                                 />
                                             </div>
@@ -225,68 +254,9 @@ function PlanPage({ children }) {
             </div>
         </Dialog>
 
-        {/* Dialog event */}
-        <Dialog className="relative z-10" open={event} onClose={setEvent}>
-            <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-                <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0 bg-opacity-80 dark:bg-opacity-80 bg-gray-600 dark:bg-gray-600 ">
-                    <DialogPanel
-                        transition="true"
-                        className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
-                    >
-                        <div className=" px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                            <div className="sm:flex sm:items-start">
-                                <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                                    <ExclamationTriangleIcon className="h-6 w-6 text-red-600" aria-hidden="true" />
-                                </div>
-                                <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                                    <DialogTitle as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                                        Deactivate account
-                                    </DialogTitle>
-                                    <div className="mt-2">
-
-                                        <div>
-                                            <label htmlFor="last-name" className="block text-sm font-semibold leading-6 text-gray-900">
-                                                Email
-                                            </label>
-                                            <div className="mt-2.5">
-                                                <input
-                                                    type="text"
-                                                    name="last-name"
-                                                    id="last-name"
-                                                    autoComplete="family-name"
-                                                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="bg-white px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                            <button
-                                type="button"
-                                className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                                onClick={() => setEvent(false)}
-                            >
-                                Deactivate
-                            </button>
-                            <button
-                                type="button"
-                                className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                                onClick={() => setEvent(false)}
-                                data-autofocus
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                    </DialogPanel>
-                </div>
-            </div>
-        </Dialog>
-
         <div className="lg:flex lg:h-full lg:flex-col px-4 py-16 sm:px-2 sm:py-24">
             <header className="flex items-center justify-between border-b border-gray-200 px-6 py-4 lg:flex-none">
-                <h1 className="text-base font-semibold leading-6 text-gray-900 dark:text-gray-200" onClick={openEvent}>
+                <h1 className="text-base font-semibold leading-6 text-gray-900 dark:text-gray-200">
                     <time dateTime="2022-01">January 2022</time>
                 </h1>
                 <div className="flex items-center">
@@ -354,7 +324,7 @@ function PlanPage({ children }) {
                         <button
                             type="button"
                             className="ml-6 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-                            onClick={openDialog}
+                            onClick={() => openDialog({date: new Date(Date.now()), event: []})}
                         >
                             Add event
                         </button>
@@ -398,22 +368,18 @@ function PlanPage({ children }) {
                         <time dateTime="2021-12-28">28</time>
                     </div> */}
                     {weeks.map((week, index) => (
-                        week.map((date, index) => {
-                            return <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={openEvent}>
-                                <time dateTime="2022-01-03">{date}</time>
+                        week.map((plan, index) => {
+                            return <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={() => openDialog(plan)}>
+                                <time dateTime="2022-01-03">{plan.date}</time>
                                 <ol className="mt-2">
-                                    <li>
-                                        <a href="#" className="group flex">
-                                            <p className="flex-auto truncate font-medium text-gray-900 dark:text-gray-200 group-hover:text-indigo-600">Design review</p>
-                                            <time dateTime="2022-01-03T10:00" className="ml-3 hidden flex-none text-gray-500 dark:text-gray-200 group-hover:text-indigo-600 xl:block">10AM</time>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" className="group flex">
-                                            <p className="flex-auto truncate font-medium text-gray-900 dark:text-gray-200 group-hover:text-indigo-600">Sales meeting</p>
-                                            <time dateTime="2022-01-03T14:00" className="ml-3 hidden flex-none text-gray-500 dark:text-gray-200 group-hover:text-indigo-600 xl:block">2PM</time>
-                                        </a>
-                                    </li>
+                                    {plan.event.map((event, index) => {
+                                        return <li>
+                                            <a href="#" className="group flex">
+                                                <p className="flex-auto truncate font-medium text-gray-900 dark:text-gray-200 group-hover:text-indigo-600">{event.task}</p>
+                                                <time dateTime="2022-01-03T10:00" className="ml-3 hidden flex-none text-gray-500 dark:text-gray-200 group-hover:text-indigo-600 xl:block">10AM</time>
+                                            </a>
+                                        </li>
+                                    })}
                                 </ol>
                             </div>
                         })
