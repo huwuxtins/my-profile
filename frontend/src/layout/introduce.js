@@ -44,7 +44,7 @@ export default function Introduce() {
                     </dl>
                 </div>
                 <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:gap-8">
-                    <div className="flex flex-row justify-evenly bg-white py-8 sm:py-16">
+                    <div className="bg-white py-8 sm:py-16">
                         <div className="mx-auto max-w-7xl px-6 lg:px-8">
                             <dl className="grid grid-cols-2 gap-x-8 gap-y-16 text-center">
                                 {stats.map((stat) => (
