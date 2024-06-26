@@ -1,6 +1,9 @@
+'use client'
+
 import { faGithub, faYoutube } from "@fortawesome/free-brands-svg-icons"
 import LinkButton from "../components/button/link_button"
-import { faComment, faUserPlus } from "@fortawesome/free-solid-svg-icons"
+import { faComment, faUserPlus, faUserTag } from "@fortawesome/free-solid-svg-icons"
+import CountUp from 'react-countup'
 
 const features = [
     { name: 'Fullname', description: 'Nguyen Huu Tin' },
@@ -10,6 +13,11 @@ const features = [
     { name: 'Github', description: 'https://github.com/huwuxtins' },
     { name: 'Emal', description: 'nguyenhuutin124@gmail.com' },
 ]
+
+const stats = [
+    { id: 1, name: 'Followers', value: '44' },
+    { id: 3, name: 'Friends', value: '46000' },
+  ]
 
 export default function Introduce() {
     return (
@@ -33,12 +41,25 @@ export default function Introduce() {
                                 <dd className="mt-2 text-sm text-gray-900 dark:text-white">{feature.description}</dd>
                             </div>
                         ))}
-                        <LinkButton width={'150px'} height={'50px'} icon={faYoutube} name={'Youtube'} color={'bg-red-700'} hoverColor={'hover:bg-red-400'} sizeIcon={'50px'} />
-                        <LinkButton width={'150px'} height={'50px'} icon={faGithub} name={'Github'} color={'bg-gray-800'} hoverColor={'hover:bg-gray-400'} sizeIcon={'50px'} />
                     </dl>
                 </div>
                 <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:gap-8">
-                    <div className="flex flex-row my-10 grid-cols-2 justify-center">
+                    <div className="flex flex-row justify-evenly bg-white py-8 sm:py-16">
+                        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                            <dl className="grid grid-cols-2 gap-x-8 gap-y-16 text-center">
+                                {stats.map((stat) => (
+                                    <div key={stat.id} className="mx-auto flex max-w-xs flex-col gap-y-4">
+                                        <dt className="text-base leading-7 text-gray-600">{stat.name}</dt>
+                                        <dd className="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
+                                            <CountUp start={0} end={stat.value} duration={3} ecimals={4} decimal=","/>
+                                        </dd>
+                                    </div>
+                                ))}
+                            </dl>
+                        </div>
+                    </div>
+                    <div className="flex flex-row my-10 grid-cols-3 justify-center">
+                    <LinkButton width={'200px'} height={'50px'} icon={faUserTag} name={'Followers'} color={'bg-rose-700'} hoverColor={'hover:bg-rose-400'} sizeIcon={'50px'} />
                         <LinkButton width={'200px'} height={'50px'} icon={faUserPlus} name={'Add friend'} color={'bg-blue-700'} hoverColor={'hover:bg-blue-400'} sizeIcon={'50px'} />
                         <LinkButton width={'200px'} height={'50px'} icon={faComment} name={'Chat'} color={'bg-gray-800'} hoverColor={'hover:bg-gray-400'} sizeIcon={'50px'} />
                     </div>
