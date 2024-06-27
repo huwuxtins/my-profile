@@ -340,7 +340,7 @@ export default function ProfilePage() {
                 <div className='flex flex-row mt-6 justify-between'>
                     <button type="button"
                         className="rounded-md bg-emerald-700 px-3 py-2 text-sm font-semibold text-white border-2 shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        onClick={() => router.push('/view')}
+                        onClick={() => router.push('/view/1')}
                     >
                         Preview
                     </button>
