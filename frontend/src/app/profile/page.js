@@ -1,13 +1,48 @@
 'use client'
 
+import { BriefcaseIcon, CalendarIcon, CurrencyDollarIcon, MapPinIcon } from '@heroicons/react/20/solid'
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import Link from 'next/link'
 
 import { useRouter } from 'next/navigation'
 
 export default function ProfilePage() {
 
     const router = useRouter()
-    
+
+    const experiences = [
+        {
+            id: '17e8adaa-59c1-4e59-bb9a-b0a8819f8ab5',
+            job: 'Back end Developer',
+            startDate: '2020-12-24',
+            endDate: '2022-12-24',
+            minSalary: '1200',
+            maxSalary: '2000',
+            type: 'Fulltime',
+            company: {
+                id: '2f28eacf-070b-4563-b9c9-decf8d34235a',
+                href: '/',
+                name: 'My Profile',
+                image: 'https://c8.alamy.com/comp/2AH6RFF/real-estate-company-logo-design-template-blue-house-and-building-concept-construction-architecture-element-apartment-condo-rouded-window-shape-2AH6RFF.jpg',
+            }
+        },
+        {
+            id: '17e8adaa-59c1-4e59-bb9a-b0a8819f8ab6',
+            job: 'Back end Developer',
+            startDate: '2022-12-24',
+            endDate: '2024-12-24',
+            minSalary: '1200',
+            maxSalary: '2000',
+            type: 'Fulltime',
+            company: {
+                id: '2f28eacf-070b-4563-b9c9-decf8d34235b',
+                href: '/',
+                name: 'My Profile',
+                image: 'https://c8.alamy.com/comp/2AH6RFF/real-estate-company-logo-design-template-blue-house-and-building-concept-construction-architecture-element-apartment-condo-rouded-window-shape-2AH6RFF.jpg',
+            }
+        },
+    ]
+
     return (
         <div className='bg-white dark:bg-gray-800 mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
             <form className='px-4 py-24 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8'>
@@ -91,6 +126,7 @@ export default function ProfilePage() {
                         </div>
                     </div>
 
+                    {/* Personal information */}
                     <div className="border-b border-gray-900/10 pb-12">
                         <h2 className="text-base font-semibold leading-7 text-gray-900 dark:text-gray-200">Personal Information</h2>
                         <p className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-300">Use a permanent address where you can receive mail.</p>
@@ -235,105 +271,50 @@ export default function ProfilePage() {
                         </div>
                     </div>
 
+                    {/* Experience */}
                     <div className="border-b border-gray-900/10 pb-12">
-                        <h2 className="text-base font-semibold leading-7 text-gray-900 dark:text-gray-200">Notifications</h2>
+                        <h2 className="text-base font-semibold leading-7 text-gray-900 dark:text-gray-200">Experience</h2>
                         <p className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-300">
                             We'll always let you know about important changes, but you pick what else you want to hear about.
                         </p>
-
-                        <div className="mt-10 space-y-10">
-                            <fieldset>
-                                <legend className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-200">By Email</legend>
-                                <div className="mt-6 space-y-6">
-                                    <div className="relative flex gap-x-3">
-                                        <div className="flex h-6 items-center">
-                                            <input
-                                                id="comments"
-                                                name="comments"
-                                                type="checkbox"
-                                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                            />
-                                        </div>
-                                        <div className="text-sm leading-6">
-                                            <label htmlFor="comments" className="font-medium text-gray-900 dark:text-gray-200">
-                                                Comments
-                                            </label>
-                                            <p className="text-gray-500">Get notified when someones posts a comment on a posting.</p>
-                                        </div>
-                                    </div>
-                                    <div className="relative flex gap-x-3">
-                                        <div className="flex h-6 items-center">
-                                            <input
-                                                id="candidates"
-                                                name="candidates"
-                                                type="checkbox"
-                                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                            />
-                                        </div>
-                                        <div className="text-sm leading-6">
-                                            <label htmlFor="candidates" className="font-medium text-gray-900 dark:text-gray-200">
-                                                Candidates
-                                            </label>
-                                            <p className="text-gray-500">Get notified when a candidate applies for a job.</p>
+                        <div className='rounded-lg border-2'>
+                            <button
+                                type="button"
+                                className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 m-10 mb-0"
+                            >
+                                Add experience
+                            </button>
+                            {experiences.map((experience, index) => {
+                                return <div className='lg:flex lg:items-center lg:justify-between m-10'>
+                                    <div className="min-w-0 flex-1">
+                                        <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+                                            {experience.job}
+                                        </h2>
+                                        <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
+                                            <div className="mt-2 flex items-center text-sm text-gray-500">
+                                                <BriefcaseIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                                                {experience.type}
+                                            </div>
+                                            <div className="mt-2 flex items-center text-sm text-gray-500">
+                                                <MapPinIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                                                Remote
+                                            </div>
+                                            <div className="mt-2 flex items-center text-sm text-gray-500">
+                                                <CurrencyDollarIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                                                ${experience.minSalary} &ndash; ${experience.maxSalary}
+                                            </div>
+                                            <div className="mt-2 flex items-center text-sm text-gray-500">
+                                                <CalendarIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                                                {experience.startDate} - {experience.endDate}
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="relative flex gap-x-3">
-                                        <div className="flex h-6 items-center">
-                                            <input
-                                                id="offers"
-                                                name="offers"
-                                                type="checkbox"
-                                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                            />
-                                        </div>
-                                        <div className="text-sm leading-6">
-                                            <label htmlFor="offers" className="font-medium text-gray-900 dark:text-gray-200">
-                                                Offers
-                                            </label>
-                                            <p className="text-gray-500">Get notified when a candidate accepts or rejects an offer.</p>
-                                        </div>
+                                    <div className='flex flex-row items-center'>
+                                        <img src={experience.company.image} className='rounded-full mr-1' width={'50px'} height={'50px'} />
+                                        <Link href={experience.company.href}>{experience.company.name}</Link>
                                     </div>
                                 </div>
-                            </fieldset>
-                            <fieldset>
-                                <legend className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-200">Push Notifications</legend>
-                                <p className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-300">These are delivered via SMS to your mobile phone.</p>
-                                <div className="mt-6 space-y-6">
-                                    <div className="flex items-center gap-x-3">
-                                        <input
-                                            id="push-everything"
-                                            name="push-notifications"
-                                            type="radio"
-                                            className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                        />
-                                        <label htmlFor="push-everything" className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-200">
-                                            Everything
-                                        </label>
-                                    </div>
-                                    <div className="flex items-center gap-x-3">
-                                        <input
-                                            id="push-email"
-                                            name="push-notifications"
-                                            type="radio"
-                                            className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                        />
-                                        <label htmlFor="push-email" className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-200">
-                                            Same as email
-                                        </label>
-                                    </div>
-                                    <div className="flex items-center gap-x-3">
-                                        <input
-                                            id="push-nothing"
-                                            name="push-notifications"
-                                            type="radio"
-                                            className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                        />
-                                        <label htmlFor="push-nothing" className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-200">
-                                            No push notifications
-                                        </label>
-                                    </div>
-                                </div>
-                            </fieldset>
+                            })}
                         </div>
                     </div>
                 </div>

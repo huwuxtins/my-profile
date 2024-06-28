@@ -1,55 +1,83 @@
-const companies = [
+import { BriefcaseIcon, CalendarIcon, CurrencyDollarIcon, MapPinIcon } from "@heroicons/react/20/solid"
+import Link from "next/link"
+
+const experiences = [
     {
-        name: 'Leslie Alexander',
-        email: 'leslie@gmail.com',
-        role: 'Co-Founder / CEO',
-        period: '1/2020 - 5/2024',
-        imageUrl:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        id: '17e8adaa-59c1-4e59-bb9a-b0a8819f8ab5',
+        job: 'Back end Developer',
+        startDate: '2020-12-24',
+        endDate: '2022-12-24',
+        minSalary: '1200',
+        maxSalary: '2000',
+        type: 'Fulltime',
+        company: {
+            id: '2f28eacf-070b-4563-b9c9-decf8d34235a',
+            href: '/',
+            name: 'My Profile',
+            image: 'https://c8.alamy.com/comp/2AH6RFF/real-estate-company-logo-design-template-blue-house-and-building-concept-construction-architecture-element-apartment-condo-rouded-window-shape-2AH6RFF.jpg',
+        }
     },
     {
-        name: 'Leslie Alexander',
-        email: 'leslie123@gmail.com',
-        role: 'Co-Founder / CEO',
-        period: '1/2020 - 5/2024',
-        imageUrl:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        id: '17e8adaa-59c1-4e59-bb9a-b0a8819f8ab6',
+        job: 'Back end Developer',
+        startDate: '2022-12-24',
+        endDate: '2024-12-24',
+        minSalary: '1200',
+        maxSalary: '2000',
+        type: 'Fulltime',
+        company: {
+            id: '2f28eacf-070b-4563-b9c9-decf8d34235b',
+            href: '/',
+            name: 'My Profile',
+            image: 'https://c8.alamy.com/comp/2AH6RFF/real-estate-company-logo-design-template-blue-house-and-building-concept-construction-architecture-element-apartment-condo-rouded-window-shape-2AH6RFF.jpg',
+        }
     },
 ]
 
 export default function Experience() {
     return (
         <div className="bg-white dark:bg-gray-800 py-24 sm:py-32">
-            <div className="mx-auto grid max-w-7xl gap-x-8 gap-y-20 px-6 lg:px-8 xl:grid-cols-2">
-                <div className="max-w-2xl">
-                    <h2 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Experience</h2>
-                    <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-200">
-                        Libero fames augue nisl porttitor nisi, quis. Id ac elit odio vitae elementum enim vitae ullamcorper
-                        suspendisse.
-                    </p>
-                </div>
-                <ul role="list" className="divide-y divide-gray-100">
-                    {companies.map((company) => (
-                        <li key={company.email} className="flex justify-between gap-x-6 py-5">
-                            <div className="flex min-w-0 gap-x-4">
-                                <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={company.imageUrl} alt="" />
-                                <div className="min-w-0 flex-auto">
-                                    <p className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">{company.name}</p>
-                                    <p className="mt-1 truncate text-xs leading-5 text-gray-500 dark:text-gray-200">{company.email}</p>
-                                </div>
-                            </div>
-                            <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                                <p className="text-sm leading-6 text-gray-900 dark:text-white">{company.role}</p>
-                                <div className="mt-1 flex items-center gap-x-1.5">
-                                    <div className="flex-none rounded-full bg-emerald-500/20 p-1">
-                                        <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 border-b border-gray-900/10 pb-12">
+                <h2 className="text-4xl font-semibold leading-7 text-gray-900 dark:text-gray-200">Experience</h2>
+                <p className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-300">
+                    We'll always let you know about important changes, but you pick what else you want to hear about.
+                </p>
+
+                <div className='rounded-lg border-2'>
+                    {experiences.map((experience, index) => {
+                        return <div key={experience.id} className='lg:flex lg:items-center lg:justify-between m-10'>
+                            <div className="min-w-0 flex-1">
+                                <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+                                    {experience.job}
+                                </h2>
+                                <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
+                                    <div className="mt-2 flex items-center text-sm text-gray-500">
+                                        <BriefcaseIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                                        {experience.type}
                                     </div>
-                                    <p className="text-xs leading-5 text-gray-500 dark:text-gray-200">{company.period}</p>
+                                    <div className="mt-2 flex items-center text-sm text-gray-500">
+                                        <MapPinIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                                        Remote
+                                    </div>
+                                    <div className="mt-2 flex items-center text-sm text-gray-500">
+                                        <CurrencyDollarIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                                        ${experience.minSalary} &ndash; ${experience.maxSalary}
+                                    </div>
+                                    <div className="mt-2 flex items-center text-sm text-gray-500">
+                                        <CalendarIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                                        {experience.startDate} - {experience.endDate}
+                                    </div>
                                 </div>
                             </div>
-                        </li>
-                    ))}
-                </ul>
+                            <div className='flex flex-row items-center'>
+                                <img src={experience.company.image} className='rounded-full mr-1' width={'50px'} height={'50px'} />
+                                <Link href={experience.company.href}>{experience.company.name}</Link>
+                            </div>
+                        </div>
+                    })}
+
+                    
+                </div>
             </div>
         </div>
     )
