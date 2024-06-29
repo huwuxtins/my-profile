@@ -1,5 +1,7 @@
 'use client'
 
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link"
 import React, { useRef, useEffect, useState } from 'react';
 
@@ -90,7 +92,30 @@ export default function ProjectPreview() {
                     <div className="flex flex-row justify-between items-center">
                         <h2 className="text-4xl font-bold text-gray-900 dark:text-white">Projects</h2>
                     </div>
-
+                    <div className="flex flex-col-reverse mt-2 items-start sm:flex-row sm:items-center justify-between">
+                        <button
+                            type="button"
+                            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 my-2"
+                        >
+                            Add project
+                        </button>
+                        <div className="relative my-2">
+                            <input
+                                type="text"
+                                name="query-text"
+                                id="query-text"
+                                autoComplete="given-name"
+                                placeholder="Search"
+                                className="dark:bg-gray-800 block w-full rounded-full border-0 pl-10 pr-4 py-2 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            />
+                            <div class="absolute inset-y-0 left-0 pl-3  
+                            flex items-center  
+                            pointer-events-none"
+                            >
+                                <FontAwesomeIcon icon={faSearch} color={'gray'} />
+                            </div>
+                        </div>
+                    </div>
                     <div
                         ref={calloutRef}
                         className="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0"
