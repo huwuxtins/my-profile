@@ -3,6 +3,7 @@
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link"
+import { useRouter } from "next/navigation";
 import React, { useRef, useEffect, useState } from 'react';
 
 const callouts = [
@@ -57,6 +58,7 @@ const callouts = [
 ]
 
 export default function ProjectPreview() {
+    const router = useRouter()
 
     const calloutRef = useRef(null);
     const [isVisible, setIsVisible] = useState(false);
@@ -96,6 +98,7 @@ export default function ProjectPreview() {
                         <button
                             type="button"
                             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 my-2"
+                            onClick={() => router.push('/project/add-project')}
                         >
                             Add project
                         </button>
