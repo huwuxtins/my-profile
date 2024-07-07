@@ -1,6 +1,6 @@
 'use client'
-import { faTableCellsRowLock, faTableColumns } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
 import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -8,8 +8,7 @@ import 'react-quill/dist/quill.snow.css';
 function AddBlogPage() {
     const [value, setValue] = useState('');
 
-    const handleChange = (value) => {
-        console.log(value)
+    const handleChange = (value, editor) => {
         setValue(value)
     }
 
@@ -58,7 +57,13 @@ function AddBlogPage() {
             <span className='text-4xl font-bold my-10 text-gray-800 dark:text-gray-200'>Add blog</span>
         </div>
         <div className='flex flex-col lg:flex-row justify-between'>
-            <ReactQuill theme="snow" value={value} onChange={(value) => handleChange(value)} className='border-2 overflow-hidden rounded-lg h-96 lg:basis-1/2 mb-5 lg:mb-0 lg:mr-5' modules={modules} formats={formats} />
+            <ReactQuill theme="snow"
+                value={value}
+                onChange={(value, delta, source, editor) => handleChange(value, editor)}
+                className='border-2 overflow-hidden rounded-lg h-96 lg:basis-1/2 mb-5 lg:mb-0 lg:mr-5'
+                modules={modules}
+                formats={formats}
+            />
             <div className='flex flex-col border-2 rounded-lg h-96 lg:basis-1/2'>
                 <span className='items-center border-t-2 border p-5 font-bold'>
                     Preview
