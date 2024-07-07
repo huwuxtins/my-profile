@@ -85,6 +85,7 @@ export default function Home() {
 
     const companies = [
         {
+            id: 'ca1d1f27-a3ca-46da-82b4-008cc02e0ff6',
             name: 'Leslie Alexander',
             email: 'leslie@gmail.com',
             role: 'Co-Founder / CEO',
@@ -93,6 +94,7 @@ export default function Home() {
                 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
         },
         {
+            id: 'ca1d1f27-a3ca-46da-82b4-008cc02e0ff7',
             name: 'Leslie Alexander',
             email: 'leslie123@gmail.com',
             role: 'Co-Founder / CEO',
@@ -223,7 +225,7 @@ export default function Home() {
                                         <div className="flex min-w-0 gap-x-4">
                                             <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={company.imageUrl} alt="" />
                                             <div className="min-w-0 flex-auto">
-                                                <p className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">{company.name}</p>
+                                                <Link href={`/view/${company.id}`} className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">{company.name}</Link>
                                                 <p className="mt-1 truncate text-xs leading-5 text-gray-500 dark:text-gray-200">{company.email}</p>
                                             </div>
                                         </div>
@@ -254,7 +256,7 @@ export default function Home() {
                                         <div className="flex min-w-0 gap-x-4">
                                             <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={company.imageUrl} alt="" />
                                             <div className="min-w-0 flex-auto">
-                                                <p className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">{company.name}</p>
+                                                <Link href={`/view/${company.id}`} className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">{company.name}</Link>
                                                 <p className="mt-1 truncate text-xs leading-5 text-gray-500 dark:text-gray-200">{company.email}</p>
                                             </div>
                                         </div><LinkButton width={'200px'} height={'50px'} icon={faComment} name={'Chat'} color={'bg-gray-800'} hoverColor={'hover:bg-gray-400'} sizeIcon={'50px'} />

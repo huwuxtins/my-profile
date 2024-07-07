@@ -47,7 +47,7 @@ function AddBlogPage() {
     ]
 
     return <div className='flex flex-col mx-auto max-w-2xl px-4 py-16 h-auto sm:px-6 sm:py-32 lg:max-w-7xl lg:px-8 bg-white dark:bg-gray-800'>
-        <span className='text-4xl font-bold my-10'>Add blog</span>
+        <span className='text-4xl font-bold my-10 text-gray-800 dark:text-gray-200'>Add blog</span>
         <ReactQuill theme="snow" value={value} onChange={setValue} className='w-full border-2 overflow-hidden rounded-lg h-96' modules={modules} formats={formats} />
         <div className='flex flex-row mt-6 justify-between'>
             <button type="button"
