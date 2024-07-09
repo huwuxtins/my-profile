@@ -1,6 +1,5 @@
 'use client'
 
-import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
 import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -60,11 +59,11 @@ function AddBlogPage() {
             <ReactQuill theme="snow"
                 value={value}
                 onChange={(value, delta, source, editor) => handleChange(value, editor)}
-                className='border-2 overflow-hidden rounded-lg h-96 lg:basis-1/2 mb-5 lg:mb-0 lg:mr-5'
+                className='border-2 overflow-hidden rounded-lg lg:basis-1/2 mb-5 lg:mb-0 lg:mr-5' style={{height: '550px'}}
                 modules={modules}
                 formats={formats}
             />
-            <div className='flex flex-col border-2 rounded-lg h-96 lg:basis-1/2'>
+            <div className='flex flex-col border-2 rounded-lg lg:basis-1/2' style={{height: '550px'}}>
                 <span className='items-center border-t-2 border p-5 font-bold'>
                     Preview
                 </span>
