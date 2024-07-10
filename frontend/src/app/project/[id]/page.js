@@ -1,7 +1,6 @@
 import { CloudArrowUpIcon, LockClosedIcon, ServerIcon } from '@heroicons/react/20/solid'
 import Comment from '~/components/comment'
 
-
 const comments = [
     {
         id: "48193c46-654c-460d-99c1-92a7550c5aa8",

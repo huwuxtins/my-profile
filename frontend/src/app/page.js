@@ -176,7 +176,7 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col-reverse lg:flex-row  mx-auto max-w-2xl items-start px-4 py-24 sm:px-6 sm:py-32 lg:max-w-7xl lg:px-8 bg-white dark:bg-gray-800 ">
+            <div className="flex flex-col-reverse lg:flex-row mx-auto max-w-2xl items-start px-4 py-24 sm:px-6 sm:py-32 lg:max-w-7xl lg:px-8 bg-white dark:bg-gray-800 ">
                 <div className="basis-2/3 rounded-lg border-2 p-5 m-2">
                     {blogs.map((post) => (
                         <article key={post.id} className="flex flex-col items-start justify-between rounded-lg m-2 p-2 border-2">
