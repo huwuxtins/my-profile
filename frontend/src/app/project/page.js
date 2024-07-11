@@ -133,10 +133,10 @@ export default function ProjectPreview() {
                                     />
                                 </div>
                                 <h3 className="mt-6 text-sm text-gray-500 dark:text-white">
-                                    <a href={`${callout.href}/${callout.id}`}>
+                                    <Link href={`${callout.href}/${callout.id}`}>
                                         <span className="absolute inset-0" />
                                         {callout.name}
-                                    </a>
+                                    </Link>
                                 </h3>
                                 <p className="text-base font-semibold text-gray-900 dark:text-white">{callout.description}</p>
                             </div>

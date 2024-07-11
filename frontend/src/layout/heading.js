@@ -14,11 +14,12 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import ImageButton from '../components/button/image_button'
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from "react"
+import Link from 'next/link'
 const navigation = [
-  { name: 'Home', href: '/', current: true },
-  { name: 'Blog', href: '/blog', current: false },
-  { name: 'Projects', href: '/project', current: false },
-  { name: 'Calendar', href: '/plan', current: false },
+  { name: 'Home', href: '/',  },
+  { name: 'Blog', href: '/blog',  },
+  { name: 'Projects', href: '/project',  },
+  { name: 'Calendar', href: '/plan',  },
 ]
 
 function classNames(...classes) {
@@ -27,6 +28,7 @@ function classNames(...classes) {
 
 export default function Example() {
 
+  const [page, setPage] = useState('Home')
   const [theme, setTheme] = useState('light')
   const [icon, setIcon] = useState(faSun)
 
@@ -42,6 +44,7 @@ export default function Example() {
     setTheme(theme === 'dark' ? 'light' : 'dark')
     setIcon(icon === faSun ? faMoon : faSun)
   }
+
   return (
     <Disclosure as="nav" className="fixed top-0 left-0 right-0 bg-white dark:bg-gray-800 opacity-80 z-10">
       {({ open }) => (
@@ -74,17 +77,18 @@ export default function Example() {
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
                         href={item.href}
                         className={classNames(
-                          item.current ? 'bg-gray-800 dark:bg-white text-white dark:text-black' : 'text-black dark:text-white hover:bg-gray-700 hover:text-white',
+                          item.name == page ? 'bg-gray-800 dark:bg-white text-white dark:text-black' : 'text-black dark:text-white hover:bg-gray-700 hover:text-white',
                           'rounded-md px-3 py-2 text-sm font-medium',
                         )}
-                        aria-current={item.current ? 'page' : undefined}
+                        aria-current={item.name == page ? 'page' : undefined}
+                        onClick={() => setPage(item.name)}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -123,32 +127,36 @@ export default function Example() {
                     <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <MenuItem>
                         {({ focus }) => (
-                          <a
+                          <Link
                             href="/profile"
                             className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            
+                            onClick={() => setPage('')}
                           >
                             Your Profile
-                          </a>
+                          </Link>
                         )}
                       </MenuItem>
                       <MenuItem>
                         {({ focus }) => (
-                          <a
+                          <Link
                             href="#"
                             className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            onClick={() => setPage('')}
                           >
                             My chat
-                          </a>
+                          </Link>
                         )}
                       </MenuItem>
                       <MenuItem>
                         {({ focus }) => (
-                          <a
+                          <Link
                             href="#"
                             className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            onClick={() => setPage('')}
                           >
                             Sign out
-                          </a>
+                          </Link>
                         )}
                       </MenuItem>
                     </MenuItems>
@@ -166,10 +174,10 @@ export default function Example() {
                   as="a"
                   href={item.href}
                   className={classNames(
-                    item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                    item.name == page ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                     'block rounded-md px-3 py-2 text-base font-medium',
                   )}
-                  aria-current={item.current ? 'page' : undefined}
+                  aria-current={item.name == page ? 'page' : undefined}
                 >
                   {item.name}
                 </DisclosureButton>
