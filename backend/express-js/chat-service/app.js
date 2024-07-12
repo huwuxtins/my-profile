@@ -15,4 +15,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/v1/message', messageRouter);
 
+require('./eureka-client');
+
 module.exports = app;
