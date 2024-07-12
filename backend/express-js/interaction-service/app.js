@@ -15,6 +15,7 @@ dotenv.config() /// load file .env
 
 var app = express();
 
+
 const config = {
   authRequired: false,
   auth0Logout: true,
@@ -31,7 +32,6 @@ const config = {
 // app.get('/', (req, res) => {
 //   res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 // });
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -50,5 +50,44 @@ app.use('/api/v1/like', likeRouter);
 app.use('/api/v1/follow', followRouter);
 
 require('./eureka-client');
+
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
+
+const options = {
+  failOnErrors: true, // Whether or not to throw when parsing errors. Defaults to false.
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: "My Profile - Swagger Ui",
+      version: "0.1.0",
+      description:
+        "This is a simple CRUD API application made with Express and documented with Swagger",
+      license: {
+        name: "MIT",
+        url: "https://spdx.org/licenses/MIT.html",
+      },
+      contact: {
+        name: "My Profile",
+        url: "https://myprofile.com",
+        email: "nguyenhuutin124@gmail.com",
+      },
+    },
+  },
+  servers: [
+    {
+      url: "http://localhost:8085",
+    },
+  ],
+  apis: ["./routes/*.js"],
+};
+const swaggerSpec = swaggerJsdoc(options);
+
+app.use('/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(
+    swaggerSpec,
+  ),
+);
 
 module.exports = app;
