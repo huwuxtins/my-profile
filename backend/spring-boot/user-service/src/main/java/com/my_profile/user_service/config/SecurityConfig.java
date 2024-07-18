@@ -28,7 +28,7 @@ public class SecurityConfig {
         return http
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(authorize -> {
-                    authorize.pathMatchers("/", "/images/**", "/api/v1/user/registration").permitAll();
+                    authorize.pathMatchers("/", "/images/**", "/api/v1/user-swagger/**").permitAll();
                     authorize.anyExchange().authenticated();
                 })
                 .oauth2Login(withDefaults())

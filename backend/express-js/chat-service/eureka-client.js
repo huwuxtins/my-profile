@@ -4,18 +4,18 @@ const Eureka = require('eureka-js-client').Eureka;
 const client = new Eureka({
     // application instance information
     instance: {
-        app: 'interaction-service',
+        app: 'chat-service',
         hostName: 'localhost',
         ipAddr: '127.0.0.1',
         port: {
-            '$': 8085,
+            '$': 8084,
             '@enabled': true,
         },
         dataCenterInfo: {
             '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
             name: 'MyOwn',
         },
-        vipAddress: 'interaction-service',
+        vipAddress: 'chat-service',
     },
     eureka: {
         // eureka server host / port

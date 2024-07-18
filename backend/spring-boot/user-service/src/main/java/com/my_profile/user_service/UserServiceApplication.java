@@ -17,8 +17,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 				email = "nguyenhuutin124@gmail.com"), title = "User Service",
 				description = "User service provide the department information to the other users.",
 				license = @License(name = "User service licence", url = "www.google.com/licence"),
-				version = "v1"),
-		security = @SecurityRequirement(name = "bearerAuth"))
+				version = "v1"))
 public class UserServiceApplication {
 
 	public static void main(String[] args) {

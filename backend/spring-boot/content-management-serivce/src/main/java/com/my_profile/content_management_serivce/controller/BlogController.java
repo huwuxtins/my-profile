@@ -2,7 +2,6 @@ package com.my_profile.content_management_serivce.controller;
 
 import com.my_profile.content_management_serivce.model.ResponseMessage;
 import com.my_profile.content_management_serivce.service.BlogService;
-import jakarta.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

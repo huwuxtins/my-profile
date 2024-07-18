@@ -57,19 +57,19 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const options = {
   failOnErrors: true, // Whether or not to throw when parsing errors. Defaults to false.
   definition: {
-    openapi: '3.0.0',
+    openapi: '3.1.0',
     info: {
-      title: "My Profile - Swagger Ui",
-      version: "0.1.0",
+      swagger: "2.0",
+      title: "Interaction service",
+      version: "v1",
       description:
         "This is a simple CRUD API application made with Express and documented with Swagger",
       license: {
-        name: "MIT",
-        url: "https://spdx.org/licenses/MIT.html",
+        name: "Interaction service licence",
+        url: "www.google.com/licence",
       },
       contact: {
-        name: "My Profile",
-        url: "https://myprofile.com",
+        name: "Nguyen Huu Tin",
         email: "nguyenhuutin124@gmail.com",
       },
     },
@@ -83,7 +83,7 @@ const options = {
 };
 const swaggerSpec = swaggerJsdoc(options);
 
-app.use('/api-docs',
+app.use('/api/v1/interaction-swagger/v3/api-docs',
   swaggerUi.serve,
   swaggerUi.setup(
     swaggerSpec,

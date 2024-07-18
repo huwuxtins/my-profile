@@ -28,8 +28,8 @@ public class SecurityConfig {
         return http
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(authorize -> {
-                    authorize.pathMatchers("/", "/images/**", "/api/v1/**").permitAll();
-                    authorize.anyExchange().authenticated();
+                    authorize.pathMatchers("/", "/images/**", "/api/v1/content-management-swagger/**").permitAll()
+                             .anyExchange().authenticated();
                 })
                 .oauth2Login(withDefaults())
                 .logout(logout -> logout.logoutSuccessHandler(logoutSuccessHandler())).build();
