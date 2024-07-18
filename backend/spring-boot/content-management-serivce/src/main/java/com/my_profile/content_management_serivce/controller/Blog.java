@@ -24,6 +24,8 @@ public class Blog {
 
     @Field("created_at")
     private LocalDateTime createdAt;
+    private String title;
+
     private String image;
     private String video;
     private String content;

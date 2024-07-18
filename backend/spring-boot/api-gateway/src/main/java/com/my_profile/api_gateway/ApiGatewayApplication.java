@@ -13,7 +13,8 @@ import io.swagger.v3.oas.annotations.info.License;
 @EnableDiscoveryClient
 @OpenAPIDefinition(
 		info = @Info(contact = @Contact(name = "Nguyen Huu Tin",
-				email = "gov.kumarbharatdwaj@gmail.com"), title = "API Gateway",
+				email = "gov.kumarbharatdwaj@gmail.com"),
+				title = "API Gateway",
 				termsOfService = "www.api-gateway.com/terms-and-condition",
 				description = "API-Gateway provide the api-gateway information to the other users.",
 				license = @License(name = "api gateway licence", url = "www.api-gateway.com/licence"),

@@ -17,6 +17,7 @@ export default function RootLayout({ children }) {
       <body className="h-full bg-white dark:bg-gray-800">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"/>
+        <script language="javascript" src="lz-string.js"></script>
         <Heading />
         <main className={myFont.className}>{children}</main>
       </body>

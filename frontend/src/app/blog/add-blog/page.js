@@ -11,6 +11,14 @@ function AddBlogPage() {
         setValue(value)
     }
 
+    const handleSave = (value) => {
+        alert("Size of sample is: " + value.length);
+        var compressed = LZString.compress(string);
+        alert("Size of compressed sample is: " + compressed.length);
+        var string = LZString.decompress(compressed);
+        alert("Sample is: " + string);
+    }
+
     const modules = {
         toolbar: [
             ['bold', 'italic', 'underline',],        // toggled buttons
@@ -78,6 +86,7 @@ function AddBlogPage() {
             <button
                 type="submit"
                 className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={() => handleSave(value)}
             >
                 Save
             </button>

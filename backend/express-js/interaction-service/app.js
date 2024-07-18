@@ -57,9 +57,8 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const options = {
   failOnErrors: true, // Whether or not to throw when parsing errors. Defaults to false.
   definition: {
-    openapi: '3.1.0',
+    openapi: '3.0.0',
     info: {
-      swagger: "2.0",
       title: "Interaction service",
       version: "v1",
       description:
@@ -84,10 +83,14 @@ const options = {
 const swaggerSpec = swaggerJsdoc(options);
 
 app.use('/api/v1/interaction-swagger/v3/api-docs',
-  swaggerUi.serve,
-  swaggerUi.setup(
-    swaggerSpec,
-  ),
+  // swaggerUi.serve,
+  // swaggerUi.setup(
+  //   swaggerSpec,
+  // ),
+  (req, res) => {
+    res.setHeader('Content-Type', 'application/json')
+    res.send(swaggerSpec)
+  }
 );
 
 module.exports = app;

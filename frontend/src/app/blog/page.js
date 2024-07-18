@@ -4,17 +4,17 @@ import { faComment, faSearch, faUserPlus, faUserTag } from "@fortawesome/free-so
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import LinkButton from "~/components/button/link_button";
+import moment from "moment";
 
 const blogs = [
     {
         id: 1,
         title: 'Boost your conversion rate',
         href: '/blog',
-        description:
+        content:
             'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
         date: 'Mar 16, 2020',
-        datetime: '2020-03-16',
+        creatdAt: '2020-03-16',
         category: { title: 'Marketing', href: '#' },
         author: {
             id: 2,
@@ -24,78 +24,6 @@ const blogs = [
             imageUrl:
                 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
         },
-    },
-    {
-        id: 2,
-        title: 'Boost your conversion rate',
-        href: '/blog',
-        description:
-            'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-        date: 'Mar 16, 2020',
-        datetime: '2020-03-16',
-        category: { title: 'Marketing', href: '#' },
-        author: {
-            id: 2,
-            name: 'Michael Foster',
-            role: 'Co-Founder / CTO',
-            href: '/view',
-            imageUrl:
-                'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-    },
-    {
-        id: 3,
-        title: 'Boost your conversion rate',
-        href: '/blog',
-        description:
-            'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-        date: 'Mar 16, 2020',
-        datetime: '2020-03-16',
-        category: { title: 'Marketing', href: '#' },
-        author: {
-            id: 2,
-            name: 'Michael Foster',
-            role: 'Co-Founder / CTO',
-            href: '/view',
-            imageUrl:
-                'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-    },
-    {
-        id: 4,
-        title: 'Boost your conversion rate',
-        href: '/blog',
-        description:
-            'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-        date: 'Mar 16, 2020',
-        datetime: '2020-03-16',
-        category: { title: 'Marketing', href: '#' },
-        author: {
-            id: 2,
-            name: 'Michael Foster',
-            role: 'Co-Founder / CTO',
-            href: '/view',
-            imageUrl:
-                'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-    },
-]
-const companies = [
-    {
-        name: 'Leslie Alexander',
-        email: 'leslie@gmail.com',
-        role: 'Co-Founder / CEO',
-        period: '1/2020 - 5/2024',
-        imageUrl:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
-    {
-        name: 'Leslie Alexander',
-        email: 'leslie123@gmail.com',
-        role: 'Co-Founder / CEO',
-        period: '1/2020 - 5/2024',
-        imageUrl:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
     },
 ]
 
@@ -132,8 +60,8 @@ function BlogsPage() {
                 {blogs.map((post) => (
                     <article key={post.id} className="flex flex-col items-start justify-between rounded-lg m-2 p-2 border-2">
                         <div className="flex items-center gap-x-4 text-xs">
-                            <time dateTime={post.datetime} className="text-gray-500 dark:text-white">
-                                {post.date}
+                            <time dateTime={post.creatdAt} className="text-gray-500 dark:text-white">
+                                {moment().format("MMMM Do YYYY")}
                             </time>
                             <Link
                                 href={post.category.href}
@@ -149,7 +77,7 @@ function BlogsPage() {
                                     {post.title}
                                 </Link>
                             </h3>
-                            <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600 dark:text-white">{post.description}</p>
+                            <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600 dark:text-white">{post.content}</p>
                         </div>
                         <div className="relative mt-8 flex items-center gap-x-4">
                             <img src={post.author.imageUrl} alt="" className="h-10 w-10 rounded-full bg-gray-50" />
