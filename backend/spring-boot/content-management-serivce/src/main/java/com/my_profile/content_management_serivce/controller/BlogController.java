@@ -1,7 +1,9 @@
 package com.my_profile.content_management_serivce.controller;
 
+import com.my_profile.content_management_serivce.client.UserServiceClient;
 import com.my_profile.content_management_serivce.model.ResponseMessage;
 import com.my_profile.content_management_serivce.service.BlogService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,13 +11,18 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/blog")
 public class BlogController {
     @Autowired
     private BlogService blogService;
+
+    @Autowired
+    private UserServiceClient userServiceClient;
 
     @GetMapping("")
     public ResponseEntity<Object> getBlogs(
@@ -41,10 +48,22 @@ public class BlogController {
     @GetMapping("/{blogID}")
     public ResponseEntity<Object> getBlogByID(@PathVariable String blogID){
         Blog blog = blogService.getBlogByID(blogID);
+
         if(blog == null){
             return ResponseMessage.createResponse("This blog isn't exist", null, HttpStatus.NOT_FOUND);
         }
-        return ResponseMessage.createResponse("Get blog successfully!", blog, HttpStatus.OK);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("blog", blog);
+
+        ResponseEntity<String> response = userServiceClient.getUserByID(blog.getUserID());
+        if(response.getBody() != null){
+            JSONObject jsonObject = new JSONObject(response.getBody());
+            Map<String, Object> author = jsonObject.getJSONObject("data").toMap();
+            System.out.println("Author: " + author);
+            map.put("author", author);
+        }
+        return ResponseMessage.createResponse("Get blog successfully!", map, HttpStatus.OK);
     }
 
     @PostMapping("")

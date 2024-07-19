@@ -26,7 +26,6 @@ public class Blog {
     private LocalDateTime createdAt;
     private String title;
 
-    private String image;
     private String video;
     private String content;
 }

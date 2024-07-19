@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { compress, decompress } from 'lz-string';
 
 function AddBlogPage() {
     const [value, setValue] = useState('');
@@ -13,9 +14,9 @@ function AddBlogPage() {
 
     const handleSave = (value) => {
         alert("Size of sample is: " + value.length);
-        var compressed = LZString.compress(string);
+        var compressed = compress(string);
         alert("Size of compressed sample is: " + compressed.length);
-        var string = LZString.decompress(compressed);
+        var string = decompress(compressed);
         alert("Sample is: " + string);
     }
 
