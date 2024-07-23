@@ -36,7 +36,7 @@ const addComment = async (comment) => {
 }
 
 const updateComment = async (comment) => {
-    const response = await axios.post(URL, comment)
+    const response = await axios.put(URL, comment)
         .then(value)
         .catch(err => {
             console.error(err)
@@ -50,11 +50,7 @@ const updateComment = async (comment) => {
 }
 
 const deleteComment = async (commentID) => {
-    const response = await axios.get(`${URL}`, {
-        params: {
-            commentID
-        }
-    })
+    const response = await axios.delete(`${URL}/${commentID}`)
         .then(value)
         .catch(err => {
             console.error(err)
