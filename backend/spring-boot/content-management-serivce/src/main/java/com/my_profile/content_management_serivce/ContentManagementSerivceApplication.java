@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableDiscoveryClient
@@ -19,7 +20,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 				license = @License(name = "Content management service licence", url = "www.google.com/licence"),
 				version = "v1"),
 		security = @SecurityRequirement(name = "bearerAuth"))
-
+@EnableFeignClients
 public class ContentManagementSerivceApplication {
 
 	public static void main(String[] args) {
