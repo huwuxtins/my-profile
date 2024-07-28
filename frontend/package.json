@@ -35,7 +35,8 @@
     "react-countup": "^6.5.3",
     "react-dom": "^18",
     "react-quill": "^2.0.0",
-    "tailwind-datepicker-react": "^1.4.3"
+    "tailwind-datepicker-react": "^1.4.3",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "eslint": "^8",
