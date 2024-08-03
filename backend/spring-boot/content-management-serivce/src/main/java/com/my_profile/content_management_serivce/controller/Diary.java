@@ -25,6 +25,5 @@ public class Diary {
     @Field("created_at")
     private LocalDateTime createdAt;
     private String image;
-    private String video;
     private String content;
 }

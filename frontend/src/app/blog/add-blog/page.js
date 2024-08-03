@@ -17,11 +17,11 @@ function AddBlogPage() {
     }
 
     const handleSave = async (blogTitle, value) => {
-        alert("Size of sample is: " + value.length);
-        var compressed = compress(string);
-        alert("Size of compressed sample is: " + compressed.length);
-        var string = decompress(compressed);
-        alert("Sample is: " + string);
+        // alert("Size of sample is: " + value.length);
+        // var compressed = compress(string);
+        // alert("Size of compressed sample is: " + compressed.length);
+        // var string = decompress(compressed);
+        // alert("Sample is: " + string);
 
         const blog = await addBlog({
             id: uuidv4(),
@@ -106,7 +106,7 @@ function AddBlogPage() {
             <button
                 type="submit"
                 className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                onClick={() => handleSave(value)}
+                onClick={() => handleSave(test, value)}
             >
                 Save
             </button>

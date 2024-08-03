@@ -45,7 +45,7 @@ public class SecurityConfig {
     @Bean
     public ServerLogoutSuccessHandler logoutSuccessHandler() {
         // Change this as needed to URI where users should be redirected to after logout
-        String returnTo = "http://localhost:8081/";
+        String returnTo = "http://localhost:8080/";
 
         // Build the URL to log the user out of Auth0 and redirect them to the home
         // page.

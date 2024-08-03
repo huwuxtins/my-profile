@@ -38,6 +38,8 @@ public class UserController {
         String userID = authentication.getAttribute("sub");
         User user = userService.getUserByUserID(userID);
 
+        System.out.println("User: " + user);
+
         if(user != null){
             return ResponseMessage.createResponse("Get user by user's id", user, HttpStatus.OK);
         }
