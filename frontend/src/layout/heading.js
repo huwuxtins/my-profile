@@ -13,13 +13,15 @@ import {
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import ImageButton from '../components/button/image_button'
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Link from 'next/link'
+import { AuthContext } from '~/context/AuthContext'
+import { useUser } from '@auth0/nextjs-auth0/client'
 const navigation = [
-  { name: 'Home', href: '/',  },
-  { name: 'Blog', href: '/blog',  },
-  { name: 'Projects', href: '/project',  },
-  { name: 'Calendar', href: '/plan',  },
+  { name: 'Home', href: '/', },
+  { name: 'Blog', href: '/blog', },
+  { name: 'Projects', href: '/project', },
+  { name: 'Calendar', href: '/plan', },
 ]
 
 function classNames(...classes) {
@@ -28,6 +30,7 @@ function classNames(...classes) {
 
 export default function Example() {
 
+  const { user } = useUser()
   const [page, setPage] = useState('Home')
   const [theme, setTheme] = useState('light')
   const [icon, setIcon] = useState(faSun)
@@ -124,42 +127,59 @@ export default function Example() {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <MenuItem>
-                        {({ focus }) => (
-                          <Link
-                            href="/profile"
-                            className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                            
-                            onClick={() => setPage('')}
-                          >
-                            Your Profile
-                          </Link>
-                        )}
-                      </MenuItem>
-                      <MenuItem>
-                        {({ focus }) => (
-                          <Link
-                            href="#"
-                            className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                            onClick={() => setPage('')}
-                          >
-                            My chat
-                          </Link>
-                        )}
-                      </MenuItem>
-                      <MenuItem>
-                        {({ focus }) => (
-                          <Link
-                            href="#"
-                            className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                            onClick={() => setPage('')}
-                          >
-                            Sign out
-                          </Link>
-                        )}
-                      </MenuItem>
-                    </MenuItems>
+                    {user ?
+                      <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <MenuItem>
+                          {({ focus }) => (
+                            <Link
+                              href="/profile"
+                              className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+
+                              onClick={() => setPage('')}
+                            >
+                              Your Profile
+                            </Link>
+                          )}
+                        </MenuItem>
+                        <MenuItem>
+                          {({ focus }) => (
+                            <Link
+                              href="#"
+                              className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                              onClick={() => setPage('')}
+                            >
+                              My chat
+                            </Link>
+                          )}
+                        </MenuItem>
+                        <MenuItem>
+                          {({ focus }) => (
+                            <Link
+                              href="#"
+                              className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                              onClick={() => setPage('')}
+                            >
+                              Sign out
+                            </Link>
+                          )}
+                        </MenuItem>
+                      </MenuItems>
+                      :
+                      <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <MenuItem>
+                          {({ focus }) => (
+                            <a
+                              href="/api/auth/login"
+                              className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                              // onClick={() => setPage('')}
+                            >
+                              Sign in
+                            </a>
+
+                          )}
+                        </MenuItem>
+                      </MenuItems>
+                    }
                   </Transition>
                 </Menu>
               </div>

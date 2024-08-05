@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import localFont from "next/font/local"
+import { UserProvider } from '@auth0/nextjs-auth0/client';
 import "./globals.css";
 import Heading from "~/layout/heading";
 
@@ -12,15 +13,15 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
   return (
     <html lang="en" className="h-full">
-      <body className="h-full bg-white dark:bg-gray-800">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"/>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"/>
-        <script language="javascript" src="lz-string.js"></script>
-        <Heading />
-        <main className={myFont.className}>{children}</main>
-      </body>
+      <UserProvider>
+        <body className="h-full bg-white dark:bg-gray-800">
+          <Heading />
+          <main className={myFont.className}>{children}</main>
+        </body>
+      </UserProvider>
     </html>
   );
 }

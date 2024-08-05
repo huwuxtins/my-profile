@@ -68,10 +68,13 @@ public class BlogController {
 
     @PostMapping("")
     public ResponseEntity<Object> addBlog(@RequestBody Blog blog, @AuthenticationPrincipal OidcUser authentication){
-        Blog addedBlog = blogService.addBlog(blog);
-        if(addedBlog != null){
-            return ResponseMessage.createResponse("Add blog successfully!", addedBlog, HttpStatus.CREATED);
-        }
+        System.out.println(authentication);
+//        String user = authentication.getAttribute()
+
+//        Blog addedBlog = blogService.addBlog(blog);
+//        if(addedBlog != null){
+//            return ResponseMessage.createResponse("Add blog successfully!", addedBlog, HttpStatus.CREATED);
+//        }
         return ResponseMessage.createResponse("Add blog failed!", null, HttpStatus.BAD_REQUEST);
     }
 
