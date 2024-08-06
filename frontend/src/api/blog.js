@@ -1,11 +1,13 @@
 import 'dotenv/config'
 import axios from 'axios'
 
-const URL = process.env.URL + 'blog'
+const URL = process.env.NEXT_PUBLIC_URL + 'blog'
 
 const getBlogByID = async (blogID) => {
     const response = await axios.get(`${URL}/${blogID}`)
-        .then(value)
+        .then(value => {
+            console.log(value)
+        })
         .catch(err => {
             console.error(err)
         })
@@ -21,7 +23,9 @@ const getBlogs = async (page, size) => {
     const response = await axios.get(URL, {
         params: { page, size }
     })
-        .then(value)
+        .then(value => {
+            console.log(value)
+        })
         .catch(err => {
             console.error(err)
         })
@@ -34,8 +38,11 @@ const getBlogs = async (page, size) => {
 }
 
 const addBlog = async (blog) => {
+    console.log(process.env)
     const response = await axios.post(URL, blog)
-        .then(value)
+        .then(value => {
+            console.log(value)
+        })
         .catch(err => {
             console.error(err)
         })
@@ -50,7 +57,9 @@ const addBlog = async (blog) => {
 const updateBlog = async (blog) => {
 
     const response = await axios.put(URL, blog)
-        .then(value)
+        .then(value => {
+            console.log(value)
+        })
         .catch(err => {
             console.error(err)
         })
@@ -63,16 +72,18 @@ const updateBlog = async (blog) => {
 }
 
 const deleteBlog = async (blogID) => {
-    
+
     const response = await axios.delete(`${URL}/${blogID}`)
-        .then(value)
+        .then(value => {
+            console.log(value)
+        })
         .catch(err => {
             console.error(err)
         })
 
-    if(response.status == 200){
+    if (response.status == 200) {
         return response.data.data
-    }else{
+    } else {
         throw new Error(response.status)
     }
 }
