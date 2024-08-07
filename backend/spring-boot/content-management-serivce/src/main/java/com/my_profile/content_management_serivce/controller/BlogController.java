@@ -7,7 +7,9 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.*;
 
@@ -67,8 +69,16 @@ public class BlogController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Object> addBlog(@RequestBody Blog blog, @AuthenticationPrincipal OidcUser authentication){
-        System.out.println(authentication);
+    public ResponseEntity<Object> addBlog(@RequestBody Blog blog){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated())
+        {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
+        }
+
+        // Access user information from authentication
+        String userId = authentication.getName();
+        System.out.println(userId);
 //        String user = authentication.getAttribute()
 
 //        Blog addedBlog = blogService.addBlog(blog);

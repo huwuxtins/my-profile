@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import axios from 'axios'
 
-const URL = process.env.URL + 'plan'
+const URL = process.env.NEXT_PUBLIC_URL + 'plan'
 
 const getPlansByUserID = async (date) => {
     const response = await axios.get(URL)

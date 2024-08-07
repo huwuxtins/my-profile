@@ -369,11 +369,11 @@ function PlanPage({ children }) {
                     </div> */}
                     {weeks.map((week, index) => (
                         week.map((plan, index) => {
-                            return <div className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={() => openDialog(plan)}>
+                            return <div key={index} className="relative bg-white dark:bg-gray-800 px-3 py-2" onClick={() => openDialog(plan)}>
                                 <time dateTime="2022-01-03">{plan.date}</time>
                                 <ol className="mt-2">
                                     {plan.event.map((event, index) => {
-                                        return <li>
+                                        return <li key={index}>
                                             <a href="#" className="group flex">
                                                 <p className="flex-auto truncate font-medium text-gray-900 dark:text-gray-200 group-hover:text-indigo-600">{event.task}</p>
                                                 <time dateTime="2022-01-03T10:00" className="ml-3 hidden flex-none text-gray-500 dark:text-gray-200 group-hover:text-indigo-600 xl:block">10AM</time>

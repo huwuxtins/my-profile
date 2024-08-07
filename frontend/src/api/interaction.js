@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const URL_FOLLOW = process.env.URL + 'follow'
-const URL_LIKE = process.env.URL + 'like'
+const URL_FOLLOW = process.env.NEXT_PUBLIC_URL + 'follow'
+const URL_LIKE = process.env.NEXT_PUBLIC_URL + 'like'
 
 const addFollow = async (followerID, targetID) => {
     const response = await axios.post(URL_FOLLOW, { followerID, targetID })

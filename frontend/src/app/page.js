@@ -215,7 +215,7 @@ export default function Home() {
                         </article>
                     ))}
                 </div>
-                <div classNames="flex flex-col basis-1/3 mx-auto max-w-7xl lg:px-8">
+                <div className="flex flex-col basis-1/3 mx-auto max-w-7xl lg:px-8">
                     <div className="mx-auto max-w-7xl lg:px-8 rounded-lg border-2 p-5 m-2">
                         <h2 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Can you know</h2>
                         <ul role="list" className="divide-y divide-gray-100">

@@ -26,7 +26,7 @@ function AddBlogPage() {
 
         const blog = await addBlog({
             id: uuidv4(),
-            createdAt: Date.now(),
+            createdAt: new Date(Date.now()).toISOString().slice(0, 19),
             title: blogTitle,
             content: value,
         })

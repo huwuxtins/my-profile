@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import axios from 'axios'
 
-const URL = process.env.URL + 'comment'
+const URL = process.env.NEXT_PUBLIC_URL + 'comment'
 
 const getComments = async (blogID, page, size) => {
     const response = await axios.get(`${URL}`, {
