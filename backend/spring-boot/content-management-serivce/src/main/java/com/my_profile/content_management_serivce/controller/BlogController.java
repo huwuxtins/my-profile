@@ -9,9 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
 import java.util.List;
@@ -69,25 +72,22 @@ public class BlogController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Object> addBlog(@RequestBody Blog blog, @AuthenticationPrincipal OidcUser authentication){
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        if (authentication == null || !authentication.isAuthenticated())
-//        {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
-//        }
-//
-        // Access user information from authentication
-        String userId = authentication.getName();
-        System.out.println(userId);
-        String user = authentication.getAttribute("sub");
-        blog.setUserID(user);
+    public Mono<ResponseEntity<Object>> addBlog(@RequestBody Blog blog) {
+        return ReactiveSecurityContextHolder.getContext()
+                .map(SecurityContext::getAuthentication)
+                .flatMap(authentication -> {
+                    if (authentication != null) {
+                        String userId = authentication.getName(); // Get the user's ID or name
+                        blog.setUserID(userId); // Set the user ID in the blog
 
-        Blog addedBlog = blogService.addBlog(blog);
-        if(addedBlog != null){
-            return ResponseMessage.createResponse("Add blog successfully!", addedBlog, HttpStatus.CREATED);
-        }
-        return ResponseMessage.createResponse("Add blog failed!", null, HttpStatus.BAD_REQUEST);
+                        // Assuming `blogService.addBlog(blog)` returns a Mono<Blog>
+                        return Mono.just(ResponseMessage.createResponse("No authentication available", authentication, HttpStatus.UNAUTHORIZED));
+                    } else {
+                        return Mono.just(ResponseMessage.createResponse("No authentication available", null, HttpStatus.UNAUTHORIZED));
+                    }
+                });
     }
+
 
     @PutMapping("")
     public ResponseEntity<Object> updateBlog(@RequestBody Blog blog, @AuthenticationPrincipal OidcUser authentication){
