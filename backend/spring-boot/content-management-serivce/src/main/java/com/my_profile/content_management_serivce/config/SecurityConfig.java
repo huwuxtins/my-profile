@@ -27,11 +27,11 @@ public class SecurityConfig {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         return http
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
-//                .authorizeExchange(authorize -> {
-//                    authorize
-//                            .pathMatchers("/", "/images/**", "/api/v1/content-management-swagger/**").permitAll()
-//                             .anyExchange().authenticated();
-//                })
+                .authorizeExchange(authorize -> {
+                    authorize
+                            .pathMatchers("/", "/images/**", "/api/v1/content-management-swagger/**").permitAll()
+                             .anyExchange().authenticated();
+                })
                 .oauth2Login(withDefaults())
                 .logout(logout -> logout.logoutSuccessHandler(logoutSuccessHandler())).build();
     }

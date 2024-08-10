@@ -38,11 +38,8 @@ const getBlogs = async (page, size) => {
 }
 
 const addBlog = async (blog) => {
-    console.log(process.env)
     const response = await axios.post(URL, blog)
-        .then(value => {
-            console.log(value)
-        })
+        .then((value) => value)
         .catch(err => {
             console.error(err)
         })
@@ -58,7 +55,7 @@ const updateBlog = async (blog) => {
 
     const response = await axios.put(URL, blog)
         .then(value => {
-            console.log(value)
+            return value.data.data
         })
         .catch(err => {
             console.error(err)

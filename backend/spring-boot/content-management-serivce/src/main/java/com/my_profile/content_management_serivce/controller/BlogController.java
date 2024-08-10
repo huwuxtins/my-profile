@@ -69,22 +69,23 @@ public class BlogController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Object> addBlog(@RequestBody Blog blog){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated())
-        {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
-        }
-
+    public ResponseEntity<Object> addBlog(@RequestBody Blog blog, @AuthenticationPrincipal OidcUser authentication){
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        if (authentication == null || !authentication.isAuthenticated())
+//        {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
+//        }
+//
         // Access user information from authentication
         String userId = authentication.getName();
         System.out.println(userId);
-//        String user = authentication.getAttribute()
+        String user = authentication.getAttribute("sub");
+        blog.setUserID(user);
 
-//        Blog addedBlog = blogService.addBlog(blog);
-//        if(addedBlog != null){
-//            return ResponseMessage.createResponse("Add blog successfully!", addedBlog, HttpStatus.CREATED);
-//        }
+        Blog addedBlog = blogService.addBlog(blog);
+        if(addedBlog != null){
+            return ResponseMessage.createResponse("Add blog successfully!", addedBlog, HttpStatus.CREATED);
+        }
         return ResponseMessage.createResponse("Add blog failed!", null, HttpStatus.BAD_REQUEST);
     }
 

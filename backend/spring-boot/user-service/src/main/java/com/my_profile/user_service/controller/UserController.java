@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -34,12 +35,16 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public ResponseEntity<Object> getUser(@AuthenticationPrincipal OidcUser authentication) {
-        String userID = authentication.getAttribute("sub");
+    public ResponseEntity<Object> getUser(@RequestParam String userID, @RequestParam String accessToken) {
+        System.out.println("Access-Token: " + accessToken);
+        System.out.println("UserID: " + userID);
         User user = userService.getUserByUserID(userID);
+        Map<String, Object> map = new HashMap<>();
+        map.put("user", user);
+        map.put("accessToken", accessToken);
 
         if(user != null){
-            return ResponseMessage.createResponse("Get user by user's id", user, HttpStatus.OK);
+            return ResponseMessage.createResponse("Get user by user's id", map, HttpStatus.OK);
         }
         return new ResponseEntity<>(userID, HttpStatus.OK);
     }
