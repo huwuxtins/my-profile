@@ -5,6 +5,7 @@ import com.my_profile.content_management_serivce.model.ResponseMessage;
 import com.my_profile.content_management_serivce.service.BlogService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -42,9 +43,9 @@ public class BlogController {
             @RequestParam(defaultValue = "10") int size,
             @AuthenticationPrincipal OidcUser authentication){
         String userID = authentication.getAttribute("sub");
-        List<Blog> blogs = blogService.getBlogsByUserID(userID, page, size);
+        Mono<Page<Blog>> blogs = blogService.getBlogsByUserID(userID, page, size);
 
-        if(blogs.isEmpty()){
+        if(blogs.block().isEmpty()){
             return ResponseMessage.createResponse("There aren't any blog in your profile!", blogs, HttpStatus.NOT_FOUND);
         }
         return ResponseMessage.createResponse("Get blogs by profile successfully!", blogs, HttpStatus.OK);
@@ -52,7 +53,7 @@ public class BlogController {
 
     @GetMapping("/{blogID}")
     public ResponseEntity<Object> getBlogByID(@PathVariable String blogID){
-        Blog blog = blogService.getBlogByID(blogID);
+        Mono<Blog> blog = blogService.getBlogByID(blogID);
 
         if(blog == null){
             return ResponseMessage.createResponse("This blog isn't exist", null, HttpStatus.NOT_FOUND);
@@ -61,7 +62,7 @@ public class BlogController {
         Map<String, Object> map = new HashMap<>();
         map.put("blog", blog);
 
-        ResponseEntity<String> response = userServiceClient.getUserByID(blog.getUserID());
+        ResponseEntity<String> response = userServiceClient.getUserByID(blog.block().getUserID());
         if(response.getBody() != null){
             JSONObject jsonObject = new JSONObject(response.getBody());
             Map<String, Object> author = jsonObject.getJSONObject("data").toMap();
@@ -79,19 +80,19 @@ public class BlogController {
                     if (authentication != null) {
                         String userId = authentication.getName(); // Get the user's ID or name
                         blog.setUserID(userId); // Set the user ID in the blog
-
-                        // Assuming `blogService.addBlog(blog)` returns a Mono<Blog>
-                        return Mono.just(ResponseMessage.createResponse("No authentication available", authentication, HttpStatus.UNAUTHORIZED));
+                        return blogService.addBlog(blog)
+                                .flatMap(addedBlog -> {
+                                    return Mono.just(ResponseMessage.createResponse("Add blog successfully!", addedBlog, HttpStatus.CREATED));
+                                });
                     } else {
                         return Mono.just(ResponseMessage.createResponse("No authentication available", null, HttpStatus.UNAUTHORIZED));
                     }
                 });
     }
 
-
     @PutMapping("")
     public ResponseEntity<Object> updateBlog(@RequestBody Blog blog, @AuthenticationPrincipal OidcUser authentication){
-        Blog updateBlog = blogService.updateBlog(blog);
+        Mono<Blog> updateBlog = blogService.updateBlog(blog);
         if(updateBlog != null){
             return ResponseMessage.createResponse("Update blog successfully!", updateBlog, HttpStatus.CREATED);
         }
@@ -100,10 +101,7 @@ public class BlogController {
 
     @DeleteMapping("/{blogID}")
     public ResponseEntity<Object> deleteBlog(@PathVariable String blogID){
-        Blog blog = blogService.deleteBlog(blogID);
-        if(blog != null){
-            return ResponseMessage.createResponse("Delete blog successfully!", blog, HttpStatus.OK);
-        }
-        return ResponseMessage.createResponse("Blog isn't exist or there are some error in delete!", null, HttpStatus.OK);
+        blogService.deleteBlog(blogID);
+        return ResponseMessage.createResponse("Delete blog successfully!", null, HttpStatus.OK);
     }
 }

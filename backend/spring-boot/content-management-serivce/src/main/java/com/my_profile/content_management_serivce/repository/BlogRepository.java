@@ -1,12 +1,11 @@
 package com.my_profile.content_management_serivce.repository;
 
 import com.my_profile.content_management_serivce.controller.Blog;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
+import reactor.core.publisher.Mono;
 
 @Repository
-public interface BlogRepository extends MongoRepository<Blog, String> {
-    Optional<Blog> findById(String id);
+public interface BlogRepository extends ReactiveMongoRepository<Blog, String> {
+    Mono<Blog> findById(String id);
 }
