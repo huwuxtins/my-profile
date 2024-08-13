@@ -1,5 +1,6 @@
 import 'dotenv/config'
 import axios from 'axios'
+import { getAccessToken } from '@auth0/nextjs-auth0'
 
 const URL = process.env.NEXT_PUBLIC_URL + 'blog'
 
@@ -37,8 +38,12 @@ const getBlogs = async (page, size) => {
     }
 }
 
-const addBlog = async (blog) => {
-    const response = await axios.post(URL, blog)
+const addBlog = async (accessToken, blog) => {
+    const response = await axios.post(URL, blog, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        }
+    })
         .then((value) => value)
         .catch(err => {
             console.error(err)

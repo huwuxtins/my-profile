@@ -6,6 +6,7 @@ import 'react-quill/dist/quill.snow.css';
 import { compress, decompress } from 'lz-string';
 import { addBlog } from '~/api/blog';
 import { v4 as uuidv4 } from 'uuid';
+import { getAccessToken, getSession } from '@auth0/nextjs-auth0';
 
 function AddBlogPage() {
 
@@ -23,8 +24,10 @@ function AddBlogPage() {
         // alert("Size of compressed sample is: " + compressed.length);
         // var string = decompress(compressed);
         // alert("Sample is: " + string);
+        const { accessToken } = await getAccessToken({ req: res }); // Get access token
 
-        const blog = await addBlog({
+
+        const blog = await addBlog(accessToken, {
             id: uuidv4(),
             createdAt: new Date(Date.now()).toISOString().slice(0, 19),
             title: blogTitle,

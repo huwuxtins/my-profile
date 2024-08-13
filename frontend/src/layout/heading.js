@@ -17,6 +17,7 @@ import { useContext, useEffect, useState } from "react"
 import Link from 'next/link'
 import { AuthContext } from '~/context/AuthContext'
 import { useUser } from '@auth0/nextjs-auth0/client'
+import { getSession } from '@auth0/nextjs-auth0'
 const navigation = [
   { name: 'Home', href: '/', },
   { name: 'Blog', href: '/blog', },
