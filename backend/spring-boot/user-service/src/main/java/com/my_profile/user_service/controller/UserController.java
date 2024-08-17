@@ -1,8 +1,5 @@
 package com.my_profile.user_service.controller;
 
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
 import com.my_profile.user_service.model.ResponseMessage;
 import com.my_profile.user_service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +23,6 @@ import java.util.Map;
 @RequestMapping("/api/v1/user")
 public class UserController {
 
-    @Value("${spring.security.oauth2.client.provider.auth0.issuer-uri}")
-    String domain;
-
-    @Value("${spring.security.oauth2.client.registration.auth0.client-id}")
-    String clientID;
-
-    @Value("${spring.security.oauth2.client.registration.auth0.client-secret}")
-    String secretID;
-
     @Autowired
     private UserService userService;
 
@@ -48,27 +36,16 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public ResponseEntity<Object> getUser(@RequestParam String userID, @RequestParam String accessToken) throws UnirestException {
-
-        HttpResponse<String> response = Unirest.post(domain + "oauth/token")
-                .header("content-type", "application/x-www-form-urlencoded")
-                .body("grant_type=client_credentials&client_id=" + clientID+ "&client_secret="+secretID+"&audience=https://dev-k6vjpfkbkgmdsry6.us.auth0.com/api/v2/")
-                .asString();
-
-        System.out.println(response);
-
-        System.out.println("Access-Token: " + accessToken);
+    public ResponseEntity<Object> getUser(@RequestParam String userID){
         System.out.println("UserID: " + userID);
         User user = userService.getUserByUserID(userID);
         Map<String, Object> map = new HashMap<>();
         map.put("user", user);
-        map.put("accessToken", accessToken);
-        map.put("response", response);
 
         if(user != null){
-            return ResponseMessage.createResponse("Get user by user's id", response, HttpStatus.OK);
+            return ResponseMessage.createResponse("Get user by user's id", map, HttpStatus.OK);
         }
-        return new ResponseEntity<>(response.getBody(), HttpStatus.OK);
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
     @PostMapping("/registration")
