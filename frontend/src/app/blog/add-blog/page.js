@@ -33,7 +33,7 @@ function AddBlogPage() {
         // })
         // console.log(blog)
 
-        const response = await axios.post("/blog/add-blog/api", {
+        const response = await axios.post("/api/blog", {
             id: uuidv4(),
             createdAt: new Date(Date.now()).toISOString().slice(0, 19),
             title: blogTitle,

@@ -39,10 +39,6 @@ const getBlogs = async (page, size) => {
     }
 }
 
-const addBlog = async (accessToken, blog) => {
-
-}
-
 const updateBlog = async (blog) => {
 
     const response = await axios.put(URL, blog)
@@ -98,5 +94,3 @@ export async function POST(request) {
         throw new Error(response.status)
     }
 }
-
-export { getBlogByID, getBlogs, addBlog, updateBlog, deleteBlog }
