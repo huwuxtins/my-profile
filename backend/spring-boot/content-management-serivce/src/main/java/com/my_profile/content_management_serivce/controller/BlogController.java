@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
@@ -24,11 +25,18 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/blog")
 public class BlogController {
-    @Autowired
-    private BlogService blogService;
+    private final BlogService blogService;
 
-    @Autowired
-    private UserServiceClient userServiceClient;
+
+//    @Autowired
+//    private UserServiceClient userServiceClient;
+
+    private final WebClient webClient;
+
+    public BlogController(BlogService blogService, WebClient webClient, BlogService blogService1, WebClient webClient1){
+        this.blogService = blogService1;
+        this.webClient = webClient1;
+    }
 
     @GetMapping("")
     public ResponseEntity<Object> getBlogs(
@@ -56,7 +64,12 @@ public class BlogController {
         return blogService.getBlogByID(blogID)
                 .flatMap(blog -> {
                     // Call user service to get the user details using userID
-                    Mono<ResponseEntity<String>> userResponseMono = userServiceClient.getUserByID(blog.getUserID());
+//                    Mono<ResponseEntity<String>> userResponseMono = userServiceClient.getUserByID(blog.getUserID());
+                    Mono<ResponseEntity<String>> userResponseMono = this.webClient
+                            .get()
+                            .uri("http://localhost:8080/api/v1/user/")
+                            .retrieve()
+                            .toEntity(String.class);
 
                     return userResponseMono.flatMap(response -> {
                         if (response.getBody() != null) {
