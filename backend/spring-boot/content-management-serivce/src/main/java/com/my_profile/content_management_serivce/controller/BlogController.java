@@ -13,13 +13,13 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.web.reactive.function.client.ServerOAuth2AuthorizedClientExchangeFilterFunction;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -61,6 +61,8 @@ public class BlogController {
 
     @GetMapping("/{blogID}")
     public Mono<ResponseEntity<Object>> getBlogByID(@PathVariable String blogID) {
+        System.out.println("Running....");
+        System.out.println();
         return blogService.getBlogByID(blogID)
                 .flatMap(blog -> {
                     // Call user service to get the user details using userID
@@ -68,6 +70,7 @@ public class BlogController {
                     Mono<ResponseEntity<String>> userResponseMono = this.webClient
                             .get()
                             .uri("http://localhost:8080/api/v1/user/")
+                            .attributes(ServerOAuth2AuthorizedClientExchangeFilterFunction.clientRegistrationId("auth0"))
                             .retrieve()
                             .toEntity(String.class);
 
@@ -88,7 +91,6 @@ public class BlogController {
                 })
                 .switchIfEmpty(Mono.just(ResponseMessage.createResponse("This blog isn't exist", null, HttpStatus.NOT_FOUND)));
     }
-
 
     @PostMapping("")
     public Mono<ResponseEntity<Object>> addBlog(@RequestBody Blog blog) {

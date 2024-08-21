@@ -59,18 +59,18 @@ public class SecurityConfig {
         return ReactiveJwtDecoders.fromIssuerLocation("https://dev-k6vjpfkbkgmdsry6.us.auth0.com/");
     }
 
-//    @Bean
-//    public ClientRegistrationRepository clientRegistrationRepository() {
-//        ClientRegistration auth0Registration = ClientRegistration.withRegistrationId("auth0")
-//                .clientId(clientID)
-//                .clientSecret(clientSecret)
-//                .scope(scope)
-//                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-//                .issuerUri(issuerUri)
-//                .build();
-//
-//        return new InMemoryClientRegistrationRepository(auth0Registration);
-//    }
+    @Bean
+    public ClientRegistrationRepository clientRegistrationRepository() {
+        ClientRegistration auth0Registration = ClientRegistration.withRegistrationId("auth0")
+                .clientId(clientID)
+                .clientSecret(clientSecret)
+                .scope(scope)
+                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .issuerUri(issuerUri)
+                .build();
+
+        return new InMemoryClientRegistrationRepository(auth0Registration);
+    }
 
     @Bean
     public ReactiveOAuth2AuthorizedClientManager authorizedClientManager(
@@ -97,6 +97,7 @@ public class SecurityConfig {
     public WebClient webClient(ReactiveOAuth2AuthorizedClientManager authorizedClientManager) {
         ServerOAuth2AuthorizedClientExchangeFilterFunction oauth2Client =
                 new ServerOAuth2AuthorizedClientExchangeFilterFunction(authorizedClientManager);
+        oauth2Client.setDefaultClientRegistrationId("auth0");
         return WebClient.builder()
                 .filter(oauth2Client)
                 .build();
