@@ -53,7 +53,8 @@ public class SecurityConfig {
                 })
                 .oauth2ResourceServer((oauth2) -> oauth2
                         .jwt(Customizer.withDefaults())
-                ).build();
+                )
+                .build();
     }
 
     @Bean
@@ -61,18 +62,18 @@ public class SecurityConfig {
         return ReactiveJwtDecoders.fromIssuerLocation("https://dev-k6vjpfkbkgmdsry6.us.auth0.com/");
     }
 
-    @Bean
-    public ClientRegistrationRepository clientRegistrationRepository() {
-        ClientRegistration auth0Registration = ClientRegistration.withRegistrationId("auth0")
-                .clientId(clientID)
-                .clientSecret(clientSecret)
-                .scope(scope)
-                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .issuerUri(issuerUri)
-                .build();
-
-        return new InMemoryClientRegistrationRepository(auth0Registration);
-    }
+//    @Bean
+//    public ClientRegistrationRepository clientRegistrationRepository() {
+//        ClientRegistration auth0Registration = ClientRegistration.withRegistrationId("auth0")
+//                .clientId(clientID)
+//                .clientSecret(clientSecret)
+//                .scope(scope)
+//                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+//                .issuerUri(issuerUri)
+//                .build();
+//
+//        return new InMemoryClientRegistrationRepository(auth0Registration);
+//    }
 
     @Bean
     public ReactiveOAuth2AuthorizedClientManager authorizedClientManager(
