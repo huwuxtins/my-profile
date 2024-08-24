@@ -1,15 +1,18 @@
 package com.my_profile.content_management_serivce.config;
 
+import com.my_profile.content_management_serivce.security.Auth0ClientCredentialsGrantRequestEntityConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.http.RequestEntity;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
-import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientManager;
-import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientProvider;
-import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientProviderBuilder;
+import org.springframework.security.oauth2.client.*;
+import org.springframework.security.oauth2.client.endpoint.DefaultClientCredentialsTokenResponseClient;
+import org.springframework.security.oauth2.client.endpoint.OAuth2ClientCredentialsGrantRequest;
+import org.springframework.security.oauth2.client.endpoint.WebClientReactiveClientCredentialsTokenResponseClient;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
@@ -21,6 +24,7 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
 import org.springframework.security.oauth2.jwt.ReactiveJwtDecoders;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
@@ -41,6 +45,9 @@ public class SecurityConfig {
 
     @Value("spring.security.oauth2.client.registration.auth0.scope")
     private String scope;
+
+    @Value("spring.security.oauth2.client.provider.auth0.audience")
+    private String audience;
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
@@ -80,12 +87,23 @@ public class SecurityConfig {
             ReactiveClientRegistrationRepository clientRegistrationRepository,
             ServerOAuth2AuthorizedClientRepository authorizedClientRepository) {
 
+        WebClientReactiveClientCredentialsTokenResponseClient responseClient =
+                new WebClientReactiveClientCredentialsTokenResponseClient();
+
+        // Spring does not provide a configuration only way to add 'resource' to the message body
+        // See https://docs.spring.io/spring-security/reference/servlet/oauth2/client/authorization-grants.html#_customizing_the_access_token_request_2
+        responseClient.addParametersConverter(
+                source -> {
+                    LinkedMultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+                    map.add("audience", "https://dev-k6vjpfkbkgmdsry6.us.auth0.com/api/v2/");
+                    return map;
+                }
+        );
+
         ReactiveOAuth2AuthorizedClientProvider authorizedClientProvider =
                 ReactiveOAuth2AuthorizedClientProviderBuilder.builder()
-                        .authorizationCode()
-                        .refreshToken()
-                        .clientCredentials()
-                        .password()
+                        .clientCredentials(clientCredentialsGrantBuilder ->
+                                clientCredentialsGrantBuilder.accessTokenResponseClient(responseClient))
                         .build();
 
         DefaultReactiveOAuth2AuthorizedClientManager authorizedClientManager =

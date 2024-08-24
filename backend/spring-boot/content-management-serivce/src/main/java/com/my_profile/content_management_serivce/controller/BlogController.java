@@ -70,9 +70,6 @@ public class BlogController {
                     Mono<ResponseEntity<String>> userResponseMono = this.webClient
                             .get()
                             .uri("http://localhost:8080/api/v1/user/")
-                            .attributes(
-                                    ServerOAuth2AuthorizedClientExchangeFilterFunction
-                                            .clientRegistrationId("auth0"))
                             .retrieve()
                             .toEntity(String.class);
 
