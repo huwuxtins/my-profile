@@ -10,5 +10,5 @@ import reactor.core.publisher.Mono;
 @FeignClient(name = "user-service")
 public interface UserServiceClient {
     @GetMapping(value = "/api/v1/user/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Mono <ResponseEntity<String>> getUserByID(@RequestParam String id);
+    public ResponseEntity<String> getUserByID(@RequestParam String id);
 }

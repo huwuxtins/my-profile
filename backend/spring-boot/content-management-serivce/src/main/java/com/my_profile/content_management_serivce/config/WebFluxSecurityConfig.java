@@ -1,26 +1,16 @@
 package com.my_profile.content_management_serivce.config;
 
-import com.my_profile.content_management_serivce.security.Auth0ClientCredentialsGrantRequestEntityConverter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.http.RequestEntity;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.oauth2.client.*;
-import org.springframework.security.oauth2.client.endpoint.DefaultClientCredentialsTokenResponseClient;
-import org.springframework.security.oauth2.client.endpoint.OAuth2ClientCredentialsGrantRequest;
 import org.springframework.security.oauth2.client.endpoint.WebClientReactiveClientCredentialsTokenResponseClient;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.DefaultReactiveOAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.web.reactive.function.client.ServerOAuth2AuthorizedClientExchangeFilterFunction;
 import org.springframework.security.oauth2.client.web.server.ServerOAuth2AuthorizedClientRepository;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
 import org.springframework.security.oauth2.jwt.ReactiveJwtDecoders;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -29,26 +19,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 @EnableWebFluxSecurity
-public class SecurityConfig {
-
-    @Value("spring.security.oauth2.client.registration.auth0.client-id")
-    private String clientID;
-
-    @Value("spring.security.oauth2.client.registration.auth0.client-secret")
-    private String clientSecret;
-
-    @Value("spring.security.oauth2.client.registration.auth0.authorization-grant-type")
-    private String authorizationGrantType;
-
-    @Value("spring.security.oauth2.client.provider.auth0.issuer-uri")
-    private String issuerUri;
-
-    @Value("spring.security.oauth2.client.registration.auth0.scope")
-    private String scope;
-
-    @Value("spring.security.oauth2.client.provider.auth0.audience")
-    private String audience;
-
+public class WebFluxSecurityConfig {
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         return http

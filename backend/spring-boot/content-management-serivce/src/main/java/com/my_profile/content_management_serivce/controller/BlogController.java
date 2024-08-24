@@ -30,13 +30,14 @@ public class BlogController {
 
 
 //    @Autowired
-//    private UserServiceClient userServiceClient;
+    private final UserServiceClient userServiceClient;
 
     private final WebClient webClient;
 
-    public BlogController(BlogService blogService, WebClient webClient){
+    public BlogController(BlogService blogService, WebClient webClient, UserServiceClient userServiceClient){
         this.blogService = blogService;
         this.webClient = webClient;
+        this.userServiceClient = userServiceClient;
     }
 
     @GetMapping("")
@@ -62,31 +63,43 @@ public class BlogController {
 
     @GetMapping("/{blogID}")
     public Mono<ResponseEntity<Object>> getBlogByID(@PathVariable String blogID) {
-        System.out.println("Running....");
         return blogService.getBlogByID(blogID)
                 .flatMap(blog -> {
                     // Call user service to get the user details using userID
-//                    Mono<ResponseEntity<String>> userResponseMono = userServiceClient.getUserByID(blog.getUserID());
-                    Mono<ResponseEntity<String>> userResponseMono = this.webClient
-                            .get()
-                            .uri("http://localhost:8080/api/v1/user/")
-                            .retrieve()
-                            .toEntity(String.class);
+//                    Mono<ResponseEntity<String>> userResponseMono = this.webClient
+//                            .get()
+//                            .uri(uriBuilder -> uriBuilder
+//                                    .host("lb://user-service")
+//                                    .path("/api/v1/user")
+//                                    .queryParam("id", blog.getUserID())
+//                                    .build())
+//                            .retrieve()
+//                            .toEntity(String.class);
 
-                    return userResponseMono.flatMap(response -> {
-                        if (response.getBody() != null) {
-                            JSONObject jsonObject = new JSONObject(response.getBody());
-                            Map<String, Object> author = jsonObject.getJSONObject("data").toMap();
-
-                            Map<String, Object> map = new HashMap<>();
-                            map.put("blog", blog);
-                            map.put("author", author);
-
-                            return Mono.just(ResponseMessage.createResponse("Get blog successfully!", map, HttpStatus.OK));
-                        } else {
-                            return Mono.just(ResponseMessage.createResponse("User not found", null, HttpStatus.NOT_FOUND));
-                        }
-                    });
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("blog", blog);
+                    ResponseEntity<String> response = userServiceClient.getUserByID(blog.getUserID());
+                    if(response.getBody() != null){
+                        JSONObject jsonObject = new JSONObject(response.getBody());
+                        Map<String, Object> author = jsonObject.getJSONObject("data").toMap();
+                        System.out.println("Author: " + author);
+                        map.put("author", author);
+                    }
+                    return Mono.just(ResponseMessage.createResponse("Get blog successfully!", map, HttpStatus.OK));
+//                    return userResponseMono.flatMap(response -> {
+//                        if (response.getBody() != null) {
+//                            JSONObject jsonObject = new JSONObject(response.getBody());
+//                            Map<String, Object> author = jsonObject.getJSONObject("data").toMap();
+//
+//                            Map<String, Object> map = new HashMap<>();
+//                            map.put("blog", blog);
+//                            map.put("author", author);
+//
+//                            return Mono.just(ResponseMessage.createResponse("Get blog successfully!", map, HttpStatus.OK));
+//                        } else {
+//                            return Mono.just(ResponseMessage.createResponse("User not found", null, HttpStatus.NOT_FOUND));
+//                        }
+//                    });
                 })
                 .switchIfEmpty(Mono.just(ResponseMessage.createResponse("This blog isn't exist", null, HttpStatus.NOT_FOUND)));
     }
