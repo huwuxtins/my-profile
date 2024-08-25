@@ -8,6 +8,8 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 @Service
 public class BlogServiceImpl implements BlogService {
     private final BlogRepository blogRepository;
@@ -20,24 +22,24 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Mono<Blog> getBlogByID(String id) {
-        return blogRepository.findById(id);
+    public Blog getBlogByID(String id) {
+        return blogRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Mono<Page<Blog>> getBlogsByUserID(String userID, int page, int size) {
+    public List<Blog> getBlogsByUserID(String userID, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC);
 
-        return blogPageRepository.findByUserID(userID, pageable).collectList().map(content -> new PageImpl<>(content, pageable, content.size()));
+        return blogPageRepository.findByUserID(userID, pageable).getContent();
     }
 
     @Override
-    public Mono<Page<Blog>> getBlogs(int page, int size) {
+    public List<Blog> getBlogs(int page, int size) {
         return null;
     }
 
     @Override
-    public Mono<Blog> addBlog(Blog blog) {
+    public Blog addBlog(Blog blog) {
         try {
             return blogRepository.insert(blog);
         } catch (Exception e){
@@ -47,7 +49,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Mono<Blog> updateBlog(Blog blog) {
+    public Blog updateBlog(Blog blog) {
         try {
             return blogRepository.save(blog);
         } catch (Exception e){
@@ -57,7 +59,17 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Mono<Void> deleteBlog(String id) {
-        return blogRepository.deleteById(id);
+    public Blog deleteBlog(String id) {
+        Blog blog = blogRepository.findById(id).orElse(null);
+        if(blog == null){
+            return null;
+        }
+        try {
+            blogRepository.delete(blog);
+            return blog;
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }
