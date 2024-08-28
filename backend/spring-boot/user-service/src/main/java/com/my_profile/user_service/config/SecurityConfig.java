@@ -20,26 +20,25 @@ import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
 import org.springframework.security.oauth2.jwt.ReactiveJwtDecoders;
 import org.springframework.security.web.server.SecurityWebFilterChain;
-import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 @EnableWebFluxSecurity
 public class SecurityConfig {
 
-    @Value("spring.security.oauth2.client.registration.auth0.client-id")
-    private String clientID;
-
-    @Value("spring.security.oauth2.client.registration.auth0.client-secret")
-    private String clientSecret;
-
-    @Value("spring.security.oauth2.client.registration.auth0.authorization-grant-type")
-    private String authorizationGrantType;
-
-    @Value("spring.security.oauth2.client.provider.auth0.issuer-uri")
-    private String issuerUri;
-
-    @Value("spring.security.oauth2.client.registration.auth0.scope")
-    private String scope;
+//    @Value("spring.security.oauth2.client.registration.auth0.client-id")
+//    private String clientID;
+//
+//    @Value("spring.security.oauth2.client.registration.auth0.client-secret")
+//    private String clientSecret;
+//
+//    @Value("spring.security.oauth2.client.registration.auth0.authorization-grant-type")
+//    private String authorizationGrantType;
+//
+//    @Value("spring.security.oauth2.client.provider.auth0.issuer-uri")
+//    private String issuerUri;
+//
+//    @Value("spring.security.oauth2.client.registration.auth0.scope")
+//    private String scope;
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {

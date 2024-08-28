@@ -4,25 +4,13 @@ import com.my_profile.content_management_serivce.client.UserServiceClient;
 import com.my_profile.content_management_serivce.model.ResponseMessage;
 import com.my_profile.content_management_serivce.service.BlogService;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.ReactiveSecurityContextHolder;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
-import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
-import org.springframework.security.oauth2.client.web.reactive.function.client.ServerOAuth2AuthorizedClientExchangeFilterFunction;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
-
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,12 +62,10 @@ public class BlogController {
         Map<String, Object> map = new HashMap<>();
         map.put("blog", blog);
 
-        System.out.println(blog);
         ResponseEntity<String> response = userServiceClient.getUserByID(blog.getUserID());
         if(response.getBody() != null){
             JSONObject jsonObject = new JSONObject(response.getBody());
             Map<String, Object> author = jsonObject.getJSONObject("data").toMap();
-            System.out.println("Author: " + author);
             map.put("author", author);
         }
         return ResponseMessage.createResponse("Get blog successfully!", map, HttpStatus.OK);

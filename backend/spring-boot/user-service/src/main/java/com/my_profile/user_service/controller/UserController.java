@@ -3,7 +3,6 @@ package com.my_profile.user_service.controller;
 import com.my_profile.user_service.model.ResponseMessage;
 import com.my_profile.user_service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +36,6 @@ public class UserController {
 
     @GetMapping("/profile")
     public ResponseEntity<Object> getUser(@RequestParam String userID){
-        System.out.println("UserID: " + userID);
         User user = userService.getUserByUserID(userID);
         Map<String, Object> map = new HashMap<>();
         map.put("user", user);
