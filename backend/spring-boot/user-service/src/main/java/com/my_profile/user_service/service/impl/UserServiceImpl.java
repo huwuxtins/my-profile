@@ -6,6 +6,8 @@ import com.my_profile.user_service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -19,6 +21,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByUserID(String userID) {
         return userRepository.findByUserID(userID).orElse(null);
+    }
+
+    @Override
+    public List<User> getAllUser() {
+        return userRepository.findAll();
     }
 
     @Override

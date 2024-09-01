@@ -34,9 +34,9 @@ function BlogPage({ children }) {
         if (!router.isReady) return;
         const fetcher = async () => {
             const response = await axios.get(`/api/blog/${router.query.id}`)
-            setBlog(response)
+            setBlog(response.data)
 
-            return response
+            return response.data
         }
 
         fetcher()
@@ -87,7 +87,7 @@ function BlogPage({ children }) {
                                 width={'200px'} height={'200px'}
                             />
                         </div>
-                        <div className="text-lg font-bold tracking-tight text-gray-900 dark:text-gray-200 sm:text-2xl text-center">{blog.author.name}</div>
+                        <div className="text-lg font-bold tracking-tight text-gray-900 dark:text-gray-200 sm:text-2xl text-center">{blog.author?.name}</div>
                         <div className="flex -space-x-1 justify-center">
                             <img
                                 className="inline-block h-12 w-12 rounded-full ring-2 ring-white"
@@ -118,12 +118,12 @@ function BlogPage({ children }) {
             <div className="bg-white dark:bg-gray-800 mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
                 <div className="flex flex-row justify-between">
                     <div className="flex items-center">
-                        <img src={blog.author.imageUrl}
+                        <img src={blog.author?.imageUrl}
                             alt="" className="h-10 w-10 flex-shrink-0 rounded-full mr-5" />
                         <span
                             className='font-semibold text-2xl text-gray-800 dark:text-gray-200'
                         >
-                            {blog.author.name}
+                            {blog.author?.name}
                         </span>
                     </div>
                     <div className="flex flexr-row justify-between">
@@ -133,12 +133,12 @@ function BlogPage({ children }) {
                 </div>
             </div>
             <div className="bg-white dark:bg-gray-800 mx-auto max-w-2xl items-start px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
-                <span className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-200 sm:text-6xl">{blog.blog.title}</span>
+                <span className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-200 sm:text-6xl">{blog.blog?.title}</span>
                 <div></div>
             </div>
-            <div className="bg-white dark:bg-gray-800 mx-auto  max-w-2xl px-4 py-24 sm:px-6 sm:py-12 lg:max-w-7xl border-b-2 text-gray-900 dark:text-gray-200" dangerouslySetInnerHTML={{ __html: blog.blog.content }}></div>
+            <div className="bg-white dark:bg-gray-800 mx-auto  max-w-2xl px-4 py-24 sm:px-6 sm:py-12 lg:max-w-7xl border-b-2 text-gray-900 dark:text-gray-200" dangerouslySetInnerHTML={{ __html: blog.blog?.content }}></div>
             <div className="bg-white dark:bg-gray-800 mx-auto max-w-2xl px-4 py-24 sm:px-6 sm:py-12 lg:max-w-7xl text-right border-b-2">
-                <span className="text-xl font-bold text-right text-gray-900 dark:text-gray-200">{blog.author.name}</span>
+                <span className="text-xl font-bold text-right text-gray-900 dark:text-gray-200">{blog.author?.name}</span>
             </div>
             {/* Comment section */}
             <div className="bg-white dark:bg-gray-800 mx-auto max-w-2xl px-4 py-24 sm:px-6 sm:py-12 lg:max-w-7xl">

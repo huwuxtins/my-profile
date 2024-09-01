@@ -16,6 +16,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -27,11 +28,18 @@ public class UserController {
 
     @GetMapping("")
     public ResponseEntity<Object> getUserByID(@RequestParam String id) {
-        User user = userService.getUserByID(id);
+        System.out.println("ID: " + id);
+        User user = userService.getUserByUserID(id);
         if(user != null){
             return ResponseMessage.createResponse("Get user successfully!", user, HttpStatus.OK);
         }
         return ResponseMessage.createResponse("Get user failed!", null, HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<Object> getAllUser(){
+        List<User> users = userService.getAllUser();
+        return ResponseMessage.createResponse("Get all users", users, HttpStatus.OK);
     }
 
     @GetMapping("/profile")
@@ -48,7 +56,7 @@ public class UserController {
 
     @PostMapping("/registration")
     public ResponseEntity<Object> registrationUser(@RequestBody Map<String, Object> map) throws ParseException {
-        System.out.print("Map: " + map);
+        System.out.println(map);
         String userID = map.get("userID").toString();
         String email = map.get("email").toString();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");

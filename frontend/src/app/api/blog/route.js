@@ -87,7 +87,7 @@ export async function POST(request) {
         .catch(err => {
             throw new Error(err)
         })
-    console.log(response.data.data)
+        
     if (response.status == 201) {
         return NextResponse.json(response.data.data)
     } else {

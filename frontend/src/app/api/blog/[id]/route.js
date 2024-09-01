@@ -1,5 +1,6 @@
 import { getAccessToken } from "@auth0/nextjs-auth0";
 import axios from "axios";
+import { NextResponse } from "next/server";
 
 const URL = process.env.NEXT_PUBLIC_URL + 'blog'
 export async function GET(request, context) {
@@ -11,15 +12,13 @@ export async function GET(request, context) {
             Authorization: `Bearer ${accessToken}`
         }
     })
-        .then(value => {
-            console.log(value)
-        })
+        .then((value) => value)
         .catch(err => {
-            console.error(err)
+            throw new Error(err)
         })
 
     if (response.status == 200) {
-        return response.data.data
+        return NextResponse.json(response.data.data)
     } else {
         throw new Error(response.status)
     }
