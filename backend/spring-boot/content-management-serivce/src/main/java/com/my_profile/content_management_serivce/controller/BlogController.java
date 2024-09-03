@@ -36,13 +36,13 @@ public class BlogController {
         return ResponseMessage.createResponse("Get blogs successfully!", null, HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/profile")
+    @GetMapping("/all-blogs")
     public ResponseEntity<Object> getBlogsByUserID(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @AuthenticationPrincipal OidcUser authentication){
-        String userID = authentication.getAttribute("sub");
-        List<Blog> blogs = blogService.getBlogsByUserID(userID, page, size);
+            Authentication authentication){
+
+        List<Blog> blogs = blogService.getBlogsByUserID(authentication.getName(), page, size);
 
         if(blogs.isEmpty()){
             return ResponseMessage.createResponse("There aren't any blog in your profile!", blogs, HttpStatus.NOT_FOUND);
@@ -124,8 +124,7 @@ public class BlogController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Object> addBlog(@RequestBody Blog blog) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    public ResponseEntity<Object> addBlog(@RequestBody Blog blog, Authentication authentication) {
         String userID = authentication.getName();
         blog.setUserID(userID);
 

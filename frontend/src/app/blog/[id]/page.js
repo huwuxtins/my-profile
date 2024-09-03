@@ -2,13 +2,14 @@
 
 import { faShare, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import LinkButton from "~/components/button/link_button";
 import Comment from "~/components/comment";
 
 function BlogPage({ children }) {
-    const router = useRouter()
+    const params = useParams()
+
     const [blog, setBlog] = useState(
         {
             blog: {
@@ -31,16 +32,15 @@ function BlogPage({ children }) {
     )
 
     useEffect(() => {
-        if (!router.isReady) return;
         const fetcher = async () => {
-            const response = await axios.get(`/api/blog/${router.query.id}`)
+            const response = await axios.get(`/api/blog/${params.id}`)
             setBlog(response.data)
 
             return response.data
         }
 
         fetcher()
-    }, [router.isReady, router.query])
+    }, [params.id])
 
     const comments = [
         {
