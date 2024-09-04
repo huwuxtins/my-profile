@@ -28,13 +28,13 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public List<Blog> getBlogsByUserID(String userID, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
-
         return blogPageRepository.findByUserID(userID, pageable).getContent();
     }
 
     @Override
     public List<Blog> getBlogs(int page, int size) {
-        return null;
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
+        return blogPageRepository.findAll(pageable).getContent();
     }
 
     @Override

@@ -33,7 +33,11 @@ public class BlogController {
     public ResponseEntity<Object> getBlogs(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size){
-        return ResponseMessage.createResponse("Get blogs successfully!", null, HttpStatus.NOT_FOUND);
+        List<Blog> blogs = blogService.getBlogs(page, size);
+        if(blogs.isEmpty()){
+            return ResponseMessage.createResponse("Don't have any blog in current time", blogs, HttpStatus.OK);
+        }
+        return ResponseMessage.createResponse("Get blogs successfully!", blogs, HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/all-blogs")
