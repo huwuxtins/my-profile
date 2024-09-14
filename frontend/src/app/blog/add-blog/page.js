@@ -6,10 +6,12 @@ import 'react-quill/dist/quill.snow.css';
 import { compress, decompress } from 'lz-string';
 import { addBlog } from '~/api/blog';
 import { v4 as uuidv4 } from 'uuid';
-import { getAccessToken, getSession } from '@auth0/nextjs-auth0';
 import axios from 'axios';
+import { toast } from "sonner";
+import { useRouter } from 'next/navigation';
 
 function AddBlogPage() {
+    const router = useRouter();
 
     const [value, setValue] = useState('');
 
@@ -39,6 +41,16 @@ function AddBlogPage() {
             title: blogTitle,
             content: value,
         })
+
+        if (response) {
+            toast("Add blog successfully!", {
+                description: "You can check by going to blog page!",
+                action: {
+                    label: "Check",
+                    onClick: () => router.push('/blog'),
+                },
+            })
+        }
     }
 
     const modules = {

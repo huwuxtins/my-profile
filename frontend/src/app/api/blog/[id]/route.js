@@ -5,6 +5,7 @@ import { NextResponse } from "next/server";
 const URL = process.env.NEXT_PUBLIC_URL + 'blog'
 export async function GET(request, context) {
     const { accessToken } = await getAccessToken();
+    console.log(accessToken)
     const id = context.params.id
 
     const response = await axios.get(`${URL}/${id}`, {

@@ -3,6 +3,7 @@ import localFont from "next/font/local"
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import "./globals.css";
 import Heading from "~/layout/heading";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 const myFont = localFont({ src: '../font/InriaSerif-Regular.ttf' })
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
         <body className="h-full bg-white dark:bg-gray-800">
           <Heading />
           <main className={myFont.className}>{children}</main>
+          <Toaster />
         </body>
       </UserProvider>
     </html>

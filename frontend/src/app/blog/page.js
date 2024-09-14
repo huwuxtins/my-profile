@@ -1,47 +1,29 @@
 'use client'
 
-import { faComment, faSearch, faUserPlus, faUserTag } from "@fortawesome/free-solid-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-// const blogs = [
-//     {
-//         id: 1,
-//         title: 'Boost your conversion rate',
-//         href: '/blog',
-//         content:
-//             'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-//         date: 'Mar 16, 2020',
-//         creatdAt: '2020-03-16',
-//         category: { title: 'Marketing', href: '#' },
-//         author: {
-//             id: 2,
-//             name: 'Michael Foster',
-//             role: 'Co-Founder / CTO',
-//             href: '/view',
-//             imageUrl:
-//                 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-//         },
-//     },
-// ]
+import { useRouter } from "next/navigation";
 
 function BlogsPage() {
+
+    const router = useRouter()
     const [blogs, setBlogs] = useState([])
 
     useEffect(() => {
         const fetcher = async () => {
             const response = await axios.get('/api/blog/all-blogs')
-            .then(value => {
-                setBlogs(value.data)
-                return value.data
-            })
-            .catch(err => {
-                console.log(err)
-                return err
-            })
+                .then(value => {
+                    setBlogs(value.data)
+                    return value.data
+                })
+                .catch(err => {
+                    console.log(err)
+                    return err
+                })
         }
 
         fetcher()
@@ -71,7 +53,7 @@ function BlogsPage() {
                             flex items-center  
                             pointer-events-none"
                         >
-                            <FontAwesomeIcon icon={faSearch} color={'gray'}/>
+                            <FontAwesomeIcon icon={faSearch} color={'gray'} />
                         </div>
                     </div>
                 </div>
