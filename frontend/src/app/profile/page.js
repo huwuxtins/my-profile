@@ -2,13 +2,18 @@
 
 import { BriefcaseIcon, CalendarIcon, CurrencyDollarIcon, MapPinIcon } from '@heroicons/react/20/solid'
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import axios from 'axios'
 import Link from 'next/link'
 
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 
 export default function ProfilePage() {
 
     const router = useRouter()
+
+    const [user, setUser] = useState()
 
     const experiences = [
         {
@@ -43,6 +48,24 @@ export default function ProfilePage() {
         },
     ]
 
+    useEffect(() => {
+        const fetcher = async () => {
+            const response = await axios.get('/api/profile')
+                .then(value => {
+                    setUser(value)
+                    return value
+                })
+                .catch(err => {
+                    console.error(err)
+                    throw err
+                })
+            
+            console.log(response)
+        }
+
+        fetcher()
+    }, [])
+
     return (
         <div className='bg-white dark:bg-gray-800 mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
             <form className='px-4 py-24 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8'>
@@ -55,10 +78,13 @@ export default function ProfilePage() {
 
                         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6"><div className="col-span-full">
                             <label htmlFor="photo" className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-200">
-                                Photo
+                                Avatar
                             </label>
                             <div className="mt-2 flex items-center gap-x-3">
-                                <UserCircleIcon className="h-12 w-12 text-gray-300" aria-hidden="true" />
+                                <Avatar>
+                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                    <AvatarFallback>CN</AvatarFallback>
+                                </Avatar>
                                 <button
                                     type="button"
                                     className="rounded-md bg-white dark:bg-gray-700 px-2.5 py-1.5 text-sm font-semibold text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
