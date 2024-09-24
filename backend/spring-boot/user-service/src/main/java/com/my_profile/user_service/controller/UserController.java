@@ -26,24 +26,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("")
-    public ResponseEntity<Object> getUserByID(@RequestParam String id) {
-        System.out.println("ID: " + id);
-        User user = userService.getUserByUserID(id);
-        if(user != null){
-            return ResponseMessage.createResponse("Get user successfully!", user, HttpStatus.OK);
-        }
-        return ResponseMessage.createResponse("Get user failed!", null, HttpStatus.NOT_FOUND);
-    }
-
     @GetMapping("/all")
     public ResponseEntity<Object> getAllUser(){
         List<User> users = userService.getAllUser();
         return ResponseMessage.createResponse("Get all users", users, HttpStatus.OK);
     }
 
-    @GetMapping("/profile")
-    public ResponseEntity<Object> getUser(@RequestParam String userID){
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getUser(@PathVariable String userID){
         User user = userService.getUserByUserID(userID);
         Map<String, Object> map = new HashMap<>();
         map.put("user", user);
