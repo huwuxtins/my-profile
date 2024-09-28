@@ -18,10 +18,30 @@ export async function GET(request, context) {
             throw new Error(err)
         })
 
-    if(response.status == 200){
+    if (response.status == 200) {
         return NextResponse.json(response.data.data)
     } else {
         throw new Error(response.status)
     }
 
+}
+
+export async function POST() {
+    const { accessToken } = await getAccessToken();
+
+    const response = await axios.post(`${URL}/update-profile`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        }
+    })
+        .then((value) => value)
+        .catch(err => {
+            throw new Error(err)
+        })
+
+    if (response.status == 200) {
+        return NextResponse.json(response.data.data)
+    } else {
+        throw new Error(response.data)
+    }
 }

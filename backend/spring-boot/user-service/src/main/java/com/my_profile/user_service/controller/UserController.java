@@ -76,7 +76,7 @@ public class UserController {
     }
 
     @PutMapping("/update-profile")
-    public ResponseEntity<Object> updateUser(@RequestBody User user, @AuthenticationPrincipal OidcUser authentication){
+    public ResponseEntity<Object> updateUser(@RequestBody User user, Authentication authentication){
         User updatedUser = userService.updateUser(user);
 
         if(updatedUser != null) {

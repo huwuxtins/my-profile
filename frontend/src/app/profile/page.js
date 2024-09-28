@@ -66,6 +66,16 @@ export default function ProfilePage() {
         fetcher()
     }, [])
 
+    const handleSave = async () => {
+        const response = await axios.post('/api/profile')
+            .then((value) => {
+                return value.data
+            }).catch((err) => {
+                console.error(err)
+            });
+        console.log(response)
+    }
+
     return (
         <div className='bg-white dark:bg-gray-800 mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
             <form className='px-4 py-24 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8'>
@@ -129,6 +139,14 @@ export default function ProfilePage() {
                                             autoComplete="username"
                                             className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 dark:text-gray-200 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                             placeholder={user?.name}
+                                            onChange={(e) => {
+                                                const updateName = e.target.value
+
+                                                setUser((preUser) => ({
+                                                    ...preUser,
+                                                    name: updateName || ''
+                                                }))
+                                            }}
                                         />
                                     </div>
                                 </div>
@@ -146,6 +164,14 @@ export default function ProfilePage() {
                                         value={user?.description || ""}
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-800"
                                         defaultValue={''}
+                                        onChange={(e) => {
+                                                const updateDescription = e.target.value
+
+                                                setUser((preUser) => ({
+                                                    ...preUser,
+                                                    description: updateDescription || ''
+                                                }))
+                                            }}
                                     />
                                 </div>
                                 <p className="mt-3 text-sm leading-6 text-gray-600 dark:text-gray-300">Write a few sentences about yourself.</p>
@@ -171,6 +197,14 @@ export default function ProfilePage() {
                                         autoComplete="given-name"
                                         value={user?.firstName || ""}
                                         defaultValue=''
+                                        onChange={(e) => {
+                                                const updateFirstName = e.target.value
+
+                                                setUser((preUser) => ({
+                                                    ...preUser,
+                                                    firstName: updateFirstName || ''
+                                                }))
+                                            }}
                                         className="dark:bg-gray-800 block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
@@ -188,6 +222,14 @@ export default function ProfilePage() {
                                         autoComplete="family-name"
                                         value={user?.lastName || ""}
                                         defaultValue=''
+                                        onChange={(e) => {
+                                                const updateLastName = e.target.value
+
+                                                setUser((preUser) => ({
+                                                    ...preUser,
+                                                    lastName: updateLastName || ''
+                                                }))
+                                            }}
                                         className="dark:bg-gray-800 block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
@@ -205,6 +247,14 @@ export default function ProfilePage() {
                                         value={user?.phoneNumber || ""}
                                         autoComplete="tel"
                                         defaultValue=''
+                                        onChange={(e) => {
+                                                const updatePhoneNumber = e.target.value
+
+                                                setUser((preUser) => ({
+                                                    ...preUser,
+                                                    phoneNumber: updatePhoneNumber || ''
+                                                }))
+                                            }}
                                         className="dark:bg-gray-800 block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
@@ -221,6 +271,14 @@ export default function ProfilePage() {
                                         value={user?.email || ""}
                                         autoComplete="email"
                                         defaultValue=''
+                                        onChange={(e) => {
+                                                const updateEmail = e.target.value
+
+                                                setUser((preUser) => ({
+                                                    ...preUser,
+                                                    email: updateEmail || ''
+                                                }))
+                                            }}
                                         className="dark:bg-gray-800 block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>

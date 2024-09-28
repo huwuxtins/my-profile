@@ -23,6 +23,12 @@ public class User {
     @Field("user_id")
     private String userID;
     private String name;
+
+    @Field("first_name")
+    private String firstName;
+
+    @Field("last_name")
+    private String lastName;
     private String email;
 
     @Field("phone_number")
@@ -33,4 +39,5 @@ public class User {
     @Field("register_at")
     private Date registerAt;
     private String major;
+    private String description;
 }
