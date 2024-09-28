@@ -52,14 +52,14 @@ export default function ProfilePage() {
         const fetcher = async () => {
             const response = await axios.get('/api/profile')
                 .then(value => {
-                    setUser(value)
-                    return value
+                    setUser(value.data?.user)
+                    return value.data?.user
                 })
                 .catch(err => {
                     console.error(err)
                     throw err
                 })
-            
+
             console.log(response)
         }
 
@@ -121,14 +121,14 @@ export default function ProfilePage() {
                                 </label>
                                 <div className="mt-2">
                                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                        <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">workcation.com/</span>
+                                        <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">{user?.email}/</span>
                                         <input
                                             type="text"
                                             name="username"
                                             id="username"
                                             autoComplete="username"
                                             className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 dark:text-gray-200 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                            placeholder="janesmith"
+                                            placeholder={user?.name}
                                         />
                                     </div>
                                 </div>
@@ -143,6 +143,7 @@ export default function ProfilePage() {
                                         id="about"
                                         name="about"
                                         rows={3}
+                                        value={user?.description || ""}
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-800"
                                         defaultValue={''}
                                     />
@@ -168,6 +169,8 @@ export default function ProfilePage() {
                                         name="first-name"
                                         id="first-name"
                                         autoComplete="given-name"
+                                        value={user?.firstName || ""}
+                                        defaultValue=''
                                         className="dark:bg-gray-800 block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
@@ -183,6 +186,8 @@ export default function ProfilePage() {
                                         name="last-name"
                                         id="last-name"
                                         autoComplete="family-name"
+                                        value={user?.lastName || ""}
+                                        defaultValue=''
                                         className="dark:bg-gray-800 block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
@@ -197,7 +202,9 @@ export default function ProfilePage() {
                                         type="tel"
                                         name="tel"
                                         id="tel"
+                                        value={user?.phoneNumber || ""}
                                         autoComplete="tel"
+                                        defaultValue=''
                                         className="dark:bg-gray-800 block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
@@ -211,7 +218,9 @@ export default function ProfilePage() {
                                         id="email"
                                         name="email"
                                         type="email"
+                                        value={user?.email || ""}
                                         autoComplete="email"
+                                        defaultValue=''
                                         className="dark:bg-gray-800 block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
@@ -226,11 +235,13 @@ export default function ProfilePage() {
                                         id="country"
                                         name="country"
                                         autoComplete="country-name"
+                                        value={user?.country || ""}
                                         className="dark:bg-gray-800 block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                                     >
-                                        <option>United States</option>
-                                        <option>Canada</option>
-                                        <option>Mexico</option>
+                                        <option value="Vietnam">Vietnam</option>
+                                        <option value="United States">United States</option>
+                                        <option value="Canada">Canada</option>
+                                        <option value="Mexico">Mexico</option>
                                     </select>
                                 </div>
                             </div>
@@ -245,6 +256,8 @@ export default function ProfilePage() {
                                         name="street-address"
                                         id="street-address"
                                         autoComplete="street-address"
+                                        value={user?.address?.address || ""}
+                                        defaultValue=''
                                         className="dark:bg-gray-800 block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
@@ -260,6 +273,8 @@ export default function ProfilePage() {
                                         name="city"
                                         id="city"
                                         autoComplete="address-level2"
+                                        value={user?.address?.city || ""}
+                                        defaultValue=''
                                         className="dark:bg-gray-800 block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
@@ -275,6 +290,8 @@ export default function ProfilePage() {
                                         name="region"
                                         id="region"
                                         autoComplete="address-level1"
+                                        value={user?.address?.state || ""}
+                                        defaultValue=''
                                         className="dark:bg-gray-800 block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
@@ -290,6 +307,8 @@ export default function ProfilePage() {
                                         name="postal-code"
                                         id="postal-code"
                                         autoComplete="postal-code"
+                                        value={user?.address?.zip || ""}
+                                        defaultValue=''
                                         className="dark:bg-gray-800 block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>

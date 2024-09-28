@@ -18,8 +18,6 @@ export async function GET(request, context) {
             throw new Error(err)
         })
 
-    console.log(response)
-
     if(response.status == 200){
         return NextResponse.json(response.data.data)
     } else {

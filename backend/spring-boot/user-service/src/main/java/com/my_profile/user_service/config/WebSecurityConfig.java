@@ -1,6 +1,6 @@
-package com.my_profile.content_management_serivce.config;
+package com.my_profile.user_service.config;
 
-import com.my_profile.content_management_serivce.security.Auth0ClientCredentialsGrantRequestEntityConverter;
+import com.my_profile.user_service.security.Auth0ClientCredentialsGrantRequestEntityConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -22,7 +22,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http

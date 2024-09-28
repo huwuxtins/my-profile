@@ -3,6 +3,7 @@ package com.my_profile.user_service.controller;
 import com.my_profile.user_service.model.ResponseMessage;
 import com.my_profile.user_service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.*;
@@ -32,9 +33,9 @@ public class UserController {
         return ResponseMessage.createResponse("Get all users", users, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getUser(@PathVariable String userID){
-        User user = userService.getUserByUserID(userID);
+    @GetMapping("/profile")
+    public ResponseEntity<Object> getUser(Authentication authentication){
+        User user = userService.getUserByUserID(authentication.getName());
         Map<String, Object> map = new HashMap<>();
         map.put("user", user);
 
@@ -46,7 +47,6 @@ public class UserController {
 
     @PostMapping("/registration")
     public ResponseEntity<Object> registrationUser(@RequestBody Map<String, Object> map) throws ParseException {
-        System.out.println(map);
         String userID = map.get("userID").toString();
         String email = map.get("email").toString();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
