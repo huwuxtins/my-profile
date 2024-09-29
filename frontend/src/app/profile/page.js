@@ -67,13 +67,15 @@ export default function ProfilePage() {
     }, [])
 
     const handleSave = async () => {
-        const response = await axios.post('/api/profile')
-            .then((value) => {
-                return value.data
-            }).catch((err) => {
-                console.error(err)
-            });
-        console.log(response)
+        // const response = await axios.post('/api/profile')
+        //     .then((value) => {
+        //         return value.data
+        //     }).catch((err) => {
+        //         console.error(err)
+        //     });
+        // console.log(response)
+
+        console.log(user)
     }
 
     return (
@@ -165,13 +167,13 @@ export default function ProfilePage() {
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-800"
                                         defaultValue={''}
                                         onChange={(e) => {
-                                                const updateDescription = e.target.value
+                                            const updateDescription = e.target.value
 
-                                                setUser((preUser) => ({
-                                                    ...preUser,
-                                                    description: updateDescription || ''
-                                                }))
-                                            }}
+                                            setUser((preUser) => ({
+                                                ...preUser,
+                                                description: updateDescription || ''
+                                            }))
+                                        }}
                                     />
                                 </div>
                                 <p className="mt-3 text-sm leading-6 text-gray-600 dark:text-gray-300">Write a few sentences about yourself.</p>
@@ -198,13 +200,13 @@ export default function ProfilePage() {
                                         value={user?.firstName || ""}
                                         defaultValue=''
                                         onChange={(e) => {
-                                                const updateFirstName = e.target.value
+                                            const updateFirstName = e.target.value
 
-                                                setUser((preUser) => ({
-                                                    ...preUser,
-                                                    firstName: updateFirstName || ''
-                                                }))
-                                            }}
+                                            setUser((preUser) => ({
+                                                ...preUser,
+                                                firstName: updateFirstName || ''
+                                            }))
+                                        }}
                                         className="dark:bg-gray-800 block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
@@ -223,13 +225,13 @@ export default function ProfilePage() {
                                         value={user?.lastName || ""}
                                         defaultValue=''
                                         onChange={(e) => {
-                                                const updateLastName = e.target.value
+                                            const updateLastName = e.target.value
 
-                                                setUser((preUser) => ({
-                                                    ...preUser,
-                                                    lastName: updateLastName || ''
-                                                }))
-                                            }}
+                                            setUser((preUser) => ({
+                                                ...preUser,
+                                                lastName: updateLastName || ''
+                                            }))
+                                        }}
                                         className="dark:bg-gray-800 block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
@@ -248,13 +250,13 @@ export default function ProfilePage() {
                                         autoComplete="tel"
                                         defaultValue=''
                                         onChange={(e) => {
-                                                const updatePhoneNumber = e.target.value
+                                            const updatePhoneNumber = e.target.value
 
-                                                setUser((preUser) => ({
-                                                    ...preUser,
-                                                    phoneNumber: updatePhoneNumber || ''
-                                                }))
-                                            }}
+                                            setUser((preUser) => ({
+                                                ...preUser,
+                                                phoneNumber: updatePhoneNumber || ''
+                                            }))
+                                        }}
                                         className="dark:bg-gray-800 block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
@@ -272,13 +274,13 @@ export default function ProfilePage() {
                                         autoComplete="email"
                                         defaultValue=''
                                         onChange={(e) => {
-                                                const updateEmail = e.target.value
+                                            const updateEmail = e.target.value
 
-                                                setUser((preUser) => ({
-                                                    ...preUser,
-                                                    email: updateEmail || ''
-                                                }))
-                                            }}
+                                            setUser((preUser) => ({
+                                                ...preUser,
+                                                email: updateEmail || ''
+                                            }))
+                                        }}
                                         className="dark:bg-gray-800 block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
@@ -433,7 +435,8 @@ export default function ProfilePage() {
                             Cancel
                         </button>
                         <button
-                            type="submit"
+                            type="button"
+                            onClick={handleSave}
                             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
                             Save
