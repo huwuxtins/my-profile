@@ -156,9 +156,9 @@ public class BlogController {
 //                });
     }
 
-    @PutMapping("")
-    public ResponseEntity<Object> updateBlog(@RequestBody Blog blog, @AuthenticationPrincipal OidcUser authentication){
-        Blog updateBlog = blogService.updateBlog(blog);
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateBlog(@PathVariable String id, @RequestBody Blog blog){
+        Blog updateBlog = blogService.updateBlog(id, blog);
         if(updateBlog != null){
             return ResponseMessage.createResponse("Update blog successfully!", updateBlog, HttpStatus.CREATED);
         }

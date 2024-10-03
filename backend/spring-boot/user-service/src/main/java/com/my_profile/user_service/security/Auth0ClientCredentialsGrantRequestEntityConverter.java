@@ -46,14 +46,6 @@ public class Auth0ClientCredentialsGrantRequestEntityConverter implements Conver
         return new RequestEntity<>(formParameters, headers, HttpMethod.POST, uri);
     }
 
-    /**
-     * Returns a {@link MultiValueMap} of the form parameters used for the Access Token
-     * Request body.
-     *
-     * @param clientCredentialsGrantRequest the client credentials grant request
-     * @return a {@link MultiValueMap} of the form parameters used for the Access Token
-     * Request body
-     */
     private MultiValueMap<String, String> buildFormParameters(
             OAuth2ClientCredentialsGrantRequest clientCredentialsGrantRequest) {
         ClientRegistration clientRegistration = clientCredentialsGrantRequest.getClientRegistration();

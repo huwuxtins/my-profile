@@ -10,7 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DiaryServiceImpl implements DiaryService {
@@ -47,11 +49,13 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public Diary updateDiary(Diary diary) {
-        try {
-            return diaryRepository.save(diary);
-        } catch (Exception e){
-            e.printStackTrace();
+    public Diary updateDiary(String id, Diary diary) {
+        Optional<Diary> optionalDiary = this.diaryRepository.findById(id);
+        if(optionalDiary.isPresent()){
+            Diary presentDiary = optionalDiary.get();
+            presentDiary.setContent(diary.getContent());
+            presentDiary.setUpdatedAt(LocalDateTime.now());
+            return this.diaryRepository.save(presentDiary);
         }
         return null;
     }

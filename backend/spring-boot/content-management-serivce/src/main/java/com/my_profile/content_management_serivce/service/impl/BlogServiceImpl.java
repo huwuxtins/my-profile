@@ -7,7 +7,9 @@ import com.my_profile.content_management_serivce.service.BlogService;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BlogServiceImpl implements BlogService {
@@ -48,11 +50,14 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Blog updateBlog(Blog blog) {
-        try {
-            return blogRepository.save(blog);
-        } catch (Exception e){
-            e.printStackTrace();
+    public Blog updateBlog(String id, Blog blog) {
+        Optional<Blog> optionalBlog = this.blogRepository.findById(id);
+        if(optionalBlog.isPresent()){
+            Blog presentBlog = optionalBlog.get();
+            presentBlog.setContent(blog.getContent());
+            presentBlog.setTitle(blog.getTitle());
+            presentBlog.setUpdatedAt(LocalDateTime.now());
+            return blogRepository.save(presentBlog);
         }
         return null;
     }

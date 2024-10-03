@@ -49,9 +49,9 @@ public class DiaryController {
         return ResponseMessage.createResponse("Add diary failed!", null, HttpStatus.BAD_REQUEST);
     }
 
-    @PutMapping("")
-    public ResponseEntity<Object> updateDiary(@RequestBody Diary diary, @AuthenticationPrincipal OidcUser authentication){
-        Diary updateDiary = diaryService.updateDiary(diary);
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateDiary(@PathVariable String id, @RequestBody Diary diary){
+        Diary updateDiary = diaryService.updateDiary(id, diary);
         if(updateDiary != null){
             return ResponseMessage.createResponse("Update diary successfully!", updateDiary, HttpStatus.CREATED);
         }

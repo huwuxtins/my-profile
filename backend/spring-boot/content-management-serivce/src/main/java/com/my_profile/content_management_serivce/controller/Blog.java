@@ -1,5 +1,6 @@
 package com.my_profile.content_management_serivce.controller;
 
+import com.mongodb.lang.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +25,9 @@ public class Blog {
 
     @Field("created_at")
     private LocalDateTime createdAt;
+
+    @Field("updated_at")
+    private LocalDateTime updatedAt;
     private String title;
 
     private String content;

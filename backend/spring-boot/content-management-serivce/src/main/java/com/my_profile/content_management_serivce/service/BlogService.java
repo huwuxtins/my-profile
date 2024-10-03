@@ -9,6 +9,6 @@ public interface BlogService {
     public List<Blog> getBlogsByUserID(String userID, int page, int size);
     public List<Blog> getBlogs(int page, int size);
     public Blog addBlog(Blog blog);
-    public Blog updateBlog(Blog blog);
+    public Blog updateBlog(String id, Blog blog);
     public Blog deleteBlog(String id);
 }

@@ -24,6 +24,9 @@ public class Diary {
 
     @Field("created_at")
     private LocalDateTime createdAt;
+
+    @Field("updated_at")
+    private LocalDateTime updatedAt;
     private String image;
     private String content;
 }
