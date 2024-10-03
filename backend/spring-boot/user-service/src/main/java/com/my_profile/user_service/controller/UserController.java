@@ -75,7 +75,8 @@ public class UserController {
 
     @PutMapping("/update-profile")
     public ResponseEntity<Object> updateUser(@RequestBody User user, Authentication authentication){
-        User updatedUser = userService.updateUser(user);
+        String userID = authentication.getName();
+        User updatedUser = userService.updateUser(userID, user);
 
         if(updatedUser != null) {
             return ResponseMessage.createResponse("Update user successfully!", updatedUser, HttpStatus.OK);

@@ -45,7 +45,6 @@ public class WebSecurityConfig {
     @Bean
     public OAuth2AuthorizedClientManager authorizedClientManager(ClientRegistrationRepository clientRegistrationRepository, OAuth2AuthorizedClientRepository authorizedClientRepository) {
         Converter<OAuth2ClientCredentialsGrantRequest, RequestEntity<?>> customRequestEntityConverter = new Auth0ClientCredentialsGrantRequestEntityConverter("https://dev-k6vjpfkbkgmdsry6.us.auth0.com/api/v2/");
-
         var authorizedClientProvider =
                 OAuth2AuthorizedClientProviderBuilder.builder()
                         .refreshToken()

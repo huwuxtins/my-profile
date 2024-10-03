@@ -3,15 +3,18 @@ package com.my_profile.user_service.service.impl;
 import com.my_profile.user_service.controller.User;
 import com.my_profile.user_service.repository.UserRepository;
 import com.my_profile.user_service.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public User getUserByID(String id) {
@@ -39,11 +42,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(User user) {
-        try{
-            return userRepository.save(user);
-        } catch (Exception e){
-            e.printStackTrace();
+    public User updateUser(String id, User user) {
+        Optional<User> optionalUser = this.userRepository.findById(id);
+        if(optionalUser.isPresent()){
+            User presentUser = optionalUser.get();
+            presentUser.setFirstName(user.getFirstName());
+            presentUser.setLastName(user.getLastName());
+            presentUser.setPhoneNumber(user.getPhoneNumber());
+            presentUser.setAvatar(user.getAvatar());
+            presentUser.setBod(user.getBod());
+            presentUser.setMajor(user.getMajor());
+            presentUser.setDescription(user.getDescription());
+            return this.userRepository.save(presentUser);
         }
         return null;
     }
