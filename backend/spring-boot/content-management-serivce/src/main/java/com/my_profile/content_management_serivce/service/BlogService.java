@@ -5,10 +5,10 @@ import com.my_profile.content_management_serivce.controller.Blog;
 import java.util.List;
 
 public interface BlogService {
-    public Blog getBlogByID(String id);
-    public List<Blog> getBlogsByUserID(String userID, int page, int size);
-    public List<Blog> getBlogs(int page, int size);
-    public Blog addBlog(Blog blog);
-    public Blog updateBlog(String id, Blog blog);
-    public Blog deleteBlog(String id);
+    Blog getBlogByID(String id);
+    List<Blog> getBlogsByUserID(String userID, int page, int size);
+    List<Blog> getBlogs(int page, int size);
+    Blog addBlog(Blog blog);
+    Blog updateBlog(String id, Blog blog);
+    void deleteBlog(String id);
 }

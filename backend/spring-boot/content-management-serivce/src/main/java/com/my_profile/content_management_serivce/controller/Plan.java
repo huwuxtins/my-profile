@@ -25,10 +25,13 @@ public class Plan {
     @Field("created_at")
     private LocalDateTime createdAt;
 
+    @Field("updated_at")
+    private LocalDateTime updatedAt;
+
     @Field("start_at")
     private LocalDateTime startAt;
 
     @Field("end_at")
     private LocalDateTime endAt;
-    private String work;
+    private String content;
 }

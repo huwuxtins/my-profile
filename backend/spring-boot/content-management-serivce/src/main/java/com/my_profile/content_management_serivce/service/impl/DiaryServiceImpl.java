@@ -4,7 +4,6 @@ import com.my_profile.content_management_serivce.controller.Diary;
 import com.my_profile.content_management_serivce.repository.DiaryPageRepository;
 import com.my_profile.content_management_serivce.repository.DiaryRepository;
 import com.my_profile.content_management_serivce.service.DiaryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -16,10 +15,14 @@ import java.util.Optional;
 
 @Service
 public class DiaryServiceImpl implements DiaryService {
-    @Autowired
-    private DiaryRepository diaryRepository;
-    @Autowired
-    private DiaryPageRepository diaryPageRepository;
+
+    private final DiaryRepository diaryRepository;
+    private final DiaryPageRepository diaryPageRepository;
+
+    public DiaryServiceImpl(DiaryRepository diaryRepository, DiaryPageRepository diaryPageRepository){
+        this.diaryRepository = diaryRepository;
+        this.diaryPageRepository = diaryPageRepository;
+    }
 
     @Override
     public Diary getDiaryByID(String id) {

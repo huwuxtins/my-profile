@@ -10,14 +10,19 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PlanServiceImpl implements PlanService {
-    @Autowired
-    private PlanRepository planRepository;
-    @Autowired
-    private PlanPageRepository planPageRepository;
+    private final PlanRepository planRepository;
+    private final PlanPageRepository planPageRepository;
+
+    public PlanServiceImpl(PlanRepository planRepository, PlanPageRepository planPageRepository) {
+        this.planRepository = planRepository;
+        this.planPageRepository = planPageRepository;
+    }
 
     @Override
     public Plan getPlanByID(String id) {
@@ -47,11 +52,13 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public Plan updatePlan(Plan plan) {
-        try {
-            return planRepository.save(plan);
-        } catch (Exception e){
-            e.printStackTrace();
+    public Plan updatePlan(String id, Plan plan) {
+        Optional<Plan> optionalPlan = this.planRepository.findById(id);
+        if(optionalPlan.isPresent()){
+            Plan presentPlan = optionalPlan.get();
+            presentPlan.setContent(plan.getContent());
+            presentPlan.setUpdatedAt(LocalDateTime.now());
+            return planRepository.save(presentPlan);
         }
         return null;
     }

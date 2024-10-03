@@ -50,9 +50,9 @@ public class PlanController {
         return ResponseMessage.createResponse("Add plan failed!", null, HttpStatus.BAD_REQUEST);
     }
 
-    @PutMapping("")
-    public ResponseEntity<Object> updatePlan(@RequestBody Plan plan, @AuthenticationPrincipal OidcUser authentication){
-        Plan updatePlan = planService.updatePlan(plan);
+    @PutMapping("{id}")
+    public ResponseEntity<Object> updatePlan(@PathVariable String id, @RequestBody Plan plan){
+        Plan updatePlan = planService.updatePlan(id, plan);
         if(updatePlan != null){
             return ResponseMessage.createResponse("Update plan successfully!", updatePlan, HttpStatus.CREATED);
         }

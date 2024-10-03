@@ -5,10 +5,10 @@ import com.my_profile.content_management_serivce.controller.Plan;
 import java.util.List;
 
 public interface PlanService {
-    public Plan getPlanByID(String id);
-    public List<Plan> getPlansByUserID(String userID, int page, int size);
-    public List<Plan> getPlans(int page, int size);
-    public Plan addPlan(Plan Plan);
-    public Plan updatePlan(Plan Plan);
-    public Plan deletePlan(String id);
+    Plan getPlanByID(String id);
+    List<Plan> getPlansByUserID(String userID, int page, int size);
+    List<Plan> getPlans(int page, int size);
+    Plan addPlan(Plan Plan);
+    Plan updatePlan(String id, Plan Plan);
+    Plan deletePlan(String id);
 }

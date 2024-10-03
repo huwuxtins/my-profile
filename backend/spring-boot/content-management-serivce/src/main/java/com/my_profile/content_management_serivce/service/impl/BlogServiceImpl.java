@@ -63,17 +63,15 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Blog deleteBlog(String id) {
+    public void deleteBlog(String id) {
         Blog blog = blogRepository.findById(id).orElse(null);
         if(blog == null){
-            return null;
+            return;
         }
         try {
             blogRepository.delete(blog);
-            return blog;
         } catch (Exception e){
             e.printStackTrace();
         }
-        return null;
     }
 }
