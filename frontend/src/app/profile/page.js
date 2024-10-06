@@ -119,7 +119,15 @@ export default function ProfilePage() {
                                                 className="relative cursor-pointer rounded-md bg-white dark:bg-gray-200 font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                                             >
                                                 <span>Upload a file</span>
-                                                <input id="file-upload" name="file-upload" type="file" className="sr-only" />
+                                                <input id="file-upload" name="file-upload" type="file" className="sr-only"
+                                                    onChange={(e) => {
+                                                        const updateAvatar = e.target.files[0]
+
+                                                        setUser((preUser) => ({
+                                                            ...preUser,
+                                                            avatar: updateAvatar || null
+                                                        }))
+                                                    }} />
                                             </label>
                                             <p className="pl-1">or drag and drop</p>
                                         </div>
@@ -139,6 +147,7 @@ export default function ProfilePage() {
                                             name="username"
                                             id="username"
                                             autoComplete="username"
+                                            defaultValue=''
                                             className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 dark:text-gray-200 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                             placeholder={user?.name}
                                             onChange={(e) => {
@@ -165,7 +174,6 @@ export default function ProfilePage() {
                                         rows={3}
                                         value={user?.description || ""}
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-800"
-                                        defaultValue={''}
                                         onChange={(e) => {
                                             const updateDescription = e.target.value
 
@@ -198,7 +206,6 @@ export default function ProfilePage() {
                                         id="first-name"
                                         autoComplete="given-name"
                                         value={user?.firstName || ""}
-                                        defaultValue=''
                                         onChange={(e) => {
                                             const updateFirstName = e.target.value
 
@@ -223,7 +230,6 @@ export default function ProfilePage() {
                                         id="last-name"
                                         autoComplete="family-name"
                                         value={user?.lastName || ""}
-                                        defaultValue=''
                                         onChange={(e) => {
                                             const updateLastName = e.target.value
 
@@ -248,7 +254,6 @@ export default function ProfilePage() {
                                         id="tel"
                                         value={user?.phoneNumber || ""}
                                         autoComplete="tel"
-                                        defaultValue=''
                                         onChange={(e) => {
                                             const updatePhoneNumber = e.target.value
 
@@ -272,7 +277,6 @@ export default function ProfilePage() {
                                         type="email"
                                         value={user?.email || ""}
                                         autoComplete="email"
-                                        defaultValue=''
                                         onChange={(e) => {
                                             const updateEmail = e.target.value
 
@@ -295,7 +299,15 @@ export default function ProfilePage() {
                                         id="country"
                                         name="country"
                                         autoComplete="country-name"
-                                        value={user?.country || ""}
+                                        value={user?.country || "Vietnam"}
+                                        onChange={(e) => {
+                                            const updateAddress = e.target.value
+
+                                            setUser((preUser) => ({
+                                                ...preUser,
+                                                address: updateAddress || ''
+                                            }))
+                                        }}
                                         className="dark:bg-gray-800 block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                                     >
                                         <option value="Vietnam">Vietnam</option>
@@ -317,7 +329,14 @@ export default function ProfilePage() {
                                         id="street-address"
                                         autoComplete="street-address"
                                         value={user?.address?.address || ""}
-                                        defaultValue=''
+                                        onChange={(e) => {
+                                            const updateAddress = e.target.value
+
+                                            setUser((preUser) => ({
+                                                ...preUser,
+                                                address: updateAddress || ''
+                                            }))
+                                        }}
                                         className="dark:bg-gray-800 block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
@@ -334,7 +353,14 @@ export default function ProfilePage() {
                                         id="city"
                                         autoComplete="address-level2"
                                         value={user?.address?.city || ""}
-                                        defaultValue=''
+                                        onChange={(e) => {
+                                            const updateAddress = e.target.value
+
+                                            setUser((preUser) => ({
+                                                ...preUser,
+                                                address: updateAddress || ''
+                                            }))
+                                        }}
                                         className="dark:bg-gray-800 block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
@@ -351,7 +377,14 @@ export default function ProfilePage() {
                                         id="region"
                                         autoComplete="address-level1"
                                         value={user?.address?.state || ""}
-                                        defaultValue=''
+                                        onChange={(e) => {
+                                            const updateAddress = e.target.value
+
+                                            setUser((preUser) => ({
+                                                ...preUser,
+                                                address: updateAddress || ''
+                                            }))
+                                        }}
                                         className="dark:bg-gray-800 block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
@@ -368,7 +401,14 @@ export default function ProfilePage() {
                                         id="postal-code"
                                         autoComplete="postal-code"
                                         value={user?.address?.zip || ""}
-                                        defaultValue=''
+                                        onChange={(e) => {
+                                            const updateAddress = e.target.value
+
+                                            setUser((preUser) => ({
+                                                ...preUser,
+                                                address: updateAddress || ''
+                                            }))
+                                        }}
                                         className="dark:bg-gray-800 block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>

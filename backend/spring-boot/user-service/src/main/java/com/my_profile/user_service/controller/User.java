@@ -1,7 +1,9 @@
 package com.my_profile.user_service.controller;
 
 import java.util.Date;
+import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -33,6 +35,8 @@ public class User {
 
     @Field("phone_number")
     private String phoneNumber;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String avatar;
     private Date bod;
 

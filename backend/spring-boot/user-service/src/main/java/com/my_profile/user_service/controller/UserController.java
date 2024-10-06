@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<Object> registrationUser(@RequestBody Map<String, Object> map) throws ParseException {
+    public ResponseEntity<Object> registrationUser(@RequestBody Map<String, Object> map) {
         String userID = map.get("userID").toString();
         String email = map.get("email").toString();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
@@ -65,16 +65,16 @@ public class UserController {
                 .registerAt(registerAt)
                 .build();
 
-        User updatedUser = userService.addUser(user);
+        User addedUser = userService.addUser(user);
 
-        if(updatedUser != null) {
-            return ResponseMessage.createResponse("Update user successfully!", updatedUser, HttpStatus.OK);
+        if(addedUser != null) {
+            return ResponseMessage.createResponse("Update user successfully!", addedUser, HttpStatus.OK);
         }
         return ResponseMessage.createResponse("Update user failed!", null, HttpStatus.OK);
     }
 
     @PutMapping("/update-profile")
-    public ResponseEntity<Object> updateUser(@RequestBody User user, Authentication authentication){
+    public ResponseEntity<Object> updateUser(@RequestParam("avatar") MultipartFile avatar, @RequestBody User user, Authentication authentication){
         String userID = authentication.getName();
         User updatedUser = userService.updateUser(userID, user);
 
