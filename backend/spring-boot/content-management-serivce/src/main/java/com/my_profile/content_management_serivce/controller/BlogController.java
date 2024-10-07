@@ -4,17 +4,17 @@ import com.my_profile.content_management_serivce.client.UserServiceClient;
 import com.my_profile.content_management_serivce.model.ResponseMessage;
 import com.my_profile.content_management_serivce.service.BlogService;
 import org.json.JSONObject;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.ResourceAccessException;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 @RestController
 @RequestMapping("/api/v1/blog")
 public class BlogController {
@@ -36,7 +36,7 @@ public class BlogController {
             @RequestParam(defaultValue = "10") int size){
         List<Blog> blogs = blogService.getBlogs(page, size);
         if(blogs.isEmpty()){
-            return ResponseMessage.createResponse("Don't have any blog in current time", blogs, HttpStatus.OK);
+            throw new ResourceAccessException("Don't have any blog in current time");
         }
         return ResponseMessage.createResponse("Get blogs successfully!", blogs, HttpStatus.NOT_FOUND);
     }
