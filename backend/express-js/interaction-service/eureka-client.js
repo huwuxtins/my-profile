@@ -1,6 +1,5 @@
 const Eureka = require('eureka-js-client').Eureka;
 
-// example configuration
 const client = new Eureka({
     // application instance information
     instance: {
@@ -23,8 +22,10 @@ const client = new Eureka({
         port: 8761,
         servicePath: '/eureka/apps/'
     },
-});
-
-client.start(error => {
+  });
+  
+  client.start(error => {
     console.log('Eureka client started with error:', error);
-});
+  });
+
+// example configuration
