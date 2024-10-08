@@ -105,7 +105,6 @@ export default function ProfilePage() {
                                 </button>
                             </div>
                         </div>
-
                             <div className="col-span-full">
                                 <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-200">
                                     Cover photo
@@ -162,7 +161,6 @@ export default function ProfilePage() {
                                     </div>
                                 </div>
                             </div>
-
                             <div className="col-span-full">
                                 <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-200">
                                     About

@@ -1,5 +1,6 @@
 package com.my_profile.user_service.controller;
 
+import com.my_profile.user_service.exception.ResourceNotFoundException;
 import com.my_profile.user_service.model.ResponseMessage;
 import com.my_profile.user_service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class UserController {
         if(user != null){
             return ResponseMessage.createResponse("Get user by user's id", map, HttpStatus.OK);
         }
-        return new ResponseEntity<>(map, HttpStatus.OK);
+        throw new ResourceNotFoundException("User's id isn't exist!");
     }
 
     @PostMapping("/registration")
@@ -68,9 +69,9 @@ public class UserController {
         User addedUser = userService.addUser(user);
 
         if(addedUser != null) {
-            return ResponseMessage.createResponse("Update user successfully!", addedUser, HttpStatus.OK);
+            return ResponseMessage.createResponse("Create user successfully!", addedUser, HttpStatus.OK);
         }
-        return ResponseMessage.createResponse("Update user failed!", null, HttpStatus.OK);
+        return ResponseMessage.createResponse("Create user failed!", null, HttpStatus.OK);
     }
 
     @PutMapping("/update-profile")
@@ -81,6 +82,6 @@ public class UserController {
         if(updatedUser != null) {
             return ResponseMessage.createResponse("Update user successfully!", updatedUser, HttpStatus.OK);
         }
-        return ResponseMessage.createResponse("Update user failed!", null, HttpStatus.OK);
+        throw new ResourceNotFoundException("User's id isn't exist!");
     }
 }

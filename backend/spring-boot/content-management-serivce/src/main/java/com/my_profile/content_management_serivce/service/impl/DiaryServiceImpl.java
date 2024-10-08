@@ -1,6 +1,7 @@
 package com.my_profile.content_management_serivce.service.impl;
 
 import com.my_profile.content_management_serivce.controller.Diary;
+import com.my_profile.content_management_serivce.exception.AccessDbException;
 import com.my_profile.content_management_serivce.repository.DiaryPageRepository;
 import com.my_profile.content_management_serivce.repository.DiaryRepository;
 import com.my_profile.content_management_serivce.service.DiaryService;
@@ -42,38 +43,40 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public Diary addDiary(Diary diary) {
+    public Diary addDiary(Diary diary) throws AccessDbException {
         try {
             return diaryRepository.insert(diary);
         } catch (Exception e){
-            e.printStackTrace();
+            throw new AccessDbException("Add diary failed!");
         }
-        return null;
     }
 
     @Override
-    public Diary updateDiary(String id, Diary diary) {
+    public Diary updateDiary(String id, Diary diary) throws AccessDbException {
         Optional<Diary> optionalDiary = this.diaryRepository.findById(id);
         if(optionalDiary.isPresent()){
             Diary presentDiary = optionalDiary.get();
             presentDiary.setContent(diary.getContent());
             presentDiary.setUpdatedAt(LocalDateTime.now());
-            return this.diaryRepository.save(presentDiary);
+            try {
+                return this.diaryRepository.save(presentDiary);
+            } catch (Exception e) {
+                throw new AccessDbException("Update diary failed!");
+            }
         }
         return null;
     }
 
     @Override
-    public Diary deleteDiary(String id) {
+    public Diary deleteDiary(String id) throws AccessDbException {
         Diary diary = diaryRepository.findById(id).orElse(null);
-        if(diary == null){
-            return null;
-        }
-        try {
-            diaryRepository.delete(diary);
-            return diary;
-        } catch (Exception e){
-            e.printStackTrace();
+        if(diary != null){
+            try {
+                diaryRepository.delete(diary);
+                return diary;
+            } catch (Exception e){
+                throw new AccessDbException("Delete diary failed!");
+            }
         }
         return null;
     }

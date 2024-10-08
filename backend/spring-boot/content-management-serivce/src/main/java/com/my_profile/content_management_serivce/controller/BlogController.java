@@ -1,6 +1,7 @@
 package com.my_profile.content_management_serivce.controller;
 
 import com.my_profile.content_management_serivce.client.UserServiceClient;
+import com.my_profile.content_management_serivce.exception.ResourceNotFoundException;
 import com.my_profile.content_management_serivce.model.ResponseMessage;
 import com.my_profile.content_management_serivce.service.BlogService;
 import org.json.JSONObject;
@@ -9,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.ResourceAccessException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +36,7 @@ public class BlogController {
             @RequestParam(defaultValue = "10") int size){
         List<Blog> blogs = blogService.getBlogs(page, size);
         if(blogs.isEmpty()){
-            throw new ResourceAccessException("Don't have any blog in current time");
+            throw new ResourceNotFoundException("Don't have any blog in current time");
         }
         return ResponseMessage.createResponse("Get blogs successfully!", blogs, HttpStatus.NOT_FOUND);
     }
@@ -47,22 +47,20 @@ public class BlogController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             Authentication authentication){
-
         List<Blog> blogs = blogService.getBlogsByUserID(authentication.getName(), page, size);
 
         if(blogs.isEmpty()){
-            return ResponseMessage.createResponse("There aren't any blog in your profile!", blogs, HttpStatus.NOT_FOUND);
+            throw new ResourceNotFoundException("There aren't any blog in your profile!");
         }
         return ResponseMessage.createResponse("Get blogs by profile successfully!", blogs, HttpStatus.OK);
     }
 
     @GetMapping("/{blogID}")
     public ResponseEntity<Object> getBlogByID(@PathVariable String blogID) {
-
         Blog blog = blogService.getBlogByID(blogID);
 
         if(blog == null){
-            return ResponseMessage.createResponse("This blog isn't exist", null, HttpStatus.NOT_FOUND);
+            throw new ResourceNotFoundException("This blog isn't exist");
         }
 
         Map<String, Object> map = new HashMap<>();
@@ -162,12 +160,15 @@ public class BlogController {
         if(updateBlog != null){
             return ResponseMessage.createResponse("Update blog successfully!", updateBlog, HttpStatus.CREATED);
         }
-        return ResponseMessage.createResponse("Update blog failed!", null, HttpStatus.BAD_REQUEST);
+        throw new ResourceNotFoundException("This blog isn't exist");
     }
 
     @DeleteMapping("/{blogID}")
     public ResponseEntity<Object> deleteBlog(@PathVariable String blogID){
-        blogService.deleteBlog(blogID);
-        return ResponseMessage.createResponse("Delete blog successfully!", null, HttpStatus.OK);
+        Blog blog = blogService.deleteBlog(blogID);
+        if(blog != null){
+            return ResponseMessage.createResponse("Delete blog successfully!", blog, HttpStatus.OK);
+        }
+        throw new ResourceNotFoundException("This blog isn't exist");
     }
 }

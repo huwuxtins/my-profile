@@ -1,5 +1,6 @@
 package com.my_profile.content_management_serivce.controller;
 
+import com.my_profile.content_management_serivce.exception.ResourceNotFoundException;
 import com.my_profile.content_management_serivce.model.ResponseMessage;
 import com.my_profile.content_management_serivce.service.DiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/diary")
 public class DiaryController {
-    @Autowired
-    private DiaryService diaryService;
+    private final DiaryService diaryService;
+
+    public DiaryController(DiaryService diaryService) {
+        this.diaryService = diaryService;
+    }
 
     @GetMapping("/profile")
     public ResponseEntity<Object> getDiaryByUserID(
@@ -26,7 +30,7 @@ public class DiaryController {
         List<Diary> diary = diaryService.getDiariesByUserID(userID, page, size);
 
         if(diary.isEmpty()){
-            return ResponseMessage.createResponse("There aren't any diary in your profile!", diary, HttpStatus.NOT_FOUND);
+            throw new ResourceNotFoundException("There aren't any diary in your profile!");
         }
         return ResponseMessage.createResponse("Get diary by profile successfully!", diary, HttpStatus.OK);
     }
@@ -35,7 +39,7 @@ public class DiaryController {
     public ResponseEntity<Object> getDiaryByID(@PathVariable String diaryID){
         Diary diary = diaryService.getDiaryByID(diaryID);
         if(diary == null){
-            return ResponseMessage.createResponse("This diary isn't exist", null, HttpStatus.NOT_FOUND);
+            throw new ResourceNotFoundException("This diary isn't exist!");
         }
         return ResponseMessage.createResponse("Get diary successfully!", diary, HttpStatus.OK);
     }
@@ -55,7 +59,7 @@ public class DiaryController {
         if(updateDiary != null){
             return ResponseMessage.createResponse("Update diary successfully!", updateDiary, HttpStatus.CREATED);
         }
-        return ResponseMessage.createResponse("Update diary failed!", null, HttpStatus.BAD_REQUEST);
+        throw new ResourceNotFoundException("This diary isn't exist!");
     }
 
     @DeleteMapping("/{diaryID}")
@@ -64,6 +68,6 @@ public class DiaryController {
         if(diary != null){
             return ResponseMessage.createResponse("Delete diary successfully!", diary, HttpStatus.OK);
         }
-        return ResponseMessage.createResponse("Diary isn't exist or there are some error in delete!", null, HttpStatus.OK);
+        throw new ResourceNotFoundException("This diary isn't exist!");
     }
 }

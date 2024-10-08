@@ -1,10 +1,10 @@
 package com.my_profile.content_management_serivce.service.impl;
 
 import com.my_profile.content_management_serivce.controller.Plan;
+import com.my_profile.content_management_serivce.exception.AccessDbException;
 import com.my_profile.content_management_serivce.repository.PlanPageRepository;
 import com.my_profile.content_management_serivce.repository.PlanRepository;
 import com.my_profile.content_management_serivce.service.PlanService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -42,38 +42,40 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public Plan addPlan(Plan plan) {
+    public Plan addPlan(Plan plan) throws AccessDbException {
         try {
             return planRepository.insert(plan);
         } catch (Exception e){
-            e.printStackTrace();
+            throw new AccessDbException("Add plan failed!");
         }
-        return null;
     }
 
     @Override
-    public Plan updatePlan(String id, Plan plan) {
+    public Plan updatePlan(String id, Plan plan) throws AccessDbException{
         Optional<Plan> optionalPlan = this.planRepository.findById(id);
         if(optionalPlan.isPresent()){
             Plan presentPlan = optionalPlan.get();
             presentPlan.setContent(plan.getContent());
             presentPlan.setUpdatedAt(LocalDateTime.now());
-            return planRepository.save(presentPlan);
+            try{
+                return planRepository.save(presentPlan);
+            } catch (Exception e){
+                throw new AccessDbException("Update plan failed!");
+            }
         }
         return null;
     }
 
     @Override
-    public Plan deletePlan(String id) {
+    public Plan deletePlan(String id) throws AccessDbException {
         Plan plan = planRepository.findById(id).orElse(null);
-        if(plan == null){
-            return null;
-        }
-        try {
-            planRepository.delete(plan);
-            return plan;
-        } catch (Exception e){
-            e.printStackTrace();
+        if(plan != null){
+            try {
+                planRepository.delete(plan);
+                return plan;
+            } catch (Exception e){
+                throw new AccessDbException("Delete plan failed!");
+            }
         }
         return null;
     }
