@@ -1,12 +1,17 @@
 package com.my_profile.content_management_serivce.exception;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
@@ -22,7 +27,7 @@ public class ControllerExceptionHandler {
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(ResourceNotFoundException.class)
+    @ExceptionHandler(AccessDbException.class)
     public ResponseEntity<ErrorMessage> accessDbException(AccessDbException ex, WebRequest request){
         ErrorMessage message = new ErrorMessage(
                 HttpStatus.SERVICE_UNAVAILABLE.value(),

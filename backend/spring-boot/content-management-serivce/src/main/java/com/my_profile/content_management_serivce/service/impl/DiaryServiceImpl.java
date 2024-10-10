@@ -2,6 +2,7 @@ package com.my_profile.content_management_serivce.service.impl;
 
 import com.my_profile.content_management_serivce.controller.Diary;
 import com.my_profile.content_management_serivce.exception.AccessDbException;
+import com.my_profile.content_management_serivce.exception.ResourceNotFoundException;
 import com.my_profile.content_management_serivce.repository.DiaryPageRepository;
 import com.my_profile.content_management_serivce.repository.DiaryRepository;
 import com.my_profile.content_management_serivce.service.DiaryService;
@@ -27,7 +28,11 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public Diary getDiaryByID(String id) {
-        return diaryRepository.findById(id).orElse(null);
+        Optional<Diary> optionalDiary = this.diaryRepository.findById(id);
+        if(optionalDiary.isPresent()){
+            return optionalDiary.get();
+        }
+        throw new ResourceNotFoundException("This diary isn't exist!");
     }
 
     @Override
@@ -64,7 +69,7 @@ public class DiaryServiceImpl implements DiaryService {
                 throw new AccessDbException("Update diary failed!");
             }
         }
-        return null;
+        throw new ResourceNotFoundException("This diary isn't exist!");
     }
 
     @Override
@@ -78,6 +83,6 @@ public class DiaryServiceImpl implements DiaryService {
                 throw new AccessDbException("Delete diary failed!");
             }
         }
-        return null;
+        throw new ResourceNotFoundException("This diary isn't exist!");
     }
 }

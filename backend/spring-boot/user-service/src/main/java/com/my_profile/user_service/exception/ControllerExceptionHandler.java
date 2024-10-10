@@ -22,7 +22,7 @@ public class ControllerExceptionHandler {
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(ResourceNotFoundException.class)
+    @ExceptionHandler(AccessDbException.class)
     public ResponseEntity<ErrorMessage> accessDbException(AccessDbException ex, WebRequest request){
         ErrorMessage message = new ErrorMessage(
                 HttpStatus.SERVICE_UNAVAILABLE.value(),

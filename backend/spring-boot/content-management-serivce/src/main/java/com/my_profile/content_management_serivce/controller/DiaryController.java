@@ -37,9 +37,6 @@ public class DiaryController {
     @GetMapping("/{diaryID}")
     public ResponseEntity<Object> getDiaryByID(@PathVariable String diaryID){
         Diary diary = diaryService.getDiaryByID(diaryID);
-        if(diary == null){
-            throw new ResourceNotFoundException("This diary isn't exist!");
-        }
         return ResponseMessage.createResponse("Get diary successfully!", diary, HttpStatus.OK);
     }
 
