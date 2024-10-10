@@ -1,5 +1,6 @@
 package com.my_profile.user_service.controller;
 
+import com.my_profile.user_service.exception.AccessDbException;
 import com.my_profile.user_service.exception.ResourceNotFoundException;
 import com.my_profile.user_service.model.ResponseMessage;
 import com.my_profile.user_service.service.UserService;
@@ -45,7 +46,7 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<Object> registrationUser(@RequestBody Map<String, Object> map) {
+    public ResponseEntity<Object> registrationUser(@RequestBody Map<String, Object> map) throws AccessDbException {
         String userID = map.get("userID").toString();
         String email = map.get("email").toString();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
@@ -75,7 +76,7 @@ public class UserController {
     }
 
     @PutMapping("/update-profile")
-    public ResponseEntity<Object> updateUser(@RequestParam("avatar") MultipartFile avatar, @RequestBody User user, Authentication authentication){
+    public ResponseEntity<Object> updateUser(@RequestParam("avatar") MultipartFile avatar, @RequestBody User user, Authentication authentication) throws AccessDbException {
         String userID = authentication.getName();
         User updatedUser = userService.updateUser(userID, user);
 

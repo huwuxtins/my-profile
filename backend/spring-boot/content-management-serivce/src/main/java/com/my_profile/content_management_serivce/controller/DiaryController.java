@@ -1,5 +1,6 @@
 package com.my_profile.content_management_serivce.controller;
 
+import com.my_profile.content_management_serivce.exception.AccessDbException;
 import com.my_profile.content_management_serivce.exception.ResourceNotFoundException;
 import com.my_profile.content_management_serivce.model.ResponseMessage;
 import com.my_profile.content_management_serivce.service.DiaryService;
@@ -45,7 +46,7 @@ public class DiaryController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Object> addDiary(@RequestBody Diary diary, @AuthenticationPrincipal OidcUser authentication){
+    public ResponseEntity<Object> addDiary(@RequestBody Diary diary, @AuthenticationPrincipal OidcUser authentication) throws AccessDbException {
         Diary addedDiary = diaryService.addDiary(diary);
         if(addedDiary != null){
             return ResponseMessage.createResponse("Add diary successfully!", addedDiary, HttpStatus.CREATED);
@@ -54,7 +55,7 @@ public class DiaryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateDiary(@PathVariable String id, @RequestBody Diary diary){
+    public ResponseEntity<Object> updateDiary(@PathVariable String id, @RequestBody Diary diary) throws AccessDbException {
         Diary updateDiary = diaryService.updateDiary(id, diary);
         if(updateDiary != null){
             return ResponseMessage.createResponse("Update diary successfully!", updateDiary, HttpStatus.CREATED);
@@ -63,7 +64,7 @@ public class DiaryController {
     }
 
     @DeleteMapping("/{diaryID}")
-    public ResponseEntity<Object> deleteDiary(@PathVariable String diaryID){
+    public ResponseEntity<Object> deleteDiary(@PathVariable String diaryID) throws AccessDbException {
         Diary diary = diaryService.deleteDiary(diaryID);
         if(diary != null){
             return ResponseMessage.createResponse("Delete diary successfully!", diary, HttpStatus.OK);

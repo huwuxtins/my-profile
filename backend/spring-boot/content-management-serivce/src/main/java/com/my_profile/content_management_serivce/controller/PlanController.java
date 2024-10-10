@@ -1,5 +1,6 @@
 package com.my_profile.content_management_serivce.controller;
 
+import com.my_profile.content_management_serivce.exception.AccessDbException;
 import com.my_profile.content_management_serivce.exception.ResourceNotFoundException;
 import com.my_profile.content_management_serivce.model.ResponseMessage;
 import com.my_profile.content_management_serivce.service.PlanService;
@@ -44,7 +45,7 @@ public class PlanController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Object> addPlan(@RequestBody Plan plan, @AuthenticationPrincipal OidcUser authentication){
+    public ResponseEntity<Object> addPlan(@RequestBody Plan plan, @AuthenticationPrincipal OidcUser authentication) throws AccessDbException {
         Plan addedPlan = planService.addPlan(plan);
         if(addedPlan != null){
             return ResponseMessage.createResponse("Add plan successfully!", addedPlan, HttpStatus.CREATED);
@@ -53,7 +54,7 @@ public class PlanController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Object> updatePlan(@PathVariable String id, @RequestBody Plan plan){
+    public ResponseEntity<Object> updatePlan(@PathVariable String id, @RequestBody Plan plan) throws AccessDbException {
         Plan updatePlan = planService.updatePlan(id, plan);
         if(updatePlan != null){
             return ResponseMessage.createResponse("Update plan successfully!", updatePlan, HttpStatus.CREATED);
@@ -62,7 +63,7 @@ public class PlanController {
     }
 
     @DeleteMapping("/{planID}")
-    public ResponseEntity<Object> deletePlan(@PathVariable String planID){
+    public ResponseEntity<Object> deletePlan(@PathVariable String planID) throws AccessDbException {
         Plan Plan = planService.deletePlan(planID);
         if(Plan != null){
             return ResponseMessage.createResponse("Delete plan successfully!", Plan, HttpStatus.OK);

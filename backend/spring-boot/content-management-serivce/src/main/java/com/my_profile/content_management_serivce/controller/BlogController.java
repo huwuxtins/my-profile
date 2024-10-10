@@ -1,6 +1,7 @@
 package com.my_profile.content_management_serivce.controller;
 
 import com.my_profile.content_management_serivce.client.UserServiceClient;
+import com.my_profile.content_management_serivce.exception.AccessDbException;
 import com.my_profile.content_management_serivce.exception.ResourceNotFoundException;
 import com.my_profile.content_management_serivce.model.ResponseMessage;
 import com.my_profile.content_management_serivce.service.BlogService;
@@ -128,7 +129,7 @@ public class BlogController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Object> addBlog(@RequestBody Blog blog, Authentication authentication) {
+    public ResponseEntity<Object> addBlog(@RequestBody Blog blog, Authentication authentication) throws AccessDbException {
         String userID = authentication.getName();
         blog.setUserID(userID);
 
@@ -155,7 +156,7 @@ public class BlogController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateBlog(@PathVariable String id, @RequestBody Blog blog){
+    public ResponseEntity<Object> updateBlog(@PathVariable String id, @RequestBody Blog blog) throws AccessDbException {
         Blog updateBlog = blogService.updateBlog(id, blog);
         if(updateBlog != null){
             return ResponseMessage.createResponse("Update blog successfully!", updateBlog, HttpStatus.CREATED);
@@ -164,7 +165,7 @@ public class BlogController {
     }
 
     @DeleteMapping("/{blogID}")
-    public ResponseEntity<Object> deleteBlog(@PathVariable String blogID){
+    public ResponseEntity<Object> deleteBlog(@PathVariable String blogID) throws AccessDbException {
         Blog blog = blogService.deleteBlog(blogID);
         if(blog != null){
             return ResponseMessage.createResponse("Delete blog successfully!", blog, HttpStatus.OK);
