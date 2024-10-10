@@ -11,12 +11,14 @@ public class GatewayConfig {
     @Bean
     public RouteLocator routes(RouteLocatorBuilder builder){
         return builder.routes()
+//                Swagger
         .route("user-swagger", r -> r.path("/api/v1/user-swagger/**").uri("lb://user-service"))
         .route("content-management-swagger", r -> r.path("/api/v1/content-management-swagger/**").uri("lb://content-management-service"))
         .route("search-swagger", r -> r.path("/api/v1/search-swagger/**").uri("lb://search-service"))
         .route("chat-swagger", r -> r.path("/api/v1/chat-swagger/**").uri("lb://chat-service"))
         .route("interaction-swagger", r -> r.path("/api/v1/interaction-swagger/**").uri("lb://interaction-service"))
-        
+
+//                Api
         .route("user-service", r -> r.path("/api/v1/user-service/**").uri("lb://user-service"))
         .route("auth-service", r -> r.path("/oauth2/authorization/auth0/**").uri("lb://user-service"))
         .route("login-service", r -> r.path("/login/oauth2/code/auth0/**").uri("lb://user-service"))

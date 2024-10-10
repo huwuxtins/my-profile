@@ -2,6 +2,7 @@ package com.my_profile.content_management_serivce.service.impl;
 
 import com.my_profile.content_management_serivce.controller.Blog;
 import com.my_profile.content_management_serivce.exception.AccessDbException;
+import com.my_profile.content_management_serivce.exception.ResourceNotFoundException;
 import com.my_profile.content_management_serivce.repository.BlogPageRepository;
 import com.my_profile.content_management_serivce.repository.BlogRepository;
 import com.my_profile.content_management_serivce.service.BlogService;
@@ -25,7 +26,11 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Blog getBlogByID(String id) {
-        return blogRepository.findById(id).orElse(null);
+        Optional<Blog> optionalBlog = this.blogRepository.findById(id);
+        if(optionalBlog.isPresent()){
+            return optionalBlog.get();
+        }
+        throw new ResourceNotFoundException("This blog isn't exist");
     }
 
     @Override
@@ -50,7 +55,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Blog updateBlog(String id, Blog blog) throws AccessDbException{
+    public Blog updateBlog(String id, Blog blog) throws AccessDbException {
         Optional<Blog> optionalBlog = this.blogRepository.findById(id);
         if(optionalBlog.isPresent()){
             Blog presentBlog = optionalBlog.get();
@@ -63,7 +68,7 @@ public class BlogServiceImpl implements BlogService {
                 throw new AccessDbException("Update blog failed!");
             }
         }
-        return null;
+        throw new ResourceNotFoundException("This blog isn't exist");
     }
 
     @Override
@@ -77,6 +82,6 @@ public class BlogServiceImpl implements BlogService {
                 throw new AccessDbException("Delete blog failed1");
             }
         }
-        return null;
+        throw new ResourceNotFoundException("This blog isn't exist");
     }
 }

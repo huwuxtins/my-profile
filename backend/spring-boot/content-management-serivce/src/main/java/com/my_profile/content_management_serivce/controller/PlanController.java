@@ -6,8 +6,7 @@ import com.my_profile.content_management_serivce.model.ResponseMessage;
 import com.my_profile.content_management_serivce.service.PlanService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,8 +24,8 @@ public class PlanController {
     public ResponseEntity<Object> getPlanByUserID(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @AuthenticationPrincipal OidcUser authentication){
-        String userID = authentication.getAttribute("sub");
+            Authentication authentication){
+        String userID = authentication.getName();
         List<Plan> plan = planService.getPlansByUserID(userID, page, size);
 
         if(plan.isEmpty()){
@@ -45,7 +44,7 @@ public class PlanController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Object> addPlan(@RequestBody Plan plan, @AuthenticationPrincipal OidcUser authentication) throws AccessDbException {
+    public ResponseEntity<Object> addPlan(@RequestBody Plan plan) throws AccessDbException {
         Plan addedPlan = planService.addPlan(plan);
         if(addedPlan != null){
             return ResponseMessage.createResponse("Add plan successfully!", addedPlan, HttpStatus.CREATED);

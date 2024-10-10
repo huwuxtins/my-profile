@@ -33,6 +33,17 @@ public class ControllerExceptionHandler {
         return new ResponseEntity<>(message, HttpStatus.SERVICE_UNAVAILABLE);
     }
 
+    @ExceptionHandler(ClientServiceException.class)
+    public ResponseEntity<ErrorMessage> clientServiceException(ClientServiceException ex, WebRequest request){
+        ErrorMessage message = new ErrorMessage(
+                HttpStatus.SERVICE_UNAVAILABLE.value(),
+                new Date(),
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+        return new ResponseEntity<>(message, HttpStatus.SERVICE_UNAVAILABLE);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorMessage> globalExceptionHandler(Exception ex, WebRequest request){
         ErrorMessage message = new ErrorMessage(

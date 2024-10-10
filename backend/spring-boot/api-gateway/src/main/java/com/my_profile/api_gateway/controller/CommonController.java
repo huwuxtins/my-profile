@@ -2,7 +2,6 @@ package com.my_profile.api_gateway.controller;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springdoc.core.AbstractSwaggerUiConfigProperties;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +18,11 @@ import java.util.Map;
 @RestController
 public class CommonController {
 
-    @Autowired
-    private DiscoveryClient discoveryClient;
+    private final DiscoveryClient discoveryClient;
+
+    public CommonController(DiscoveryClient discoveryClient) {
+        this.discoveryClient = discoveryClient;
+    }
 
     @GetMapping("/v3/api-docs/swagger-config")
     public Map<String, Object> v3swaggerConfigurations(ServerHttpRequest request) throws URISyntaxException {
@@ -29,10 +31,17 @@ public class CommonController {
         Map<String, Object> swaggerConfigMap = new LinkedHashMap<>();
         List<AbstractSwaggerUiConfigProperties.SwaggerUrl> swaggerUrls = new LinkedList<>();
         discoveryClient.getServices().forEach(System.out::println);
-        discoveryClient.getServices().stream().filter(serviceName -> serviceName.endsWith("-service")).forEach(serviceName -> {
-            String serviceExactName = serviceName.replaceAll("-service", "");
-            swaggerUrls.add(new AbstractSwaggerUiConfigProperties.SwaggerUrl(serviceName, url + "/api/v1/" + serviceExactName + "-swagger/v3/api-docs", serviceName));
-        });
+        discoveryClient
+            .getServices()
+            .stream()
+            .filter(serviceName -> serviceName.endsWith("-service"))
+            .forEach(serviceName -> {
+                String serviceExactName = serviceName.replaceAll("-service", "");
+                swaggerUrls.add(new AbstractSwaggerUiConfigProperties.SwaggerUrl(
+                    serviceName, url + "/api/v1/" + serviceExactName + "-swagger/v3/api-docs", serviceName)
+                );
+            }
+        );
         swaggerConfigMap.put("urls", swaggerUrls);
         return swaggerConfigMap;
     }

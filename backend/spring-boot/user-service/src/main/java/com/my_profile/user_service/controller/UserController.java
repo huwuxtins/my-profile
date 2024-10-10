@@ -4,7 +4,6 @@ import com.my_profile.user_service.exception.AccessDbException;
 import com.my_profile.user_service.exception.ResourceNotFoundException;
 import com.my_profile.user_service.model.ResponseMessage;
 import com.my_profile.user_service.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,8 +23,11 @@ import java.util.Map;
 @RequestMapping("/api/v1/user")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/all")
     public ResponseEntity<Object> getAllUser(){
@@ -34,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public ResponseEntity<Object> getUser(Authentication authentication){
+    public ResponseEntity<Object> getUser(Authentication authentication) {
         User user = userService.getUserByUserID(authentication.getName());
         Map<String, Object> map = new HashMap<>();
         map.put("user", user);
@@ -76,13 +78,11 @@ public class UserController {
     }
 
     @PutMapping("/update-profile")
-    public ResponseEntity<Object> updateUser(@RequestParam("avatar") MultipartFile avatar, @RequestBody User user, Authentication authentication) throws AccessDbException {
+    public ResponseEntity<Object> updateUser(
+            @RequestParam("avatar") MultipartFile avatar,
+            @RequestBody User user, Authentication authentication) throws AccessDbException {
         String userID = authentication.getName();
         User updatedUser = userService.updateUser(userID, user);
-
-        if(updatedUser != null) {
-            return ResponseMessage.createResponse("Update user successfully!", updatedUser, HttpStatus.OK);
-        }
-        throw new ResourceNotFoundException("User's id isn't exist!");
+        return ResponseMessage.createResponse("Update user successfully!", updatedUser, HttpStatus.OK);
     }
 }

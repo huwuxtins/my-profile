@@ -49,31 +49,28 @@ public class BlogController {
             @RequestParam(defaultValue = "10") int size,
             Authentication authentication){
         List<Blog> blogs = blogService.getBlogsByUserID(authentication.getName(), page, size);
-
-        if(blogs.isEmpty()){
-            throw new ResourceNotFoundException("There aren't any blog in your profile!");
-        }
         return ResponseMessage.createResponse("Get blogs by profile successfully!", blogs, HttpStatus.OK);
     }
 
     @GetMapping("/{blogID}")
-    public ResponseEntity<Object> getBlogByID(@PathVariable String blogID) {
+    public ResponseEntity<Object> getBlogByID(@PathVariable String blogID) throws Exception {
         Blog blog = blogService.getBlogByID(blogID);
-
-        if(blog == null){
-            throw new ResourceNotFoundException("This blog isn't exist");
-        }
 
         Map<String, Object> map = new HashMap<>();
         map.put("blog", blog);
 
-        ResponseEntity<String> response = userServiceClient.getUserByID(blog.getUserID());
-        if(response.getBody() != null){
-            JSONObject jsonObject = new JSONObject(response.getBody());
-            Map<String, Object> author = jsonObject.getJSONObject("data").toMap();
-            map.put("author", author);
+        try {
+            ResponseEntity<String> response = userServiceClient.getUserByID(blog.getUserID());
+            if(response.getBody() != null){
+                JSONObject jsonObject = new JSONObject(response.getBody());
+                Map<String, Object> author = jsonObject.getJSONObject("data").toMap();
+                map.put("author", author);
+                return ResponseMessage.createResponse("Get blog successfully!", map, HttpStatus.OK);
+            }
+            throw new ResourceNotFoundException("This user isn't exist!");
+        } catch (Exception e){
+            throw new Exception();
         }
-        return ResponseMessage.createResponse("Get blog successfully!", map, HttpStatus.OK);
 //        return blogService.getBlogByID(blogID)
 //                .flatMap(blog -> {
                     // Call user service to get the user details using userID
@@ -158,18 +155,12 @@ public class BlogController {
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateBlog(@PathVariable String id, @RequestBody Blog blog) throws AccessDbException {
         Blog updateBlog = blogService.updateBlog(id, blog);
-        if(updateBlog != null){
-            return ResponseMessage.createResponse("Update blog successfully!", updateBlog, HttpStatus.CREATED);
-        }
-        throw new ResourceNotFoundException("This blog isn't exist");
+        return ResponseMessage.createResponse("Update blog successfully!", updateBlog, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{blogID}")
     public ResponseEntity<Object> deleteBlog(@PathVariable String blogID) throws AccessDbException {
         Blog blog = blogService.deleteBlog(blogID);
-        if(blog != null){
-            return ResponseMessage.createResponse("Delete blog successfully!", blog, HttpStatus.OK);
-        }
-        throw new ResourceNotFoundException("This blog isn't exist");
+        return ResponseMessage.createResponse("Delete blog successfully!", blog, HttpStatus.OK);
     }
 }

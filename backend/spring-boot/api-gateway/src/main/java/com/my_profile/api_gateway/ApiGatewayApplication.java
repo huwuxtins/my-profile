@@ -13,16 +13,15 @@ import io.swagger.v3.oas.annotations.info.License;
 @EnableDiscoveryClient
 @OpenAPIDefinition(
 		info = @Info(contact = @Contact(name = "Nguyen Huu Tin",
-				email = "gov.kumarbharatdwaj@gmail.com"),
+				email = "nguyenhuutin124@gmail.com"),
 				title = "API Gateway",
-				termsOfService = "www.api-gateway.com/terms-and-condition",
+				termsOfService = "",
 				description = "API-Gateway provide the api-gateway information to the other users.",
-				license = @License(name = "api gateway licence", url = "www.api-gateway.com/licence"),
+				license = @License(name = "api gateway licence"),
 				version = "v1"))
 public class ApiGatewayApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ApiGatewayApplication.class, args);
 	}
-
 }

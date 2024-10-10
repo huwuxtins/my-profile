@@ -2,6 +2,7 @@ package com.my_profile.user_service.service.impl;
 
 import com.my_profile.user_service.controller.User;
 import com.my_profile.user_service.exception.AccessDbException;
+import com.my_profile.user_service.exception.ResourceNotFoundException;
 import com.my_profile.user_service.repository.UserRepository;
 import com.my_profile.user_service.service.UserService;
 import org.springframework.stereotype.Service;
@@ -19,12 +20,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByID(String id) {
-        return userRepository.findById(id).orElse(null);
+        Optional<User> optionalUser = userRepository.findById(id);
+        if(optionalUser.isPresent()){
+            return optionalUser.get();
+        }
+        throw new ResourceNotFoundException("This user isn't exist!");
     }
 
     @Override
     public User getUserByUserID(String userID) {
-        return userRepository.findByUserID(userID).orElse(null);
+        Optional<User> optionalUser = userRepository.findByUserID(userID);
+        if(optionalUser.isPresent()){
+            return optionalUser.get();
+        }
+        throw new ResourceNotFoundException("This user isn't exist!");
     }
 
     @Override
@@ -59,7 +68,7 @@ public class UserServiceImpl implements UserService {
                 throw new AccessDbException("Update user failed!");
             }
         }
-        return null;
+        throw new ResourceNotFoundException("This user isn't exist!");
     }
 
     @Override
@@ -73,6 +82,6 @@ public class UserServiceImpl implements UserService {
                 throw new AccessDbException("Delete user failed!");
             }
         }
-        return null;
+        throw new ResourceNotFoundException("This user isn't exist!");
     }
 }

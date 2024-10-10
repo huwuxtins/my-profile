@@ -4,11 +4,9 @@ import com.my_profile.content_management_serivce.exception.AccessDbException;
 import com.my_profile.content_management_serivce.exception.ResourceNotFoundException;
 import com.my_profile.content_management_serivce.model.ResponseMessage;
 import com.my_profile.content_management_serivce.service.DiaryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,8 +24,8 @@ public class DiaryController {
     public ResponseEntity<Object> getDiaryByUserID(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @AuthenticationPrincipal OidcUser authentication){
-        String userID = authentication.getAttribute("sub");
+            Authentication authentication){
+        String userID = authentication.getName();
         List<Diary> diary = diaryService.getDiariesByUserID(userID, page, size);
 
         if(diary.isEmpty()){
@@ -46,7 +44,7 @@ public class DiaryController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Object> addDiary(@RequestBody Diary diary, @AuthenticationPrincipal OidcUser authentication) throws AccessDbException {
+    public ResponseEntity<Object> addDiary(@RequestBody Diary diary) throws AccessDbException {
         Diary addedDiary = diaryService.addDiary(diary);
         if(addedDiary != null){
             return ResponseMessage.createResponse("Add diary successfully!", addedDiary, HttpStatus.CREATED);
