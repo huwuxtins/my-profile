@@ -28,7 +28,7 @@ public class WebSecurityConfig {
                 .csrf(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> {
                     authorize
-                            .requestMatchers("/", "/images/**", "/api/v1/content-management-swagger/**").permitAll()
+                            .requestMatchers("/", "/images/**", "/api/v1/user-swagger/**").permitAll()
                             .anyRequest().authenticated();
                 })
                 .oauth2ResourceServer((oauth2) -> oauth2

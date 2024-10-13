@@ -1,5 +1,8 @@
 package com.my_profile.content_management_serivce;
 
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -20,6 +23,14 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 				license = @License(name = "Content management service licence", url = "www.google.com/licence"),
 				version = "v1"),
 		security = @SecurityRequirement(name = "bearerAuth"))
+@SecurityScheme(
+		name = "bearerAuth",
+		description = "JWT authentication",
+		scheme = "bearer",
+		type = SecuritySchemeType.HTTP,
+		bearerFormat = "JWT",
+		in = SecuritySchemeIn.HEADER
+)
 @EnableFeignClients
 public class ContentManagementSerivceApplication {
 
