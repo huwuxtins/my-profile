@@ -56,5 +56,5 @@
 | User Management       | Spring Boot Microservice           | Leverages Java's strengths for complex logic    | 
 | Content Management    | Express.js Microservice            | Benefits from Node.js for real-time aspects     |
 | API Gateway           | Spring Boot Microservice           | Centralizes API access and scales well          | 
-| Frontend Application  | React Js                           | Familiar for web development and user interface |
+| Frontend Application  | Next Js                           | Familiar for web development and user interface |
 | Database Connectivity | Spring Boot and Express.js Drivers | Connects to Neo4j and MongoDB from both sides   |

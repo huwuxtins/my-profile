@@ -1,4 +1,4 @@
-package com.my_profile.content_management_serivce.exception;
+package com.my_profile.notification_service.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,17 +24,6 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(AccessDbException.class)
     public ResponseEntity<ErrorMessage> accessDbException(AccessDbException ex, WebRequest request){
-        ErrorMessage message = new ErrorMessage(
-                HttpStatus.SERVICE_UNAVAILABLE.value(),
-                new Date(),
-                ex.getMessage(),
-                request.getDescription(false)
-        );
-        return new ResponseEntity<>(message, HttpStatus.SERVICE_UNAVAILABLE);
-    }
-
-    @ExceptionHandler(ClientServiceException.class)
-    public ResponseEntity<ErrorMessage> clientServiceException(ClientServiceException ex, WebRequest request){
         ErrorMessage message = new ErrorMessage(
                 HttpStatus.SERVICE_UNAVAILABLE.value(),
                 new Date(),
