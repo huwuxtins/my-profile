@@ -58,3 +58,6 @@
 | API Gateway           | Spring Boot Microservice           | Centralizes API access and scales well          | 
 | Frontend Application  | Next Js                           | Familiar for web development and user interface |
 | Database Connectivity | Spring Boot and Express.js Drivers | Connects to Neo4j and MongoDB from both sides   |
+
+
+- Link design system: https://drive.google.com/file/d/1COrAXKAiJoEdNbXC2XR1TWLQ9mpnm4T6/view?usp=sharing

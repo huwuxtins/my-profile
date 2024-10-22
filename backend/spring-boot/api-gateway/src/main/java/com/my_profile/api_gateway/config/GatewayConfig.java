@@ -17,6 +17,7 @@ public class GatewayConfig {
         .route("search-swagger", r -> r.path("/api/v1/search-swagger/**").uri("lb://search-service"))
         .route("chat-swagger", r -> r.path("/api/v1/chat-swagger/**").uri("lb://chat-service"))
         .route("interaction-swagger", r -> r.path("/api/v1/interaction-swagger/**").uri("lb://interaction-service"))
+        .route("notification-swagger", r -> r.path("/api/v1/notification-swagger/**").uri("lb://notification-service"))
 
 //                Api
         .route("user-service", r -> r.path("/api/v1/user-service/**").uri("lb://user-service"))
@@ -28,6 +29,7 @@ public class GatewayConfig {
         .route("search-service", r -> r.path("/api/v1/search-service/**").uri("lb://search-service"))
         .route("chat-service", r -> r.path("/api/v1/chat-service/**").uri("lb://chat-service"))
         .route("interaction-service", r -> r.path("/api/v1/interaction-service/**").uri("lb://interaction-service"))
+        .route("notification-service", r -> r.path("/api/v1/notification-service/**").uri("lb://notification-service"))
 
         .build();
     }
