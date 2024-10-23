@@ -14,7 +14,6 @@ public class GatewayConfig {
 //                Swagger
         .route("user-swagger", r -> r.path("/api/v1/user-swagger/**").uri("lb://user-service"))
         .route("content-management-swagger", r -> r.path("/api/v1/content-management-swagger/**").uri("lb://content-management-service"))
-        .route("search-swagger", r -> r.path("/api/v1/search-swagger/**").uri("lb://search-service"))
         .route("chat-swagger", r -> r.path("/api/v1/chat-swagger/**").uri("lb://chat-service"))
         .route("interaction-swagger", r -> r.path("/api/v1/interaction-swagger/**").uri("lb://interaction-service"))
         .route("notification-swagger", r -> r.path("/api/v1/notification-swagger/**").uri("lb://notification-service"))
@@ -26,7 +25,6 @@ public class GatewayConfig {
         .route("content-management-service", r -> r.path("/api/v1/blog/**").uri("lb://content-management-service"))
         .route("content-management-service", r -> r.path("/api/v1/diary/**").uri("lb://content-management-service"))
         .route("content-management-service", r -> r.path("/api/v1/plan/**").uri("lb://content-management-service"))
-        .route("search-service", r -> r.path("/api/v1/search-service/**").uri("lb://search-service"))
         .route("chat-service", r -> r.path("/api/v1/chat-service/**").uri("lb://chat-service"))
         .route("interaction-service", r -> r.path("/api/v1/interaction-service/**").uri("lb://interaction-service"))
         .route("notification-service", r -> r.path("/api/v1/notification-service/**").uri("lb://notification-service"))
