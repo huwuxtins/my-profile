@@ -61,3 +61,9 @@
 
 
 - Link design system: https://drive.google.com/file/d/1COrAXKAiJoEdNbXC2XR1TWLQ9mpnm4T6/view?usp=sharing
+
+- Elastic Search: https://docs.spring.io/spring-data/elasticsearch/reference/elasticsearch/clients.html 
+
+- Push notification: 
+    - Webpush-java: https://github.com/web-push-libs/webpush-java?tab=readme-ov-file
+    - Manually create Push notification: https://refactorfirst.com/spring-boot-websockets-stomp-notifications
