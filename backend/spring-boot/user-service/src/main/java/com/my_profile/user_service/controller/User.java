@@ -21,26 +21,26 @@ public class User {
     @Id
     private String id;
 
-    @Field("user_id")
+    @Field("userID")
     private String userID;
     private String name;
 
-    @Field("first_name")
+    @Field("firstName")
     private String firstName;
 
-    @Field("last_name")
+    @Field("lastName")
     private String lastName;
     private String email;
 
-    @Field("phone_number")
+    @Field("phoneNumber")
     private String phoneNumber;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String avatar;
     private Date bod;
 
-    @Field("register_at")
-    private Date registerAt;
+    @Field("registeredAt")
+    private Date registeredAt;
     private String major;
     private String description;
 }

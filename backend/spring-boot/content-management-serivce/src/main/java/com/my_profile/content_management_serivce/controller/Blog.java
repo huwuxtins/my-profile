@@ -19,13 +19,13 @@ public class Blog {
     @Id
     private String id;
 
-    @Field("user_id")
+    @Field("userID")
     private String userID;
 
-    @Field("created_at")
+    @Field("createdAt")
     private LocalDateTime createdAt;
 
-    @Field("updated_at")
+    @Field("updatedAt")
     private LocalDateTime updatedAt;
     private String title;
 

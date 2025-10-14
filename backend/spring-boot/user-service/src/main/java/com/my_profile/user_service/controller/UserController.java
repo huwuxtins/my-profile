@@ -61,12 +61,12 @@ public class UserController {
             date = LocalDateTime.now();
         }
 
-        Date registerAt = Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
+        Date registeredAt = Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
         User user = new User
                 .UserBuilder()
                 .userID(userID)
                 .email(email)
-                .registerAt(registerAt)
+                .registeredAt(registeredAt)
                 .build();
 
         User addedUser = userService.addUser(user);

@@ -67,7 +67,7 @@ public class BlogController {
                 map.put("author", author);
                 return ResponseMessage.createResponse("Get blog successfully!", map, HttpStatus.OK);
             }
-            throw new ResourceNotFoundException("This user isn't exist!");
+            throw new ResourceNotFoundException("This blog isn't exist!");
         } catch (Exception e){
             throw new Exception();
         }
