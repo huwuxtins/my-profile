@@ -12,4 +12,10 @@ module.exports = class Like {
             username: this.username,
         }
     }
+
+    fromJson(json) {
+        this.userID = json.userID
+        this.avatar = json.avatar
+        this.username = json.username
+    }
 }

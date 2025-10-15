@@ -1,4 +1,5 @@
-const cypher = require('../script')
+const cypher = require('../script');
+const { v4: uuidv4 } = require('uuid');
 
 const BlogController = {
     getBlogByID: async (req, res, err) => {
@@ -22,8 +23,13 @@ const BlogController = {
         });
     },
     addBlog: async (req, res, err) => {
-        const {blogID, userID} = req.body
-        await req.neo4j.write(cypher('create-blog'), {blogID, userID})
+        const blogID = uuidv4();
+
+        const {createdAt, content, userID} = req.body;
+
+        const blog = {blogID, createdAt, content, userID};
+
+        await req.neo4j.write(cypher('create-blog'), blog)
         .then(() => {
             res.status(200).json({message: "Add blog successfully!", data: blogID})
         }).catch((err) => {
@@ -31,7 +37,18 @@ const BlogController = {
         });  
     },
     updateBlog: async (req, res, err) => {
+        const {blogID} = req.params.blogID
 
+        const {userID, updatedAt, content} = req.body;
+
+        const blog = {blogID, userID, updatedAt, content};
+
+        await req.neo4j.write(cypher('update-blog'), blog)
+        .then(() => {
+            res.status(200).json({message: "Update blog successfully!", data: blogID})
+        }).catch((err) => {
+            res.status(500).json({message: "Update blog failed!", data: err})
+        });
     },
     deleteBlog: async (req, res, err) => {
         const {blogID} = req.params.blogID

@@ -10,4 +10,9 @@ module.exports = class Blog {
             userID: this.userID,
         }
     }
+
+    fromJson(json) {
+        this.blogID = json.blogID
+        this.userID = json.userID
+    }
 }

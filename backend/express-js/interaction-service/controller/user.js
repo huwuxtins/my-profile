@@ -36,7 +36,17 @@ const UserController = {
         });  
     },
     updateUser: async (req, res, err) => {
+        const {userID} = req.params.userID
+        const {avatar, username} = req.body
 
+        const user = {userID, avatar, username}
+
+        await req.neo4j.write(cypher('update-user'), user)
+        .then(() => {
+            res.status(200).json({message: "Update user successfully!", data: userID})
+        }).catch((err) => {
+            res.status(500).json({message: "Update user failed!", data: err})
+        })
     },
     deleteUser: async (req, res, err) => {
 
