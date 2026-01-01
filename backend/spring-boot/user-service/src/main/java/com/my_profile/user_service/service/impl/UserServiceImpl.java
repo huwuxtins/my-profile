@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User addUser(User user) throws AccessDbException {
         try{
-            return userRepository.insert(user);
+            return userRepository.save(user);
         } catch (Exception e){
             throw new AccessDbException("Add user failed!");
         }

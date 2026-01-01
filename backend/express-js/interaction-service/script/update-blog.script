@@ -1,0 +1,6 @@
+MATCH (blog:Blog { blogID: $blogID })
+SET blog.title = $title,
+    blog.content = $content,
+    blog.updatedAt = datetime()
+OPTIONAL MATCH (user)-[:LIKE]->(blog)
+RETURN blog, collect(user) AS likedUsers

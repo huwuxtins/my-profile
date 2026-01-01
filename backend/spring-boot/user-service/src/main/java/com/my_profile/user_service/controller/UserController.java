@@ -49,8 +49,9 @@ public class UserController {
 
     @PostMapping("/registration")
     public ResponseEntity<Object> registrationUser(@RequestBody Map<String, Object> map) throws AccessDbException {
-        String userID = map.get("userID").toString();
+        String userId = map.get("userId").toString();
         String email = map.get("email").toString();
+        String username = map.get("username").toString();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
         LocalDateTime date;
 
@@ -64,7 +65,8 @@ public class UserController {
         Date registeredAt = Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
         User user = new User
                 .UserBuilder()
-                .userID(userID)
+                .userId(userId)
+                .username(username)
                 .email(email)
                 .registeredAt(registeredAt)
                 .build();
@@ -77,7 +79,7 @@ public class UserController {
         return ResponseMessage.createResponse("Create user failed!", null, HttpStatus.OK);
     }
 
-    @PutMapping("/update-profile")
+    @PutMapping("/update")
     public ResponseEntity<Object> updateUser(
             @RequestParam("avatar") MultipartFile avatar,
             @RequestBody User user, Authentication authentication) throws AccessDbException {
