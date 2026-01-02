@@ -2,6 +2,7 @@ package com.my_profile.user_service.controller;
 
 import com.my_profile.user_service.exception.AccessDbException;
 import com.my_profile.user_service.exception.ResourceNotFoundException;
+import com.my_profile.user_service.mapper.UserMapper;
 import com.my_profile.user_service.model.ResponseMessage;
 import com.my_profile.user_service.service.UserService;
 import org.springframework.security.core.Authentication;
@@ -24,9 +25,11 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
+    private final UserMapper userMapper;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserMapper userMapper) {
         this.userService = userService;
+        this.userMapper = userMapper;
     }
 
     @GetMapping("/all")
