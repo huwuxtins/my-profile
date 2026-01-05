@@ -1,8 +1,10 @@
 package com.my_profile.user_service.service.impl;
 
-import com.my_profile.user_service.controller.User;
+import com.my_profile.user_service.entity.User;
 import com.my_profile.user_service.exception.AccessDbException;
 import com.my_profile.user_service.exception.ResourceNotFoundException;
+import com.my_profile.user_service.mapper.UserMapper;
+import com.my_profile.user_service.mapper.dto.UserDto;
 import com.my_profile.user_service.repository.UserRepository;
 import com.my_profile.user_service.service.UserService;
 import org.springframework.stereotype.Service;
@@ -13,9 +15,11 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -37,8 +41,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUser() {
-        return userRepository.findAll();
+    public List<UserDto> getAllUser() {
+        return userRepository.findAll()
+                .stream()
+                .map(userMapper::toUserDto)
+                .toList();
     }
 
     @Override

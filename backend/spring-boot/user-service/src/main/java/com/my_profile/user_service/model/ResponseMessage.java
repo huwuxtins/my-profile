@@ -3,14 +3,9 @@ package com.my_profile.user_service.model;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class ResponseMessage {
-    public static ResponseEntity<Object> createResponse(String message, Object data, HttpStatus status){
-        Map<String, Object> response = new HashMap<>();
-        response.put("message", message);
-        response.put("data", data);
+    public static <E> ResponseEntity<ApiResponse<E>> createResponse(String message, E data, HttpStatus status){
+        ApiResponse<E> response = new ApiResponse<E>(message, data);
         return new ResponseEntity<>(response, status);
     }
 }

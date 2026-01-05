@@ -1,9 +1,9 @@
 package com.my_profile.user_service.repository;
 
-import com.my_profile.user_service.controller.User;
-
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+
+import com.my_profile.user_service.entity.User;
 
 import java.util.List;
 import java.util.Optional;

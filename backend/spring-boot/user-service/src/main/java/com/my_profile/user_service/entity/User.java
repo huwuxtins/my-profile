@@ -1,4 +1,4 @@
-package com.my_profile.user_service.controller;
+package com.my_profile.user_service.entity;
 
 import java.util.Date;
 

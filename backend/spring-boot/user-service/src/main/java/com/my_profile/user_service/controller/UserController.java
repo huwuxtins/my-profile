@@ -1,8 +1,11 @@
 package com.my_profile.user_service.controller;
 
+import com.my_profile.user_service.entity.User;
 import com.my_profile.user_service.exception.AccessDbException;
 import com.my_profile.user_service.exception.ResourceNotFoundException;
 import com.my_profile.user_service.mapper.UserMapper;
+import com.my_profile.user_service.mapper.dto.UserDto;
+import com.my_profile.user_service.model.ApiResponse;
 import com.my_profile.user_service.model.ResponseMessage;
 import com.my_profile.user_service.service.UserService;
 import org.springframework.security.core.Authentication;
@@ -16,7 +19,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,25 +35,23 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Object> getAllUser(){
-        List<User> users = userService.getAllUser();
+    public ResponseEntity<ApiResponse<List<UserDto>>> getAllUser(){
+        List<UserDto> users = userService.getAllUser();
         return ResponseMessage.createResponse("Get all users", users, HttpStatus.OK);
     }
 
     @GetMapping("/profile")
-    public ResponseEntity<Object> getUser(Authentication authentication) {
+    public ResponseEntity<ApiResponse<UserDto>> getUser(Authentication authentication) {
         User user = userService.getUserByUserID(authentication.getName());
-        Map<String, Object> map = new HashMap<>();
-        map.put("user", user);
 
         if(user != null){
-            return ResponseMessage.createResponse("Get user by user's id", map, HttpStatus.OK);
+            return ResponseMessage.createResponse("Get user by user's id", userMapper.toUserDto(user), HttpStatus.OK);
         }
         throw new ResourceNotFoundException("User's id isn't exist!");
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<Object> registrationUser(@RequestBody Map<String, Object> map) throws AccessDbException {
+    public ResponseEntity<ApiResponse<UserDto>> registrationUser(@RequestBody Map<String, Object> map) throws AccessDbException {
         String userId = map.get("userId").toString();
         String email = map.get("email").toString();
         String username = map.get("username").toString();
@@ -66,8 +66,8 @@ public class UserController {
         }
 
         Date registeredAt = Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
-        User user = new User
-                .UserBuilder()
+        User user = User
+                .builder()
                 .userId(userId)
                 .username(username)
                 .email(email)
@@ -75,19 +75,21 @@ public class UserController {
                 .build();
 
         User addedUser = userService.addUser(user);
+        UserDto userDto = this.userMapper.toUserDto(addedUser);
 
         if(addedUser != null) {
-            return ResponseMessage.createResponse("Create user successfully!", addedUser, HttpStatus.OK);
+            return ResponseMessage.createResponse("Create user successfully!", userDto, HttpStatus.OK);
         }
         return ResponseMessage.createResponse("Create user failed!", null, HttpStatus.OK);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Object> updateUser(
+    public ResponseEntity<ApiResponse<UserDto>> updateUser(
             @RequestParam("avatar") MultipartFile avatar,
             @RequestBody User user, Authentication authentication) throws AccessDbException {
         String userID = authentication.getName();
-        User updatedUser = userService.updateUser(userID, user);
-        return ResponseMessage.createResponse("Update user successfully!", updatedUser, HttpStatus.OK);
+        UserDto userDto = this.userMapper.toUserDto(userService.updateUser(userID, user));
+        
+        return ResponseMessage.createResponse("Update user successfully!", userDto, HttpStatus.OK);
     }
 }
