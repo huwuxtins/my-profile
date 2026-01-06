@@ -1,4 +1,4 @@
-package com.my_profile.notification_service.model;
+package com.my_profile.notification_service.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
