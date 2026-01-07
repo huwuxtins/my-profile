@@ -1,7 +1,10 @@
 package com.my_profile.content_management_serivce.controller;
 
+import com.my_profile.content_management_serivce.entity.Diary;
 import com.my_profile.content_management_serivce.exception.AccessDbException;
 import com.my_profile.content_management_serivce.exception.ResourceNotFoundException;
+import com.my_profile.content_management_serivce.mapper.dto.DiaryDto;
+import com.my_profile.content_management_serivce.model.ApiResponse;
 import com.my_profile.content_management_serivce.model.ResponseMessage;
 import com.my_profile.content_management_serivce.service.DiaryService;
 import org.springframework.http.HttpStatus;
@@ -21,7 +24,7 @@ public class DiaryController {
     }
 
     @GetMapping("/profile")
-    public ResponseEntity<Object> getDiaryByUserID(
+    public ResponseEntity<ApiResponse<DiaryDto>> getDiaryByUserID(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             Authentication authentication){

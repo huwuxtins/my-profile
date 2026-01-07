@@ -1,8 +1,10 @@
 package com.my_profile.content_management_serivce.service.impl;
 
-import com.my_profile.content_management_serivce.controller.Blog;
+import com.my_profile.content_management_serivce.entity.Blog;
 import com.my_profile.content_management_serivce.exception.AccessDbException;
 import com.my_profile.content_management_serivce.exception.ResourceNotFoundException;
+import com.my_profile.content_management_serivce.mapper.BlogMapper;
+import com.my_profile.content_management_serivce.mapper.dto.BlogDto;
 import com.my_profile.content_management_serivce.repository.BlogPageRepository;
 import com.my_profile.content_management_serivce.repository.BlogRepository;
 import com.my_profile.content_management_serivce.service.BlogService;
@@ -16,46 +18,56 @@ import java.util.Optional;
 @Service
 public class BlogServiceImpl implements BlogService {
     private final BlogRepository blogRepository;
-
     private final BlogPageRepository blogPageRepository;
+    private final BlogMapper blogMapper;
 
-    public BlogServiceImpl(BlogRepository blogRepository, BlogPageRepository blogPageRepository) {
+    public BlogServiceImpl(BlogRepository blogRepository, BlogPageRepository blogPageRepository, BlogMapper blogMapper) {
         this.blogRepository = blogRepository;
         this.blogPageRepository = blogPageRepository;
+        this.blogMapper = blogMapper;
     }
 
     @Override
-    public Blog getBlogByID(String id) {
+    public BlogDto getBlogByID(String id) {
         Optional<Blog> optionalBlog = this.blogRepository.findById(id);
         if(optionalBlog.isPresent()){
-            return optionalBlog.get();
+            return blogMapper.toDto(optionalBlog.get());
         }
         throw new ResourceNotFoundException("This blog isn't exist");
     }
 
     @Override
-    public List<Blog> getBlogsByUserID(String userID, int page, int size) {
+    public List<BlogDto> getBlogsByUserID(String userID, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
-        return blogPageRepository.findByUserID(userID, pageable).getContent();
+        return blogPageRepository.findByUserID(userID, pageable)
+                .getContent()
+                .stream()
+                .map(blogMapper::toDto)
+                .toList();
     }
 
     @Override
-    public List<Blog> getBlogs(int page, int size) {
+    public List<BlogDto> getBlogs(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
-        return blogPageRepository.findAll(pageable).getContent();
+        return blogPageRepository.findAll(pageable)
+                .getContent()
+                .stream()
+                .map(blogMapper::toDto)
+                .toList();
     }
 
     @Override
-    public Blog addBlog(Blog blog) throws AccessDbException {
+    public BlogDto addBlog(BlogDto blogDto) throws AccessDbException {
         try {
-            return blogRepository.insert(blog);
+            Blog blog = this.blogMapper.toEntity(blogDto);
+            return this.blogMapper.toDto(blogRepository.insert(blog));
         } catch (Exception e){
             throw new AccessDbException("Add blog failed!");
         }
     }
 
     @Override
-    public Blog updateBlog(String id, Blog blog) throws AccessDbException {
+    public BlogDto updateBlog(String id, BlogDto blog) throws AccessDbException {
         Optional<Blog> optionalBlog = this.blogRepository.findById(id);
         if(optionalBlog.isPresent()){
             Blog presentBlog = optionalBlog.get();
@@ -63,7 +75,7 @@ public class BlogServiceImpl implements BlogService {
             presentBlog.setTitle(blog.getTitle());
             presentBlog.setUpdatedAt(LocalDateTime.now());
             try{
-                return blogRepository.save(presentBlog);
+                return this.blogMapper.toDto(blogRepository.save(presentBlog));
             } catch (Exception e) {
                 throw new AccessDbException("Update blog failed!");
             }
@@ -72,12 +84,12 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Blog deleteBlog(String id) throws AccessDbException {
+    public BlogDto deleteBlog(String id) throws AccessDbException {
         Blog blog = blogRepository.findById(id).orElse(null);
         if(blog != null){
             try {
                 blogRepository.delete(blog);
-                return blog;
+                return this.blogMapper.toDto(blog);
             } catch (Exception e) {
                 throw new AccessDbException("Delete blog failed1");
             }
