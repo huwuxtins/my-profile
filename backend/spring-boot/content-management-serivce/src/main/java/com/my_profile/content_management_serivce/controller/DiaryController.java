@@ -24,12 +24,12 @@ public class DiaryController {
     }
 
     @GetMapping("/profile")
-    public ResponseEntity<ApiResponse<DiaryDto>> getDiaryByUserID(
+    public ResponseEntity<ApiResponse<List<DiaryDto>>> getDiaryByUserID(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             Authentication authentication){
         String userID = authentication.getName();
-        List<Diary> diary = diaryService.getDiariesByUserID(userID, page, size);
+        List<DiaryDto> diary = diaryService.getDiariesByUserID(userID, page, size);
 
         if(diary.isEmpty()){
             throw new ResourceNotFoundException("There aren't any diary in your profile!");
@@ -38,14 +38,14 @@ public class DiaryController {
     }
 
     @GetMapping("/{diaryID}")
-    public ResponseEntity<Object> getDiaryByID(@PathVariable String diaryID){
-        Diary diary = diaryService.getDiaryByID(diaryID);
+    public ResponseEntity<ApiResponse<DiaryDto>> getDiaryByID(@PathVariable String diaryID){
+        DiaryDto diary = diaryService.getDiaryByID(diaryID);
         return ResponseMessage.createResponse("Get diary successfully!", diary, HttpStatus.OK);
     }
 
     @PostMapping("")
-    public ResponseEntity<Object> addDiary(@RequestBody Diary diary) throws AccessDbException {
-        Diary addedDiary = diaryService.addDiary(diary);
+    public ResponseEntity<ApiResponse<DiaryDto>> addDiary(@RequestBody DiaryDto diary) throws AccessDbException {
+        DiaryDto addedDiary = diaryService.addDiary(diary);
         if(addedDiary != null){
             return ResponseMessage.createResponse("Add diary successfully!", addedDiary, HttpStatus.CREATED);
         }
@@ -53,8 +53,8 @@ public class DiaryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateDiary(@PathVariable String id, @RequestBody Diary diary) throws AccessDbException {
-        Diary updateDiary = diaryService.updateDiary(id, diary);
+    public ResponseEntity<ApiResponse<DiaryDto>> updateDiary(@PathVariable String id, @RequestBody DiaryDto diary) throws AccessDbException {
+        DiaryDto updateDiary = diaryService.updateDiary(id, diary);
         if(updateDiary != null){
             return ResponseMessage.createResponse("Update diary successfully!", updateDiary, HttpStatus.CREATED);
         }
@@ -62,8 +62,8 @@ public class DiaryController {
     }
 
     @DeleteMapping("/{diaryID}")
-    public ResponseEntity<Object> deleteDiary(@PathVariable String diaryID) throws AccessDbException {
-        Diary diary = diaryService.deleteDiary(diaryID);
+    public ResponseEntity<ApiResponse<DiaryDto>> deleteDiary(@PathVariable String diaryID) throws AccessDbException {
+        DiaryDto diary = diaryService.deleteDiary(diaryID);
         if(diary != null){
             return ResponseMessage.createResponse("Delete diary successfully!", diary, HttpStatus.OK);
         }
