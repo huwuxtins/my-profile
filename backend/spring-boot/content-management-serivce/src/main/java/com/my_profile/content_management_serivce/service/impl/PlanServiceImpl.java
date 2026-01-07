@@ -42,7 +42,7 @@ public class PlanServiceImpl implements PlanService {
     public List<PlanDto> getPlansByUserID(String userID, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC);
 
-        return planPageRepository.findByUserID(userID, pageable)
+        return this.planPageRepository.findByUserID(userID, pageable)
                     .getContent()
                     .stream()
                     .map(this.planMapper::toDto)
@@ -58,7 +58,7 @@ public class PlanServiceImpl implements PlanService {
     public PlanDto addPlan(PlanDto planDto) throws AccessDbException {
         try {
             Plan plan = this.planMapper.toEntity(planDto);
-            return this.planMapper.toDto(planRepository.insert(plan));
+            return this.planMapper.toDto(this.planRepository.insert(plan));
         } catch (Exception e){
             throw new AccessDbException("Add plan failed!");
         }
@@ -72,7 +72,7 @@ public class PlanServiceImpl implements PlanService {
             presentPlan.setContent(plan.getContent());
             presentPlan.setUpdatedAt(LocalDateTime.now());
             try{
-                return this.planMapper.toDto(planRepository.save(presentPlan));
+                return this.planMapper.toDto(this.planRepository.save(presentPlan));
             } catch (Exception e){
                 throw new AccessDbException("Update plan failed!");
             }
@@ -82,10 +82,10 @@ public class PlanServiceImpl implements PlanService {
 
     @Override
     public PlanDto deletePlan(String id) throws AccessDbException {
-        Plan plan = planRepository.findById(id).orElse(null);
+        Plan plan = this.planRepository.findById(id).orElse(null);
         if(plan != null){
             try {
-                planRepository.delete(plan);
+                this.planRepository.delete(plan);
                 return this.planMapper.toDto(plan);
             } catch (Exception e){
                 throw new AccessDbException("Delete plan failed!");

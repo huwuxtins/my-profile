@@ -1,6 +1,5 @@
 package com.my_profile.content_management_serivce.controller;
 
-import com.my_profile.content_management_serivce.entity.Plan;
 import com.my_profile.content_management_serivce.exception.AccessDbException;
 import com.my_profile.content_management_serivce.exception.ResourceNotFoundException;
 import com.my_profile.content_management_serivce.mapper.dto.PlanDto;
@@ -29,7 +28,7 @@ public class PlanController {
             @RequestParam(defaultValue = "10") int size,
             Authentication authentication){
         String userID = authentication.getName();
-        List<PlanDto> plan = planService.getPlansByUserID(userID, page, size);
+        List<PlanDto> plan = this.planService.getPlansByUserID(userID, page, size);
 
         if(plan.isEmpty()){
             return ResponseMessage.createResponse("There aren't any plan in your profile!", plan, HttpStatus.NOT_FOUND);
@@ -39,7 +38,7 @@ public class PlanController {
 
     @GetMapping("/{planID}")
     public ResponseEntity<ApiResponse<PlanDto>> getPlanByID(@PathVariable String planID){
-        PlanDto plan = planService.getPlanByID(planID);
+        PlanDto plan = this.planService.getPlanByID(planID);
         if(plan == null){
             throw new ResourceNotFoundException("This plan isn't exist!");
         }
@@ -48,7 +47,7 @@ public class PlanController {
 
     @PostMapping("")
     public ResponseEntity<ApiResponse<PlanDto>> addPlan(@RequestBody PlanDto plan) throws AccessDbException {
-        PlanDto addedPlan = planService.addPlan(plan);
+        PlanDto addedPlan = this.planService.addPlan(plan);
         if(addedPlan != null){
             return ResponseMessage.createResponse("Add plan successfully!", addedPlan, HttpStatus.CREATED);
         }
@@ -57,7 +56,7 @@ public class PlanController {
 
     @PutMapping("{id}")
     public ResponseEntity<ApiResponse<PlanDto>> updatePlan(@PathVariable String id, @RequestBody PlanDto plan) throws AccessDbException {
-        PlanDto updatePlan = planService.updatePlan(id, plan);
+        PlanDto updatePlan = this.planService.updatePlan(id, plan);
         if(updatePlan != null){
             return ResponseMessage.createResponse("Update plan successfully!", updatePlan, HttpStatus.CREATED);
         }
@@ -66,7 +65,7 @@ public class PlanController {
 
     @DeleteMapping("/{planID}")
     public ResponseEntity<ApiResponse<PlanDto>> deletePlan(@PathVariable String planID) throws AccessDbException {
-        PlanDto Plan = planService.deletePlan(planID);
+        PlanDto Plan = this.planService.deletePlan(planID);
         if(Plan != null){
             return ResponseMessage.createResponse("Delete plan successfully!", Plan, HttpStatus.OK);
         }
