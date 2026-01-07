@@ -1,6 +1,5 @@
 package com.my_profile.content_management_serivce.controller;
 
-import com.my_profile.content_management_serivce.entity.Diary;
 import com.my_profile.content_management_serivce.exception.AccessDbException;
 import com.my_profile.content_management_serivce.exception.ResourceNotFoundException;
 import com.my_profile.content_management_serivce.mapper.dto.DiaryDto;

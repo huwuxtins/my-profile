@@ -43,10 +43,10 @@ public class DiaryServiceImpl implements DiaryService {
     public List<DiaryDto> getDiariesByUserID(String userID, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC);
 
-        return diaryPageRepository.findByUserID(userID, pageable)
+        return this.diaryPageRepository.findByUserID(userID, pageable)
                     .getContent()
                     .stream()
-                    .map(diaryMapper::toDto)
+                    .map(this.diaryMapper::toDto)
                     .toList();
     }
 
@@ -59,7 +59,7 @@ public class DiaryServiceImpl implements DiaryService {
     public DiaryDto addDiary(DiaryDto diaryDto) throws AccessDbException {
         try {
             Diary diary = this.diaryMapper.toEntity(diaryDto);
-            return this.diaryMapper.toDto(diaryRepository.insert(diary));
+            return this.diaryMapper.toDto(this.diaryRepository.insert(diary));
         } catch (Exception e){
             throw new AccessDbException("Add diary failed!");
         }
@@ -83,10 +83,10 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public DiaryDto deleteDiary(String id) throws AccessDbException {
-        Diary diary = diaryRepository.findById(id).orElse(null);
+        Diary diary = this.diaryRepository.findById(id).orElse(null);
         if(diary != null){
             try {
-                diaryRepository.delete(diary);
+                this.diaryRepository.delete(diary);
                 return this.diaryMapper.toDto(diary);
             } catch (Exception e){
                 throw new AccessDbException("Delete diary failed!");
