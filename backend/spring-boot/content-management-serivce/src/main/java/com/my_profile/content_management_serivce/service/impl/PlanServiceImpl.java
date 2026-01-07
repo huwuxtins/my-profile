@@ -1,7 +1,10 @@
 package com.my_profile.content_management_serivce.service.impl;
 
-import com.my_profile.content_management_serivce.controller.Plan;
+import com.my_profile.content_management_serivce.entity.Plan;
 import com.my_profile.content_management_serivce.exception.AccessDbException;
+import com.my_profile.content_management_serivce.exception.ResourceNotFoundException;
+import com.my_profile.content_management_serivce.mapper.PlanMapper;
+import com.my_profile.content_management_serivce.mapper.dto.PlanDto;
 import com.my_profile.content_management_serivce.repository.PlanPageRepository;
 import com.my_profile.content_management_serivce.repository.PlanRepository;
 import com.my_profile.content_management_serivce.service.PlanService;
@@ -18,47 +21,58 @@ import java.util.Optional;
 public class PlanServiceImpl implements PlanService {
     private final PlanRepository planRepository;
     private final PlanPageRepository planPageRepository;
+    private final PlanMapper planMapper;
 
-    public PlanServiceImpl(PlanRepository planRepository, PlanPageRepository planPageRepository) {
+    public PlanServiceImpl(PlanRepository planRepository, PlanPageRepository planPageRepository, PlanMapper planMapper) {
         this.planRepository = planRepository;
         this.planPageRepository = planPageRepository;
+        this.planMapper = planMapper;
     }
 
     @Override
-    public Plan getPlanByID(String id) {
-        return planRepository.findById(id).orElse(null);
+    public PlanDto getPlanByID(String id) {
+        Optional<Plan> optionalPlan = this.planRepository.findById(id);
+        if(optionalPlan.isPresent()) {
+             return this.planMapper.toDto(optionalPlan.get());
+        }
+        throw new ResourceNotFoundException("This plan isn't exist!");
     }
 
     @Override
-    public List<Plan> getPlansByUserID(String userID, int page, int size) {
+    public List<PlanDto> getPlansByUserID(String userID, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC);
 
-        return planPageRepository.findByUserID(userID, pageable).getContent();
+        return planPageRepository.findByUserID(userID, pageable)
+                    .getContent()
+                    .stream()
+                    .map(this.planMapper::toDto)
+                    .toList();
     }
 
     @Override
-    public List<Plan> getPlans(int page, int size) {
+    public List<PlanDto> getPlans(int page, int size) {
         return null;
     }
 
     @Override
-    public Plan addPlan(Plan plan) throws AccessDbException {
+    public PlanDto addPlan(PlanDto planDto) throws AccessDbException {
         try {
-            return planRepository.insert(plan);
+            Plan plan = this.planMapper.toEntity(planDto);
+            return this.planMapper.toDto(planRepository.insert(plan));
         } catch (Exception e){
             throw new AccessDbException("Add plan failed!");
         }
     }
 
     @Override
-    public Plan updatePlan(String id, Plan plan) throws AccessDbException{
+    public PlanDto updatePlan(String id, PlanDto plan) throws AccessDbException{
         Optional<Plan> optionalPlan = this.planRepository.findById(id);
         if(optionalPlan.isPresent()){
             Plan presentPlan = optionalPlan.get();
             presentPlan.setContent(plan.getContent());
             presentPlan.setUpdatedAt(LocalDateTime.now());
             try{
-                return planRepository.save(presentPlan);
+                return this.planMapper.toDto(planRepository.save(presentPlan));
             } catch (Exception e){
                 throw new AccessDbException("Update plan failed!");
             }
@@ -67,12 +81,12 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public Plan deletePlan(String id) throws AccessDbException {
+    public PlanDto deletePlan(String id) throws AccessDbException {
         Plan plan = planRepository.findById(id).orElse(null);
         if(plan != null){
             try {
                 planRepository.delete(plan);
-                return plan;
+                return this.planMapper.toDto(plan);
             } catch (Exception e){
                 throw new AccessDbException("Delete plan failed!");
             }

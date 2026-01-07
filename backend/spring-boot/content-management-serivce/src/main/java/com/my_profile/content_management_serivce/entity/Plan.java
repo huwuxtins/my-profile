@@ -1,4 +1,4 @@
-package com.my_profile.content_management_serivce.controller;
+package com.my_profile.content_management_serivce.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Document
 @Data
@@ -19,8 +20,8 @@ public class Plan {
     @Id
     private String id;
 
-    @Field("userID")
-    private String userID;
+    @Field("userId")
+    private String userId;
 
     @Field("createdAt")
     private LocalDateTime createdAt;
@@ -33,5 +34,9 @@ public class Plan {
 
     @Field("endAt")
     private LocalDateTime endAt;
+
+    @Field("images")
+    private List<String> images;
+    
     private String content;
 }
