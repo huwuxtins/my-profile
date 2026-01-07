@@ -9,5 +9,5 @@ import com.my_profile.content_management_serivce.entity.Plan;
 
 @Repository
 public interface PlanPageRepository extends PagingAndSortingRepository<Plan, String> {
-    Page<Plan> findByUserID(String userID, Pageable pageable);
+    Page<Plan> findByUserId(String userId, Pageable pageable);
 }

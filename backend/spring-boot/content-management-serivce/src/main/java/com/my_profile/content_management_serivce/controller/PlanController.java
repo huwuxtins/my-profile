@@ -23,12 +23,12 @@ public class PlanController {
     }
 
     @GetMapping("/profile")
-    public ResponseEntity<ApiResponse<List<PlanDto>>> getPlanByUserID(
+    public ResponseEntity<ApiResponse<List<PlanDto>>> getPlanByUserId(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             Authentication authentication){
-        String userID = authentication.getName();
-        List<PlanDto> plan = this.planService.getPlansByUserID(userID, page, size);
+        String userId = authentication.getName();
+        List<PlanDto> plan = this.planService.getPlansByUserId(userId, page, size);
 
         if(plan.isEmpty()){
             return ResponseMessage.createResponse("There aren't any plan in your profile!", plan, HttpStatus.NOT_FOUND);
@@ -36,9 +36,9 @@ public class PlanController {
         return ResponseMessage.createResponse("Get plan by profile successfully!", plan, HttpStatus.OK);
     }
 
-    @GetMapping("/{planID}")
-    public ResponseEntity<ApiResponse<PlanDto>> getPlanByID(@PathVariable String planID){
-        PlanDto plan = this.planService.getPlanByID(planID);
+    @GetMapping("/{planId}")
+    public ResponseEntity<ApiResponse<PlanDto>> getPlanById(@PathVariable String planId){
+        PlanDto plan = this.planService.getPlanById(planId);
         if(plan == null){
             throw new ResourceNotFoundException("This plan isn't exist!");
         }
@@ -63,9 +63,9 @@ public class PlanController {
         throw new ResourceNotFoundException("This plan isn't exist!");
     }
 
-    @DeleteMapping("/{planID}")
-    public ResponseEntity<ApiResponse<PlanDto>> deletePlan(@PathVariable String planID) throws AccessDbException {
-        PlanDto Plan = this.planService.deletePlan(planID);
+    @DeleteMapping("/{planId}")
+    public ResponseEntity<ApiResponse<PlanDto>> deletePlan(@PathVariable String planId) throws AccessDbException {
+        PlanDto Plan = this.planService.deletePlan(planId);
         if(Plan != null){
             return ResponseMessage.createResponse("Delete plan successfully!", Plan, HttpStatus.OK);
         }

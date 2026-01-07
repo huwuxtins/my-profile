@@ -30,7 +30,7 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public PlanDto getPlanByID(String id) {
+    public PlanDto getPlanById(String id) {
         Optional<Plan> optionalPlan = this.planRepository.findById(id);
         if(optionalPlan.isPresent()) {
              return this.planMapper.toDto(optionalPlan.get());
@@ -39,10 +39,10 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public List<PlanDto> getPlansByUserID(String userID, int page, int size) {
+    public List<PlanDto> getPlansByUserId(String userId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC);
 
-        return this.planPageRepository.findByUserID(userID, pageable)
+        return this.planPageRepository.findByUserId(userId, pageable)
                     .getContent()
                     .stream()
                     .map(this.planMapper::toDto)
