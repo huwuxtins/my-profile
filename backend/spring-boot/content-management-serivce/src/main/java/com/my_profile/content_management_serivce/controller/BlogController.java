@@ -37,29 +37,29 @@ public class BlogController {
     public ResponseEntity<ApiResponse<List<BlogDto>>> getBlogs(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size){
-        List<BlogDto> blogs = blogService.getBlogs(page, size);
+        List<BlogDto> blogs = this.blogService.getBlogs(page, size);
         if(blogs.isEmpty()){
             throw new ResourceNotFoundException("Don't have any blog in current time");
         }
         return ResponseMessage.createResponse("Get blogs successfully!", blogs, HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/all-blogs")
+    @GetMapping("/all")
     @Cacheable(cacheNames = "user")
-    public ResponseEntity<ApiResponse<List<BlogDto>>> getBlogsByUserID(
+    public ResponseEntity<ApiResponse<List<BlogDto>>> getBlogsByUserId(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             Authentication authentication){
-        List<BlogDto> blogs = blogService.getBlogsByUserID(authentication.getName(), page, size);
+        List<BlogDto> blogs = this.blogService.getBlogsByUserId(authentication.getName(), page, size);
         return ResponseMessage.createResponse("Get blogs by profile successfully!", blogs, HttpStatus.OK);
     }
 
     @GetMapping("/{blogId}")
-    public ResponseEntity<ApiResponse<BlogDto>> getBlogByID(@PathVariable String blogId) throws Exception {
-        BlogDto blogDto = blogService.getBlogByID(blogId);
+    public ResponseEntity<ApiResponse<BlogDto>> getBlogById(@PathVariable String blogId) throws Exception {
+        BlogDto blogDto = this.blogService.getBlogById(blogId);
 
         try {
-            ResponseEntity<String> response = userServiceClient.getUserByID(blogDto.getUserId());
+            ResponseEntity<String> response = this.userServiceClient.getUserById(blogDto.getUserId());
             if(response.getBody() != null){
                 JSONObject jsonObject = new JSONObject(response.getBody());
                 Map<String, Object> author = jsonObject.getJSONObject("data").toMap();
@@ -126,10 +126,10 @@ public class BlogController {
 
     @PostMapping("")
     public ResponseEntity<ApiResponse<BlogDto>> addBlog(@RequestBody BlogDto blog, Authentication authentication) throws AccessDbException {
-        String userID = authentication.getName();
-        blog.setUserId(userID);
+        String userId = authentication.getName();
+        blog.setUserId(userId);
 
-        BlogDto addedBlog = blogService.addBlog(blog);
+        BlogDto addedBlog = this.blogService.addBlog(blog);
         if(addedBlog != null){
             return ResponseMessage.createResponse("Add blog successfully!", addedBlog, HttpStatus.CREATED);
         }
@@ -153,13 +153,13 @@ public class BlogController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<BlogDto>> updateBlog(@PathVariable String id, @RequestBody BlogDto blog) throws AccessDbException {
-        BlogDto updateBlog = blogService.updateBlog(id, blog);
+        BlogDto updateBlog = this.blogService.updateBlog(id, blog);
         return ResponseMessage.createResponse("Update blog successfully!", updateBlog, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{blogId}")
     public ResponseEntity<ApiResponse<BlogDto>> deleteBlog(@PathVariable String blogId) throws AccessDbException {
-        BlogDto blog = blogService.deleteBlog(blogId);
+        BlogDto blog = this.blogService.deleteBlog(blogId);
         return ResponseMessage.createResponse("Delete blog successfully!", blog, HttpStatus.OK);
     }
 }

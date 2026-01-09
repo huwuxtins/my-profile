@@ -9,5 +9,5 @@ import com.my_profile.content_management_serivce.entity.Blog;
 
 @Repository
 public interface BlogPageRepository extends PagingAndSortingRepository<Blog, String> {
-    Page<Blog> findByUserID(String userID, Pageable pageable);
+    Page<Blog> findByUserId(String userId, Pageable pageable);
 }

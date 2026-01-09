@@ -11,5 +11,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface UserServiceClient {
     @GetMapping(value = "/api/v1/user", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Cacheable(cacheNames = "user", key = "#id")
-    ResponseEntity<String> getUserByID(@RequestParam String id);
+    ResponseEntity<String> getUserById(@RequestParam String id);
 }

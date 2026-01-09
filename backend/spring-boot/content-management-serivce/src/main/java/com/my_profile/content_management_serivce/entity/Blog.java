@@ -19,8 +19,8 @@ public class Blog {
     @Id
     private String id;
 
-    @Field("userID")
-    private String userID;
+    @Field("userId")
+    private String userId;
 
     @Field("createdAt")
     private LocalDateTime createdAt;
