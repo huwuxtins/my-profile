@@ -9,5 +9,5 @@ import com.my_profile.content_management_serivce.entity.Diary;
 
 @Repository
 public interface DiaryPageRepository extends PagingAndSortingRepository<Diary, String> {
-    Page<Diary> findByUserID(String userID, Pageable pageable);
+    Page<Diary> findByUserId(String userId, Pageable pageable);
 }

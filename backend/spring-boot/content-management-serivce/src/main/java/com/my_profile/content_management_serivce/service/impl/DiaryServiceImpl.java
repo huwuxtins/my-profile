@@ -31,7 +31,7 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public DiaryDto getDiaryByID(String id) {
+    public DiaryDto getDiaryById(String id) {
         Optional<Diary> optionalDiary = this.diaryRepository.findById(id);
         if(optionalDiary.isPresent()){
             return this.diaryMapper.toDto(optionalDiary.get());
@@ -40,10 +40,10 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public List<DiaryDto> getDiariesByUserID(String userID, int page, int size) {
+    public List<DiaryDto> getDiariesByUserId(String userId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC);
 
-        return this.diaryPageRepository.findByUserID(userID, pageable)
+        return this.diaryPageRepository.findByUserId(userId, pageable)
                     .getContent()
                     .stream()
                     .map(this.diaryMapper::toDto)

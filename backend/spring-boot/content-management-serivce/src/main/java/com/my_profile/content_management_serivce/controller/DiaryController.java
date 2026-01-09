@@ -23,12 +23,12 @@ public class DiaryController {
     }
 
     @GetMapping("/profile")
-    public ResponseEntity<ApiResponse<List<DiaryDto>>> getDiaryByUserID(
+    public ResponseEntity<ApiResponse<List<DiaryDto>>> getDiaryByUserId(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             Authentication authentication){
-        String userID = authentication.getName();
-        List<DiaryDto> diary = diaryService.getDiariesByUserID(userID, page, size);
+        String userId = authentication.getName();
+        List<DiaryDto> diary = diaryService.getDiariesByUserId(userId, page, size);
 
         if(diary.isEmpty()){
             throw new ResourceNotFoundException("There aren't any diary in your profile!");
@@ -36,9 +36,9 @@ public class DiaryController {
         return ResponseMessage.createResponse("Get diary by profile successfully!", diary, HttpStatus.OK);
     }
 
-    @GetMapping("/{diaryID}")
-    public ResponseEntity<ApiResponse<DiaryDto>> getDiaryByID(@PathVariable String diaryID){
-        DiaryDto diary = diaryService.getDiaryByID(diaryID);
+    @GetMapping("/{diaryId}")
+    public ResponseEntity<ApiResponse<DiaryDto>> getDiaryById(@PathVariable String diaryId){
+        DiaryDto diary = diaryService.getDiaryById(diaryId);
         return ResponseMessage.createResponse("Get diary successfully!", diary, HttpStatus.OK);
     }
 
@@ -60,9 +60,9 @@ public class DiaryController {
         throw new ResourceNotFoundException("This diary isn't exist!");
     }
 
-    @DeleteMapping("/{diaryID}")
-    public ResponseEntity<ApiResponse<DiaryDto>> deleteDiary(@PathVariable String diaryID) throws AccessDbException {
-        DiaryDto diary = diaryService.deleteDiary(diaryID);
+    @DeleteMapping("/{diaryId}")
+    public ResponseEntity<ApiResponse<DiaryDto>> deleteDiary(@PathVariable String diaryId) throws AccessDbException {
+        DiaryDto diary = diaryService.deleteDiary(diaryId);
         if(diary != null){
             return ResponseMessage.createResponse("Delete diary successfully!", diary, HttpStatus.OK);
         }
