@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByID(String id) {
+    public User getUserById(String id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if(optionalUser.isPresent()){
             return optionalUser.get();
@@ -32,8 +32,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByUserID(String userID) {
-        Optional<User> optionalUser = userRepository.findByUserID(userID);
+    public User getUserByUserId(String userId) {
+        Optional<User> optionalUser = userRepository.findByUserId(userId);
         if(optionalUser.isPresent()){
             return optionalUser.get();
         }
@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User deleteUser(String id) throws AccessDbException {
-        User user = this.userRepository.findByUserID(id).orElse(null);
+        User user = this.userRepository.findByUserId(id).orElse(null);
         if(user != null){
             try{
                 userRepository.delete(user);

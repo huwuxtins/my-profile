@@ -42,7 +42,7 @@ public class UserController {
 
     @GetMapping("/profile")
     public ResponseEntity<ApiResponse<UserDto>> getUser(Authentication authentication) {
-        User user = userService.getUserByUserID(authentication.getName());
+        User user = userService.getUserByUserId(authentication.getName());
 
         if(user != null){
             return ResponseMessage.createResponse("Get user by user's id", userMapper.toUserDto(user), HttpStatus.OK);
@@ -87,8 +87,8 @@ public class UserController {
     public ResponseEntity<ApiResponse<UserDto>> updateUser(
             @RequestParam("avatar") MultipartFile avatar,
             @RequestBody User user, Authentication authentication) throws AccessDbException {
-        String userID = authentication.getName();
-        UserDto userDto = this.userMapper.toUserDto(userService.updateUser(userID, user));
+        String userId = authentication.getName();
+        UserDto userDto = this.userMapper.toUserDto(userService.updateUser(userId, user));
         
         return ResponseMessage.createResponse("Update user successfully!", userDto, HttpStatus.OK);
     }
