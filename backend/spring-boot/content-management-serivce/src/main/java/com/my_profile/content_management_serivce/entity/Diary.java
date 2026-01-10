@@ -20,13 +20,13 @@ public class Diary {
     @Id
     private String id;
 
-    @Field("userId")
+    @Field("user_id")
     private String userId;
 
-    @Field("createdAt")
+    @Field("created_at")
     private LocalDateTime createdAt;
 
-    @Field("updatedAt")
+    @Field("updated_at")
     private LocalDateTime updatedAt;
     private List<String> images;
     private String content;

@@ -20,19 +20,19 @@ public class Plan {
     @Id
     private String id;
 
-    @Field("userId")
+    @Field("user_id")
     private String userId;
 
-    @Field("createdAt")
+    @Field("created_at")
     private LocalDateTime createdAt;
 
-    @Field("updatedAt")
+    @Field("updated_at")
     private LocalDateTime updatedAt;
 
-    @Field("startAt")
+    @Field("start-at")
     private LocalDateTime startAt;
 
-    @Field("endAt")
+    @Field("end_at")
     private LocalDateTime endAt;
 
     @Field("images")
