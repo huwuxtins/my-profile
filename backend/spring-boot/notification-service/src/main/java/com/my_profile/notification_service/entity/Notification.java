@@ -18,13 +18,13 @@ public class Notification {
 
     private String title;
 
-    @Field("createdAt")
+    @Field("created_at")
     private Date createdAt;
 
-    @Field("updatedAt")
+    @Field("updated_at")
     private Date updatedAt;
     private String content;
 
-    @Field("userIds")
+    @Field("user_ids")
     private List<String> userIds;
 }
