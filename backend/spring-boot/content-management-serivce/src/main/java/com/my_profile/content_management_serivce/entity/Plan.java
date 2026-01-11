@@ -29,7 +29,7 @@ public class Plan {
     @Field("updated_at")
     private LocalDateTime updatedAt;
 
-    @Field("start-at")
+    @Field("start_at")
     private LocalDateTime startAt;
 
     @Field("end_at")
