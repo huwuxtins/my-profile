@@ -22,12 +22,10 @@ import java.util.Map;
 @RequestMapping("/api/v1/blog")
 public class BlogController {
     private final BlogService blogService;
-
     private final UserServiceClient userServiceClient;
-
 //    private final WebClient webClient;
 
-    public BlogController(BlogService blogService,UserServiceClient userServiceClient){
+    public BlogController(BlogService blogService, UserServiceClient userServiceClient){
         this.blogService = blogService;
 //        this.webClient = webClient;
         this.userServiceClient = userServiceClient;

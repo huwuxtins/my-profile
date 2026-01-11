@@ -28,7 +28,7 @@ public class DiaryController {
             @RequestParam(defaultValue = "10") int size,
             Authentication authentication){
         String userId = authentication.getName();
-        List<DiaryDto> diary = diaryService.getDiariesByUserId(userId, page, size);
+        List<DiaryDto> diary = this.diaryService.getDiariesByUserId(userId, page, size);
 
         if(diary.isEmpty()){
             throw new ResourceNotFoundException("There aren't any diary in your profile!");
@@ -38,13 +38,13 @@ public class DiaryController {
 
     @GetMapping("/{diaryId}")
     public ResponseEntity<ApiResponse<DiaryDto>> getDiaryById(@PathVariable String diaryId){
-        DiaryDto diary = diaryService.getDiaryById(diaryId);
+        DiaryDto diary = this.diaryService.getDiaryById(diaryId);
         return ResponseMessage.createResponse("Get diary successfully!", diary, HttpStatus.OK);
     }
 
     @PostMapping("")
     public ResponseEntity<ApiResponse<DiaryDto>> addDiary(@RequestBody DiaryDto diary) throws AccessDbException {
-        DiaryDto addedDiary = diaryService.addDiary(diary);
+        DiaryDto addedDiary = this.diaryService.addDiary(diary);
         if(addedDiary != null){
             return ResponseMessage.createResponse("Add diary successfully!", addedDiary, HttpStatus.CREATED);
         }
@@ -53,7 +53,7 @@ public class DiaryController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<DiaryDto>> updateDiary(@PathVariable String id, @RequestBody DiaryDto diary) throws AccessDbException {
-        DiaryDto updateDiary = diaryService.updateDiary(id, diary);
+        DiaryDto updateDiary = this.diaryService.updateDiary(id, diary);
         if(updateDiary != null){
             return ResponseMessage.createResponse("Update diary successfully!", updateDiary, HttpStatus.CREATED);
         }
@@ -62,7 +62,7 @@ public class DiaryController {
 
     @DeleteMapping("/{diaryId}")
     public ResponseEntity<ApiResponse<DiaryDto>> deleteDiary(@PathVariable String diaryId) throws AccessDbException {
-        DiaryDto diary = diaryService.deleteDiary(diaryId);
+        DiaryDto diary = this.diaryService.deleteDiary(diaryId);
         if(diary != null){
             return ResponseMessage.createResponse("Delete diary successfully!", diary, HttpStatus.OK);
         }
