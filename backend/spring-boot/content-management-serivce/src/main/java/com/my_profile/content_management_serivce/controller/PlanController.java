@@ -65,9 +65,9 @@ public class PlanController {
 
     @DeleteMapping("/{planId}")
     public ResponseEntity<ApiResponse<PlanDto>> deletePlan(@PathVariable String planId) throws AccessDbException {
-        PlanDto Plan = this.planService.deletePlan(planId);
-        if(Plan != null){
-            return ResponseMessage.createResponse("Delete plan successfully!", Plan, HttpStatus.OK);
+        PlanDto plan = this.planService.deletePlan(planId);
+        if(plan != null){
+            return ResponseMessage.createResponse("Delete plan successfully!", plan, HttpStatus.OK);
         }
         throw new ResourceNotFoundException("This plan isn't exist!");
     }
