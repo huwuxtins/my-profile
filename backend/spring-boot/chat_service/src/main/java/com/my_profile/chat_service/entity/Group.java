@@ -2,17 +2,24 @@ package com.my_profile.chat_service.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.Instant;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "groups")
+@Table(
+        name = "groups",
+        indexes = {
+                @Index(name = "idx_groups_created_at", columnList = "created_at")
+        }
+)
 public class Group {
     @Id
     @GeneratedValue
