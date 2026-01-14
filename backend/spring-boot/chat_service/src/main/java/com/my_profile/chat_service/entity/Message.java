@@ -29,9 +29,6 @@ public class Message {
     @Column(name="sender_id")
     private String senderId;
 
-    /**
-     * Chat / Conversation / Group ID
-     */
     @Column(name = "group_id", nullable = false)
     private String groupId;
 
