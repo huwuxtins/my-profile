@@ -2,12 +2,14 @@ package com.my_profile.chat_service.mapper.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.util.Map;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDto {
