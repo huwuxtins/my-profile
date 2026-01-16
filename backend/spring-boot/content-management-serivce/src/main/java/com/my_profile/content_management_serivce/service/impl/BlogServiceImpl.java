@@ -33,7 +33,7 @@ public class BlogServiceImpl implements BlogService {
         if(optionalBlog.isPresent()){
             return this.blogMapper.toDto(optionalBlog.get());
         }
-        throw new ResourceNotFoundException("This blog isn't exist");
+        throw new ResourceNotFoundException("This blog isn't exist!");
     }
 
     @Override
@@ -80,7 +80,7 @@ public class BlogServiceImpl implements BlogService {
                 throw new AccessDbException("Update blog failed!");
             }
         }
-        throw new ResourceNotFoundException("This blog isn't exist");
+        throw new ResourceNotFoundException("This blog isn't exist!");
     }
 
     @Override
@@ -91,9 +91,9 @@ public class BlogServiceImpl implements BlogService {
                 this.blogRepository.delete(blog);
                 return this.blogMapper.toDto(blog);
             } catch (Exception e) {
-                throw new AccessDbException("Delete blog failed1");
+                throw new AccessDbException("Delete blog failed!");
             }
         }
-        throw new ResourceNotFoundException("This blog isn't exist");
+        throw new ResourceNotFoundException("This blog isn't exist!");
     }
 }
