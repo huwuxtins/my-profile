@@ -59,4 +59,9 @@ public class Message {
     protected void onCreate() {
         this.createdAt = Instant.now();
     }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.editedAt = Instant.now();
+    }
 }
