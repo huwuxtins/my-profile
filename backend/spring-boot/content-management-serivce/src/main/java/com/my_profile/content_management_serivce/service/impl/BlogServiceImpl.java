@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class BlogServiceImpl implements BlogService {
@@ -28,7 +29,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public BlogDto getBlogById(String id) {
+    public BlogDto getBlogById(UUID id) {
         Optional<Blog> optionalBlog = this.blogRepository.findById(id);
         if(optionalBlog.isPresent()){
             return this.blogMapper.toDto(optionalBlog.get());
@@ -37,7 +38,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<BlogDto> getBlogsByUserId(String userId, int page, int size) {
+    public List<BlogDto> getBlogsByUserId(UUID userId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
         return this.blogPageRepository.findByUserId(userId, pageable)
                 .getContent()
@@ -67,7 +68,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public BlogDto updateBlog(String id, BlogDto blog) throws AccessDbException {
+    public BlogDto updateBlog(UUID id, BlogDto blog) throws AccessDbException {
         Optional<Blog> optionalBlog = this.blogRepository.findById(id);
         if(optionalBlog.isPresent()){
             Blog presentBlog = optionalBlog.get();
@@ -84,7 +85,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public BlogDto deleteBlog(String id) throws AccessDbException {
+    public BlogDto deleteBlog(UUID id) throws AccessDbException {
         Blog blog = this.blogRepository.findById(id).orElse(null);
         if(blog != null){
             try {

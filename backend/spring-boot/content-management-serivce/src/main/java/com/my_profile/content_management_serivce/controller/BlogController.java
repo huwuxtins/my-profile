@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/blog")
@@ -48,12 +49,12 @@ public class BlogController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             Authentication authentication){
-        List<BlogDto> blogs = this.blogService.getBlogsByUserId(authentication.getName(), page, size);
+        List<BlogDto> blogs = this.blogService.getBlogsByUserId(UUID.fromString(authentication.getName()), page, size);
         return ResponseMessage.createResponse("Get blogs by profile successfully!", blogs, HttpStatus.OK);
     }
 
     @GetMapping("/{blogId}")
-    public ResponseEntity<ApiResponse<BlogDto>> getBlogById(@PathVariable String blogId) throws Exception {
+    public ResponseEntity<ApiResponse<BlogDto>> getBlogById(@PathVariable UUID blogId) throws Exception {
         BlogDto blogDto = this.blogService.getBlogById(blogId);
 
         try {
@@ -150,13 +151,13 @@ public class BlogController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<BlogDto>> updateBlog(@PathVariable String id, @RequestBody BlogDto blog) throws AccessDbException {
+    public ResponseEntity<ApiResponse<BlogDto>> updateBlog(@PathVariable UUID id, @RequestBody BlogDto blog) throws AccessDbException {
         BlogDto updateBlog = this.blogService.updateBlog(id, blog);
         return ResponseMessage.createResponse("Update blog successfully!", updateBlog, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{blogId}")
-    public ResponseEntity<ApiResponse<BlogDto>> deleteBlog(@PathVariable String blogId) throws AccessDbException {
+    public ResponseEntity<ApiResponse<BlogDto>> deleteBlog(@PathVariable UUID blogId) throws AccessDbException {
         BlogDto blog = this.blogService.deleteBlog(blogId);
         return ResponseMessage.createResponse("Delete blog successfully!", blog, HttpStatus.OK);
     }

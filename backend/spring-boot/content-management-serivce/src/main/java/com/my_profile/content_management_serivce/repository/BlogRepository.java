@@ -6,8 +6,9 @@ import org.springframework.stereotype.Repository;
 import com.my_profile.content_management_serivce.entity.Blog;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
-public interface BlogRepository extends MongoRepository<Blog, String> {
+public interface BlogRepository extends MongoRepository<Blog, UUID> {
     Optional<Blog> findById(String id);
 }

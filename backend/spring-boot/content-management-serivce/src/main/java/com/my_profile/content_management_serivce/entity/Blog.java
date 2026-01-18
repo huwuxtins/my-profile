@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Document
 @Data
@@ -17,10 +18,10 @@ import java.time.LocalDateTime;
 @Builder
 public class Blog {
     @Id
-    private String id;
+    private UUID id;
 
     @Field("user_id")
-    private String userId;
+    private UUID userId;
 
     @Field("created_at")
     private LocalDateTime createdAt;
