@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class PlanServiceImpl implements PlanService {
@@ -30,7 +31,7 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public PlanDto getPlanById(String id) {
+    public PlanDto getPlanById(UUID id) {
         Optional<Plan> optionalPlan = this.planRepository.findById(id);
         if(optionalPlan.isPresent()) {
              return this.planMapper.toDto(optionalPlan.get());
@@ -39,7 +40,7 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public List<PlanDto> getPlansByUserId(String userId, int page, int size) {
+    public List<PlanDto> getPlansByUserId(UUID userId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC);
 
         return this.planPageRepository.findByUserId(userId, pageable)
@@ -65,7 +66,7 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public PlanDto updatePlan(String id, PlanDto plan) throws AccessDbException{
+    public PlanDto updatePlan(UUID id, PlanDto plan) throws AccessDbException{
         Optional<Plan> optionalPlan = this.planRepository.findById(id);
         if(optionalPlan.isPresent()){
             Plan presentPlan = optionalPlan.get();
@@ -81,7 +82,7 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public PlanDto deletePlan(String id) throws AccessDbException {
+    public PlanDto deletePlan(UUID id) throws AccessDbException {
         Plan plan = this.planRepository.findById(id).orElse(null);
         if(plan != null){
             try {

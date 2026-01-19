@@ -2,6 +2,7 @@ package com.my_profile.content_management_serivce.mapper.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -10,13 +11,13 @@ import lombok.Data;
 @Data
 public class DiaryDto {
     @JsonProperty("id")
-    private String id;
+    private UUID id;
 
     @JsonProperty("userId")
-    private String userId;
+    private UUID userId;
     
     @JsonProperty("author")
-    private UserDto auuthor;
+    private UserDto author;
 
     @JsonProperty("createdAt")
     private LocalDateTime createdAt;

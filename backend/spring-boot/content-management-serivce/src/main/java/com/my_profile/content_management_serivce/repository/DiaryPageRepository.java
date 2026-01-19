@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import com.my_profile.content_management_serivce.entity.Diary;
 
+import java.util.UUID;
+
 @Repository
-public interface DiaryPageRepository extends PagingAndSortingRepository<Diary, String> {
-    Page<Diary> findByUserId(String userId, Pageable pageable);
+public interface DiaryPageRepository extends PagingAndSortingRepository<Diary, UUID> {
+    Page<Diary> findByUserId(UUID userId, Pageable pageable);
 }

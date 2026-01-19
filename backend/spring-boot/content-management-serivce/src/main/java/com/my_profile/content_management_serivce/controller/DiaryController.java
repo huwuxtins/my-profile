@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/diary")
@@ -28,7 +29,7 @@ public class DiaryController {
             @RequestParam(defaultValue = "10") int size,
             Authentication authentication){
         String userId = authentication.getName();
-        List<DiaryDto> diary = this.diaryService.getDiariesByUserId(userId, page, size);
+        List<DiaryDto> diary = this.diaryService.getDiariesByUserId(UUID.fromString(userId), page, size);
 
         if(diary.isEmpty()){
             throw new ResourceNotFoundException("There aren't any diary in your profile!");
@@ -37,7 +38,7 @@ public class DiaryController {
     }
 
     @GetMapping("/{diaryId}")
-    public ResponseEntity<ApiResponse<DiaryDto>> getDiaryById(@PathVariable String diaryId){
+    public ResponseEntity<ApiResponse<DiaryDto>> getDiaryById(@PathVariable UUID diaryId){
         DiaryDto diary = this.diaryService.getDiaryById(diaryId);
         return ResponseMessage.createResponse("Get diary successfully!", diary, HttpStatus.OK);
     }
@@ -52,7 +53,7 @@ public class DiaryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<DiaryDto>> updateDiary(@PathVariable String id, @RequestBody DiaryDto diary) throws AccessDbException {
+    public ResponseEntity<ApiResponse<DiaryDto>> updateDiary(@PathVariable UUID id, @RequestBody DiaryDto diary) throws AccessDbException {
         DiaryDto updateDiary = this.diaryService.updateDiary(id, diary);
         if(updateDiary != null){
             return ResponseMessage.createResponse("Update diary successfully!", updateDiary, HttpStatus.CREATED);
@@ -61,7 +62,7 @@ public class DiaryController {
     }
 
     @DeleteMapping("/{diaryId}")
-    public ResponseEntity<ApiResponse<DiaryDto>> deleteDiary(@PathVariable String diaryId) throws AccessDbException {
+    public ResponseEntity<ApiResponse<DiaryDto>> deleteDiary(@PathVariable UUID diaryId) throws AccessDbException {
         DiaryDto diary = this.diaryService.deleteDiary(diaryId);
         if(diary != null){
             return ResponseMessage.createResponse("Delete diary successfully!", diary, HttpStatus.OK);

@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import com.my_profile.content_management_serivce.entity.Plan;
 
+import java.util.UUID;
+
 @Repository
-public interface PlanPageRepository extends PagingAndSortingRepository<Plan, String> {
-    Page<Plan> findByUserId(String userId, Pageable pageable);
+public interface PlanPageRepository extends PagingAndSortingRepository<Plan, UUID> {
+    Page<Plan> findByUserId(UUID userId, Pageable pageable);
 }

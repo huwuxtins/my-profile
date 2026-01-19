@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class DiaryServiceImpl implements DiaryService {
@@ -31,7 +32,7 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public DiaryDto getDiaryById(String id) {
+    public DiaryDto getDiaryById(UUID id) {
         Optional<Diary> optionalDiary = this.diaryRepository.findById(id);
         if(optionalDiary.isPresent()){
             return this.diaryMapper.toDto(optionalDiary.get());
@@ -40,7 +41,7 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public List<DiaryDto> getDiariesByUserId(String userId, int page, int size) {
+    public List<DiaryDto> getDiariesByUserId(UUID userId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC);
 
         return this.diaryPageRepository.findByUserId(userId, pageable)
@@ -66,7 +67,7 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public DiaryDto updateDiary(String id, DiaryDto diary) throws AccessDbException {
+    public DiaryDto updateDiary(UUID id, DiaryDto diary) throws AccessDbException {
         Optional<Diary> optionalDiary = this.diaryRepository.findById(id);
         if(optionalDiary.isPresent()){
             Diary presentDiary = optionalDiary.get();
@@ -82,7 +83,7 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public DiaryDto deleteDiary(String id) throws AccessDbException {
+    public DiaryDto deleteDiary(UUID id) throws AccessDbException {
         Diary diary = this.diaryRepository.findById(id).orElse(null);
         if(diary != null){
             try {

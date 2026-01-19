@@ -6,8 +6,9 @@ import org.springframework.stereotype.Repository;
 import com.my_profile.content_management_serivce.entity.Plan;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
-public interface PlanRepository extends MongoRepository<Plan, String> {
-    Optional<Plan> findById(String id);
+public interface PlanRepository extends MongoRepository<Plan, UUID> {
+    Optional<Plan> findById(UUID id);
 }

@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Document
 @Data
@@ -18,10 +19,10 @@ import java.util.List;
 @Builder
 public class Diary {
     @Id
-    private String id;
+    private UUID id;
 
     @Field("user_id")
-    private String userId;
+    private UUID userId;
 
     @Field("created_at")
     private LocalDateTime createdAt;

@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/plan")
@@ -28,7 +29,7 @@ public class PlanController {
             @RequestParam(defaultValue = "10") int size,
             Authentication authentication){
         String userId = authentication.getName();
-        List<PlanDto> plan = this.planService.getPlansByUserId(userId, page, size);
+        List<PlanDto> plan = this.planService.getPlansByUserId(UUID.fromString(userId), page, size);
 
         if(plan.isEmpty()){
             return ResponseMessage.createResponse("There aren't any plan in your profile!", plan, HttpStatus.NOT_FOUND);
@@ -37,7 +38,7 @@ public class PlanController {
     }
 
     @GetMapping("/{planId}")
-    public ResponseEntity<ApiResponse<PlanDto>> getPlanById(@PathVariable String planId){
+    public ResponseEntity<ApiResponse<PlanDto>> getPlanById(@PathVariable UUID planId){
         PlanDto plan = this.planService.getPlanById(planId);
         if(plan == null){
             throw new ResourceNotFoundException("This plan isn't exist!");
@@ -55,7 +56,7 @@ public class PlanController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<ApiResponse<PlanDto>> updatePlan(@PathVariable String id, @RequestBody PlanDto plan) throws AccessDbException {
+    public ResponseEntity<ApiResponse<PlanDto>> updatePlan(@PathVariable UUID id, @RequestBody PlanDto plan) throws AccessDbException {
         PlanDto updatePlan = this.planService.updatePlan(id, plan);
         if(updatePlan != null){
             return ResponseMessage.createResponse("Update plan successfully!", updatePlan, HttpStatus.CREATED);
@@ -64,7 +65,7 @@ public class PlanController {
     }
 
     @DeleteMapping("/{planId}")
-    public ResponseEntity<ApiResponse<PlanDto>> deletePlan(@PathVariable String planId) throws AccessDbException {
+    public ResponseEntity<ApiResponse<PlanDto>> deletePlan(@PathVariable UUID planId) throws AccessDbException {
         PlanDto plan = this.planService.deletePlan(planId);
         if(plan != null){
             return ResponseMessage.createResponse("Delete plan successfully!", plan, HttpStatus.OK);
