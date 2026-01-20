@@ -14,8 +14,6 @@ import java.util.UUID;
 
 @Repository
 public interface GroupRepository extends JpaRepository<Group, UUID> {
-    Optional<Group> findById(String id);
-
     Optional<Group> findByName(String name);
 
 //    @Query("""
@@ -34,4 +32,6 @@ public interface GroupRepository extends JpaRepository<Group, UUID> {
             @Param("createdAt") Instant createdAt,
             Pageable pageable
     );
+
+    Page<Group> findByUserId(UUID userId, Pageable pageable);
 }

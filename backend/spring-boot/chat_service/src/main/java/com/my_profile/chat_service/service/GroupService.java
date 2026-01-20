@@ -8,9 +8,9 @@ import java.util.UUID;
 
 public interface GroupService {
     GroupDto findById(UUID id);
-    List<GroupDto> findByUserId(UUID userId);
-    GroupDto addGroup(GroupDto dto) throws AccessDbException;
+    List<GroupDto> findByUserId(UUID userId, int page, int size);
+    GroupDto addGroup(GroupDto dto, UUID creatorUserId) throws AccessDbException;
     GroupDto updateGroup(UUID id, GroupDto dto) throws AccessDbException;
-    GroupDto deleteGroup(UUID id) throws AccessDbException;
+    void deleteGroup(UUID id, UUID requesterUserId) throws AccessDbException;
 
 }
