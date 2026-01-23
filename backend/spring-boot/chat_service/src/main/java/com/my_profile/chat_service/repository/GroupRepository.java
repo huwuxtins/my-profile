@@ -16,13 +16,6 @@ import java.util.UUID;
 public interface GroupRepository extends JpaRepository<Group, UUID> {
     Optional<Group> findByName(String name);
 
-//    @Query("""
-//            SELECT g
-//            FROM Groups g
-//            WHERE g.user
-//            """)
-//    Page<Group> findAllByUserId(UUID userId);
-
     @Query("""
             SELECT g
             FROM Groups g
