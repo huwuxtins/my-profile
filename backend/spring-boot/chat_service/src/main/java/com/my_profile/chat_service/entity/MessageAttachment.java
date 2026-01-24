@@ -27,9 +27,6 @@ public class MessageAttachment {
     @Column(nullable = false, updatable = false)
     private UUID id;
 
-    @Column(name="message_id")
-    private UUID messageId;
-
     @Column(name="file_url")
     private String fileUrl;
 
