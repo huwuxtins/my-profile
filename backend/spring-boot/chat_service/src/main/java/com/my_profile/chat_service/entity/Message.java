@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -37,6 +39,13 @@ public class Message {
     @Column(name = "content", nullable = false, length = 4000)
     private String content;
 
+    @OneToMany(
+            mappedBy = "message",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<MessageAttachment> attachments = new ArrayList<>();
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
@@ -63,5 +72,10 @@ public class Message {
     @PreUpdate
     protected void onUpdate() {
         this.editedAt = Instant.now();
+    }
+
+    public void addAttachment(MessageAttachment attachment) {
+        attachments.add(attachment);
+        attachment.setMessage(this);
     }
 }

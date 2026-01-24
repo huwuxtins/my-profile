@@ -1,5 +1,6 @@
 package com.my_profile.chat_service.entity;
 
+import com.my_profile.chat_service.enums.FileType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,7 +34,15 @@ public class MessageAttachment {
     private String fileUrl;
 
     @Column(name="file_type")
-    private String fileType;
+    @Enumerated(EnumType.STRING)
+    private FileType fileType;
+
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            optional = false
+    )
+    @JoinColumn(name = "message_id", nullable = false)
+    private Message message;
 
     @Column(name="created_at")
     private Instant createdAt;
