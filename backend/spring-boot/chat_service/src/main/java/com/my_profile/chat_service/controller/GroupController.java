@@ -1,8 +1,17 @@
 package com.my_profile.chat_service.controller;
 
+import com.my_profile.chat_service.exception.AccessDbException;
+import com.my_profile.chat_service.mapper.dto.GroupDto;
+import com.my_profile.chat_service.model.ApiResponse;
+import com.my_profile.chat_service.model.ResponseMessage;
 import com.my_profile.chat_service.service.GroupService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/group")
@@ -11,5 +20,33 @@ public class GroupController {
 
     public GroupController(GroupService groupService) {
         this.groupService = groupService;
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<ApiResponse<List<GroupDto>>> getGroups(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            Authentication authentication) {
+        String userId = authentication.getName();
+        List<GroupDto> groups = this.groupService.findByUserId(UUID.fromString(userId), page, size);
+        return ResponseMessage.createResponse("Get groups by user successfully!", groups, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<GroupDto>> getGroupById(@PathVariable UUID id) {
+        GroupDto group = this.groupService.findById(id);
+        return ResponseMessage.createResponse("Get group successfully!", group, HttpStatus.OK);
+    }
+
+    @PostMapping("")
+    public ResponseEntity<ApiResponse<GroupDto>> addGroup(@RequestBody GroupDto dto,
+                                                          Authentication authentication) throws AccessDbException {
+        String userId = authentication.getName();
+        GroupDto addedGroup = this.groupService.addGroup(dto, UUID.fromString(userId));
+
+        if(addedGroup != null) {
+            return ResponseMessage.createResponse("Add group successfully!", addedGroup, HttpStatus.OK);
+        }
+        return ResponseMessage.createResponse("Add group failed!", null, HttpStatus.BAD_REQUEST);
     }
 }
