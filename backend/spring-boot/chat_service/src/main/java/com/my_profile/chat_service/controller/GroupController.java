@@ -1,6 +1,7 @@
 package com.my_profile.chat_service.controller;
 
 import com.my_profile.chat_service.exception.AccessDbException;
+import com.my_profile.chat_service.exception.ResourceNotFoundException;
 import com.my_profile.chat_service.mapper.dto.GroupDto;
 import com.my_profile.chat_service.model.ApiResponse;
 import com.my_profile.chat_service.model.ResponseMessage;
@@ -48,5 +49,22 @@ public class GroupController {
             return ResponseMessage.createResponse("Add group successfully!", addedGroup, HttpStatus.OK);
         }
         return ResponseMessage.createResponse("Add group failed!", null, HttpStatus.BAD_REQUEST);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<GroupDto>> updateGroup(@PathVariable UUID id, @RequestBody GroupDto dto) throws AccessDbException {
+        GroupDto updatedGroup = this.groupService.updateGroup(id, dto);
+
+        if(updatedGroup != null) {
+            return ResponseMessage.createResponse("Update group successfully!", updatedGroup, HttpStatus.OK);
+        }
+        throw new ResourceNotFoundException("This group isn't exist!");
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<String>> deleteGroup(@PathVariable UUID id, Authentication authentication) throws AccessDbException {
+        String userId = authentication.getName();
+        this.groupService.deleteGroup(id, UUID.fromString(userId));
+        return ResponseMessage.createResponse("Delete group successfully!", "Deleted", HttpStatus.OK);
     }
 }
