@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/v1/message-attachment")
+@SuppressWarnings("unused")
 public class MessageAttachmentController {
 
     private final MessageAttachmentService attachmentService;

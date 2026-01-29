@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/v1/message")
+@SuppressWarnings("unused")
 public class MessageController {
     private final MessageService messageService;
 
