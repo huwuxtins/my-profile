@@ -24,6 +24,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/user")
+@SuppressWarnings("unused")
 public class UserController {
 
     private final UserService userService;
