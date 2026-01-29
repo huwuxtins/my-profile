@@ -17,6 +17,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/group-member")
+@SuppressWarnings("unused")
 public class GroupMemberController {
     private final GroupMemberService memberService;
 
@@ -42,7 +43,7 @@ public class GroupMemberController {
     }
 
     @PostMapping("")
-    public ResponseEntity<ApiResponse<GroupMemberDto>> addGroup(@RequestBody GroupMemberDto dto) throws AccessDbException, AlreadyObjectException {
+    public ResponseEntity<ApiResponse<GroupMemberDto>> addGroup(@RequestBody GroupMemberDto dto) throws AlreadyObjectException {
         GroupMemberDto addedGroupMember = this.memberService.addGroupMember(dto);
 
         if(addedGroupMember != null) {

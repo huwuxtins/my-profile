@@ -16,6 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/group")
+@SuppressWarnings("unused")
 public class GroupController {
     private final GroupService groupService;
 
