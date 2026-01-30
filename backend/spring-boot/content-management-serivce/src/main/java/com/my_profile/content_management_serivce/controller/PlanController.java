@@ -16,6 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/plan")
+@SuppressWarnings("unused")
 public class PlanController {
     private final PlanService planService;
 

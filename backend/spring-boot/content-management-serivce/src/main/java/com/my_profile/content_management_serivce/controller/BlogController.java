@@ -21,6 +21,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/blog")
+@SuppressWarnings("unused")
 public class BlogController {
     private final BlogService blogService;
     private final UserServiceClient userServiceClient;
@@ -133,21 +134,23 @@ public class BlogController {
             return ResponseMessage.createResponse("Add blog successfully!", addedBlog, HttpStatus.CREATED);
         }
         return ResponseMessage.createResponse("Add blog failed!", null, HttpStatus.BAD_REQUEST);
-//        Reactive web
-//        return ReactiveSecurityContextHolder.getContext()
-//                .map(SecurityContext::getAuthentication)
-//                .flatMap(authentication -> {
-//                    if (authentication != null) {
-//                        String userId = authentication.getName(); // Get the user's ID or name
-//                        blog.setUserID(userId); // Set the user ID in the blog
-//                        return blogService.addBlog(blog)
-//                                .flatMap(addedBlog -> {
-//                                    return Mono.just(ResponseMessage.createResponse("Add blog successfully!", addedBlog, HttpStatus.CREATED));
-//                                });
-//                    } else {
-//                        return Mono.just(ResponseMessage.createResponse("No authentication available", null, HttpStatus.UNAUTHORIZED));
-//                    }
-//                });
+/*
+        Reactive web
+        return ReactiveSecurityContextHolder.getContext()
+                .map(SecurityContext::getAuthentication)
+                .flatMap(authentication -> {
+                    if (authentication != null) {
+                        String userId = authentication.getName(); // Get the user's ID or name
+                        blog.setUserID(userId); // Set the user ID in the blog
+                        return blogService.addBlog(blog)
+                                .flatMap(addedBlog -> {
+                                    return Mono.just(ResponseMessage.createResponse("Add blog successfully!", addedBlog, HttpStatus.CREATED));
+                                });
+                    } else {
+                        return Mono.just(ResponseMessage.createResponse("No authentication available", null, HttpStatus.UNAUTHORIZED));
+                    }
+                });
+*/
     }
 
     @PutMapping("/{id}")
