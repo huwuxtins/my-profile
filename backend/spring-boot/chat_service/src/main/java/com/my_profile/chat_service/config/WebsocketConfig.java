@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @RequiredArgsConstructor
+@SuppressWarnings("unused")
 public class WebsocketConfig {
     @Value("${socket.host}")
     private String host;
@@ -27,7 +28,7 @@ public class WebsocketConfig {
         config.setHostname(host);
         config.setPort(port);
         config.setOrigin("*");
-        config.setContext("/socket.io/meeting");
+        config.setContext("/socket.io/chat");
 
         server = new SocketIOServer(config);
         server.start();
