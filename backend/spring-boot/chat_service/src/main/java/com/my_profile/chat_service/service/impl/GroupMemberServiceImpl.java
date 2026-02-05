@@ -18,6 +18,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@SuppressWarnings("unused")
 public class GroupMemberServiceImpl implements GroupMemberService {
     private final GroupMemberRepository repository;
     private final GroupMemberMapper mapper;
@@ -69,7 +70,7 @@ public class GroupMemberServiceImpl implements GroupMemberService {
     }
 
     @Override
-    public GroupMemberDto updateGroupMember(UUID id, GroupMemberDto dto) throws AccessDbException {
+    public GroupMemberDto updateGroupMember(UUID id, GroupMemberDto dto){
         return null;
     }
 

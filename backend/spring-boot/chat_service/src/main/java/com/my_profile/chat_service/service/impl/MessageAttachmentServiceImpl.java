@@ -1,7 +1,6 @@
 package com.my_profile.chat_service.service.impl;
 
 import com.my_profile.chat_service.entity.MessageAttachment;
-import com.my_profile.chat_service.exception.AccessDbException;
 import com.my_profile.chat_service.exception.ResourceNotFoundException;
 import com.my_profile.chat_service.mapper.MessageAttachmentMapper;
 import com.my_profile.chat_service.mapper.dto.MessageAttachmentDto;
@@ -14,6 +13,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@SuppressWarnings("unused")
 public class MessageAttachmentServiceImpl implements MessageAttachmentService {
     private final MessageAttachmentRepository attachmentRepository;
     private final MessageAttachmentMapper mapper;
@@ -38,17 +38,17 @@ public class MessageAttachmentServiceImpl implements MessageAttachmentService {
     }
 
     @Override
-    public MessageAttachmentDto addAttachment(MessageAttachmentDto dto) throws AccessDbException {
+    public MessageAttachmentDto addAttachment(MessageAttachmentDto dto) {
         return null;
     }
 
     @Override
-    public MessageAttachmentDto updateAttachment(UUID id, MessageAttachmentDto dto) throws AccessDbException {
+    public MessageAttachmentDto updateAttachment(UUID id, MessageAttachmentDto dto) {
         return null;
     }
 
     @Override
-    public void deleteAttachment(UUID id) throws AccessDbException {
+    public void deleteAttachment(UUID id) {
 
     }
 }

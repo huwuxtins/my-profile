@@ -3,7 +3,6 @@ package com.my_profile.chat_service.service.impl;
 import com.my_profile.chat_service.entity.Group;
 import com.my_profile.chat_service.entity.GroupMember;
 import com.my_profile.chat_service.enums.GroupRole;
-import com.my_profile.chat_service.exception.AccessDbException;
 import com.my_profile.chat_service.exception.ResourceNotFoundException;
 import com.my_profile.chat_service.mapper.GroupMapper;
 import com.my_profile.chat_service.mapper.GroupMemberMapper;
@@ -24,6 +23,7 @@ import java.util.UUID;
 
 @Service
 @Transactional
+@SuppressWarnings("unused")
 public class GroupServiceImpl implements GroupService {
 
     private final GroupRepository groupRepository;
@@ -58,7 +58,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public GroupDto addGroup(GroupDto dto, UUID creatorUserId) throws AccessDbException {
+    public GroupDto addGroup(GroupDto dto, UUID creatorUserId) {
         Group group = this.groupMapper.toEntity(dto);
 
         Group savedGroup = this.groupRepository.save(group);
@@ -74,12 +74,12 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public GroupDto updateGroup(UUID id, GroupDto dto) throws AccessDbException {
+    public GroupDto updateGroup(UUID id, GroupDto dto) {
         return null;
     }
 
     @Override
-    public void deleteGroup(UUID id, UUID requesterUserId) throws AccessDbException {
+    public void deleteGroup(UUID id, UUID requesterUserId) {
         GroupMember member = this.groupMemberRepository
                 .findByGroupIdAndUserId(id, requesterUserId)
                 .orElseThrow(() -> new SecurityException("Not a group member"));
