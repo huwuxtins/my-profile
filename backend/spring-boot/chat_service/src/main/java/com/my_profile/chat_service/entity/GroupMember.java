@@ -43,6 +43,7 @@ public class GroupMember {
     private Instant joinedAt;
 
     @PrePersist
+    @SuppressWarnings("unused")
     void onJoin() {
         this.joinedAt = Instant.now();
     }

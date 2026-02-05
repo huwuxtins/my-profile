@@ -45,6 +45,7 @@ public class MessageAttachment {
     private Instant createdAt;
 
     @PrePersist
+    @SuppressWarnings("unused")
     protected void onCreate() {
         this.createdAt = Instant.now();
     }

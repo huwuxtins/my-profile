@@ -65,15 +65,18 @@ public class Message {
     private Long version;
 
     @PrePersist
+    @SuppressWarnings("unused")
     protected void onCreate() {
         this.createdAt = Instant.now();
     }
 
     @PreUpdate
+    @SuppressWarnings("unused")
     protected void onUpdate() {
         this.editedAt = Instant.now();
     }
 
+    @SuppressWarnings("unused")
     public void addAttachment(MessageAttachment attachment) {
         attachments.add(attachment);
         attachment.setMessage(this);
