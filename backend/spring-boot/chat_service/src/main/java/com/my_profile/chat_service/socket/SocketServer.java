@@ -1,6 +1,8 @@
 package com.my_profile.chat_service.socket;
 
 import com.corundumstudio.socketio.SocketIOServer;
+import com.my_profile.chat_service.mapper.dto.MessageDto;
+import com.my_profile.chat_service.service.MessageService;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -10,13 +12,19 @@ import org.springframework.stereotype.Component;
 @SuppressWarnings("unused")
 public class SocketServer {
     private final SocketIOServer server;
+    private final MessageService messageService;
 
-    public SocketServer(SocketIOServer server) {
+    public SocketServer(SocketIOServer server, MessageService messageService) {
         this.server = server;
+        this.messageService = messageService;
     }
 
     @PostConstruct
     public void initListeners(){
+        server.addEventListener("send_message", String.class, (client, data, ackRequest) -> {
+            MessageDto messageDto = MessageDto.convertFromString(data);
+            messageService.addMessage(messageDto);
+        });
 
     }
 }

@@ -1,6 +1,9 @@
 package com.my_profile.chat_service.mapper.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
 
 import java.time.Instant;
@@ -38,4 +41,15 @@ public class MessageDto {
 
     @JsonProperty("isSystem")
     private boolean system;
+
+    public static MessageDto convertFromString(String data) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonNode = mapper.readTree(data);
+
+        return MessageDto.builder()
+                .senderId(jsonNode.get("senderId").asText())
+                .groupId(jsonNode.get("groupId").asText())
+                .content(jsonNode.get("content").asText())
+                .build();
+    }
 }
