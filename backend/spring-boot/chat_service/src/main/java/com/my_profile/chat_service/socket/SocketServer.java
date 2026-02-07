@@ -26,7 +26,7 @@ public class SocketServer {
             MessageDto messageDto = MessageDto.convertFromString(data);
             MessageDto addedMessage = this.messageService.addMessage(messageDto);
 
-            client.joinRoom(addedMessage.getGroupId());
+            client.joinRoom(addedMessage.getGroupId().toString());
             String serializedMessage = SocketIOHelper.serialize(addedMessage);
 
             this.server.getRoomOperations("group" + addedMessage.getGroupId()).sendEvent("chat:receive", serializedMessage);

@@ -19,13 +19,13 @@ public class MessageDto {
     private UUID id;
 
     @JsonProperty("senderId")
-    private String senderId;
+    private UUID senderId;
 
     @JsonProperty("sender")
     private UserDto sender;
 
     @JsonProperty("groupId")
-    private String groupId;
+    private UUID groupId;
 
     @JsonProperty("content")
     private String content;
@@ -47,8 +47,8 @@ public class MessageDto {
         JsonNode jsonNode = mapper.readTree(data);
 
         return MessageDto.builder()
-                .senderId(jsonNode.get("senderId").asText())
-                .groupId(jsonNode.get("groupId").asText())
+                .senderId(UUID.fromString(jsonNode.get("senderId").asText()))
+                .groupId(UUID.fromString(jsonNode.get("groupId").asText()))
                 .content(jsonNode.get("content").asText())
                 .build();
     }
