@@ -1,6 +1,7 @@
 package com.my_profile.chat_service.socket;
 
 import com.corundumstudio.socketio.SocketIOServer;
+import com.my_profile.chat_service.helper.SocketIOHelper;
 import com.my_profile.chat_service.mapper.dto.MessageDto;
 import com.my_profile.chat_service.service.MessageService;
 import jakarta.annotation.PostConstruct;
@@ -23,7 +24,12 @@ public class SocketServer {
     public void initListeners(){
         server.addEventListener("send_message", String.class, (client, data, ackRequest) -> {
             MessageDto messageDto = MessageDto.convertFromString(data);
-            messageService.addMessage(messageDto);
+            MessageDto addedMessage = this.messageService.addMessage(messageDto);
+
+            client.joinRoom(addedMessage.getGroupId());
+            String serializedMessage = SocketIOHelper.serialize(addedMessage);
+
+            this.server.getRoomOperations("group" + addedMessage.getGroupId()).sendEvent("chat:receive", serializedMessage);
         });
 
     }
