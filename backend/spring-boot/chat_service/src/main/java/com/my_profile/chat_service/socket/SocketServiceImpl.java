@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@SuppressWarnings("unused")
 public class SocketServiceImpl implements SocketService{
     private final MessageService messageService;
 
