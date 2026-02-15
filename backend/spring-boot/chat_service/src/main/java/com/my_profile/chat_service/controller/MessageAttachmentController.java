@@ -28,7 +28,7 @@ public class MessageAttachmentController {
                                                                                   @RequestParam(defaultValue = "0") int page,
                                                                                   @RequestParam(defaultValue = "10") int size) {
         List<MessageAttachmentDto> dto = this.attachmentService.findByMessageId(messageId);
-        return ResponseMessage.createResponse("Get attachment by messageId successfully!", dto, HttpStatus.OK);
+        return ResponseMessage.createResponse("Get attachments by messageId successfully!", dto, HttpStatus.OK);
     }
 
     @GetMapping("/{groupId}")
