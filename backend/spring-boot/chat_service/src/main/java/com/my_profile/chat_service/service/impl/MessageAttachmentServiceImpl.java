@@ -6,6 +6,9 @@ import com.my_profile.chat_service.mapper.MessageAttachmentMapper;
 import com.my_profile.chat_service.mapper.dto.MessageAttachmentDto;
 import com.my_profile.chat_service.repository.MessageAttachmentRepository;
 import com.my_profile.chat_service.service.MessageAttachmentService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,6 +38,16 @@ public class MessageAttachmentServiceImpl implements MessageAttachmentService {
     @Override
     public List<MessageAttachmentDto> findByMessageId(UUID messageId) {
         return List.of();
+    }
+
+    @Override
+    public List<MessageAttachmentDto> findByGroupId(UUID groupId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
+        return this.attachmentRepository.findByMessage_GroupId(groupId, pageable)
+                .getContent()
+                .stream()
+                .map(this.mapper::toDto)
+                .toList();
     }
 
     @Override

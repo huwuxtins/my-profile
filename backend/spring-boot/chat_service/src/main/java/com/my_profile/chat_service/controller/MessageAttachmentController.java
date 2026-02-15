@@ -31,6 +31,14 @@ public class MessageAttachmentController {
         return ResponseMessage.createResponse("Get attachment by messageId successfully!", dto, HttpStatus.OK);
     }
 
+    @GetMapping("/{groupId}")
+    public ResponseEntity<ApiResponse<List<MessageAttachmentDto>>> getByGroupId(@PathVariable UUID groupId,
+                                                                                @RequestParam(defaultValue = "0") int page,
+                                                                                @RequestParam(defaultValue = "10") int size) {
+        List<MessageAttachmentDto> dto = this.attachmentService.findByGroupId(groupId, page, size);
+        return ResponseMessage.createResponse("Get attachments by groupId successfully!", dto, HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<String>> deleteMessage(@PathVariable UUID id) throws AccessDbException {
         this.attachmentService.deleteAttachment(id);
