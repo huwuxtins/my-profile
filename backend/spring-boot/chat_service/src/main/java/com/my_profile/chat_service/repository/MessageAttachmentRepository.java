@@ -13,6 +13,16 @@ import java.util.UUID;
 @Repository
 public interface MessageAttachmentRepository extends JpaRepository<MessageAttachment, UUID> {
     @Query("""
+            SELECT a
+            FROM MessageAttachment a
+            WHERE a.message.id = :messageId
+    """)
+    Page<MessageAttachment> findByMessageId(
+            @Param("messageId") UUID messageId,
+            Pageable pageable
+    );
+
+    @Query("""
         SELECT a
         FROM MessageAttachment a
         WHERE a.message.groupId = :groupId

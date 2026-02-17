@@ -36,8 +36,13 @@ public class MessageAttachmentServiceImpl implements MessageAttachmentService {
     }
 
     @Override
-    public List<MessageAttachmentDto> findByMessageId(UUID messageId) {
-        return List.of();
+    public List<MessageAttachmentDto> findByMessageId(UUID messageId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
+        return this.attachmentRepository.findByMessageId(messageId, pageable)
+                .getContent()
+                .stream()
+                .map(this.mapper::toDto)
+                .toList();
     }
 
     @Override

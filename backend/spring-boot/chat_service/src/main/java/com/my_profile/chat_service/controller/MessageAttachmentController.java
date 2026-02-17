@@ -27,7 +27,7 @@ public class MessageAttachmentController {
     public ResponseEntity<ApiResponse<List<MessageAttachmentDto>>> getByMessageId(@PathVariable UUID messageId,
                                                                                   @RequestParam(defaultValue = "0") int page,
                                                                                   @RequestParam(defaultValue = "10") int size) {
-        List<MessageAttachmentDto> dto = this.attachmentService.findByMessageId(messageId);
+        List<MessageAttachmentDto> dto = this.attachmentService.findByMessageId(messageId, page, size);
         return ResponseMessage.createResponse("Get attachments by messageId successfully!", dto, HttpStatus.OK);
     }
 

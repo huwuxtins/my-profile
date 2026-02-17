@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface MessageAttachmentService {
     MessageAttachmentDto findById(UUID id);
-    List<MessageAttachmentDto> findByMessageId(UUID messageId);
+    List<MessageAttachmentDto> findByMessageId(UUID messageId, int page, int size);
     List<MessageAttachmentDto> findByGroupId(UUID groupId, int page, int size);
     MessageAttachmentDto addAttachment(MessageAttachmentDto dto) throws AccessDbException;
     MessageAttachmentDto updateAttachment(UUID id, MessageAttachmentDto dto) throws AccessDbException;
