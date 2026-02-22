@@ -57,7 +57,11 @@ public class MessageAttachmentServiceImpl implements MessageAttachmentService {
 
     @Override
     public MessageAttachmentDto addAttachment(MessageAttachmentDto dto) {
-        return null;
+        return this.mapper.toDto(
+                this.attachmentRepository.save(
+                        this.mapper.toEntity(dto)
+                )
+        );
     }
 
     @Override
