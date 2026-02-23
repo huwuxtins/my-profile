@@ -1,6 +1,7 @@
 package com.my_profile.chat_service.service.impl;
 
 import com.my_profile.chat_service.entity.MessageAttachment;
+import com.my_profile.chat_service.exception.AccessDbException;
 import com.my_profile.chat_service.exception.ResourceNotFoundException;
 import com.my_profile.chat_service.mapper.MessageAttachmentMapper;
 import com.my_profile.chat_service.mapper.dto.MessageAttachmentDto;
@@ -70,7 +71,11 @@ public class MessageAttachmentServiceImpl implements MessageAttachmentService {
     }
 
     @Override
-    public void deleteAttachment(UUID id) {
-
+    public void deleteAttachment(UUID id) throws AccessDbException {
+        try {
+            this.attachmentRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new AccessDbException("Cannot delete this attachment!");
+        }
     }
 }
