@@ -1,11 +1,15 @@
 package com.my_profile.chat_service.service.impl;
 
 import com.my_profile.chat_service.entity.Message;
+import com.my_profile.chat_service.entity.MessageAttachment;
 import com.my_profile.chat_service.exception.AccessDbException;
 import com.my_profile.chat_service.exception.ResourceNotFoundException;
+import com.my_profile.chat_service.mapper.MessageAttachmentMapper;
 import com.my_profile.chat_service.mapper.MessageMapper;
+import com.my_profile.chat_service.mapper.dto.MessageAttachmentDto;
 import com.my_profile.chat_service.mapper.dto.MessageDto;
 import com.my_profile.chat_service.repository.MessageRepository;
+import com.my_profile.chat_service.service.MessageAttachmentService;
 import com.my_profile.chat_service.service.MessageService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,11 +25,15 @@ import java.util.UUID;
 public class MessageServiceImpl implements MessageService {
 
     private final MessageRepository messageRepository;
+    private final MessageAttachmentService attachmentService;
     private final MessageMapper messageMapper;
+    private final MessageAttachmentMapper attachmentMapper;
 
-    public MessageServiceImpl(MessageRepository messageRepository, MessageMapper messageMapper) {
+    public MessageServiceImpl(MessageRepository messageRepository, MessageAttachmentService attachmentService, MessageMapper messageMapper, MessageAttachmentMapper attachmentMapper) {
         this.messageRepository = messageRepository;
+        this.attachmentService = attachmentService;
         this.messageMapper = messageMapper;
+        this.attachmentMapper = attachmentMapper;
     }
 
     @Override
@@ -51,6 +59,7 @@ public class MessageServiceImpl implements MessageService {
     public MessageDto addMessage(MessageDto dto) throws AccessDbException{
         try {
             Message message = this.messageMapper.toEntity(dto);
+//            this.attachmentService.
             return this.messageMapper.toDto(this.messageRepository.save(message));
         } catch(Exception e) {
             throw new AccessDbException("Add message failed!");

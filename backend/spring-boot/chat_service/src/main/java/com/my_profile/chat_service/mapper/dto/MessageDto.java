@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -41,6 +42,9 @@ public class MessageDto {
 
     @JsonProperty("isSystem")
     private boolean system;
+
+    @JsonProperty("attachments")
+    private List<MessageAttachmentDto> attachments;
 
     public static MessageDto convertFromString(String data) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();

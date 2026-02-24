@@ -65,6 +65,11 @@ public class MessageAttachmentServiceImpl implements MessageAttachmentService {
         );
     }
 
+//    @Override
+//    public List<MessageAttachmentDto> addMany(List<MessageAttachmentDto> dto) {
+////        this.attachmentRepository.saveAll(dto)
+//    }
+
     @Override
     public MessageAttachmentDto updateAttachment(UUID id, MessageAttachmentDto dto) {
         return null;

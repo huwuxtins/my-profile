@@ -7,7 +7,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface GroupMapper extends BaseMapper<GroupDto, Group>{
-    @Mapping(target = "id", ignore = true)
+//    @Mapping(target = "id", ignore = true)
     GroupDto toDto(Group group);
     Group toEntity(GroupDto dto);
 }

@@ -11,6 +11,7 @@ public interface MessageAttachmentService {
     List<MessageAttachmentDto> findByMessageId(UUID messageId, int page, int size);
     List<MessageAttachmentDto> findByGroupId(UUID groupId, int page, int size);
     MessageAttachmentDto addAttachment(MessageAttachmentDto dto) throws AccessDbException;
+//    List<MessageAttachmentDto> addMany(List<MessageAttachmentDto> dto) throws AccessDbException;
     MessageAttachmentDto updateAttachment(UUID id, MessageAttachmentDto dto) throws AccessDbException;
     void deleteAttachment(UUID id) throws AccessDbException;
 }
