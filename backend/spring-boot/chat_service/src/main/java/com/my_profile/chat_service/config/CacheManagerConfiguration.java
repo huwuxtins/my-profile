@@ -23,6 +23,11 @@ public class CacheManagerConfiguration {
         return (cacheManager) -> cacheManager.setAllowNullValues(false);
     }
 
+    /**
+     * Returns a RedisCacheManagerBuilderCustomizer which configures two caches: "cache1" with a TTL of 10 seconds and "cache2" with a TTL of 1 millisecond.
+     *
+     * @return a RedisCacheManagerBuilderCustomizer that configures two caches with different TTLs.
+     */
     @Bean
     public RedisCacheManagerBuilderCustomizer myRedisCacheManagerBuilderCustomizer() {
         return (builder) -> builder
