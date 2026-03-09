@@ -45,7 +45,6 @@ public class Group {
     private Long version;
 
     @PrePersist
-    @SuppressWarnings("unused")
     protected void onCreate() {
         this.createdAt = Instant.now();
     }
